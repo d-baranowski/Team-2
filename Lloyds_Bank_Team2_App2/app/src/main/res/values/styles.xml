@@ -1,8 +1,9 @@
 <resources>
-
+    <color name="lloyds_green">#345953</color>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+
     </style>
 
 </resources>
