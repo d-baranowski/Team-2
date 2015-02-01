@@ -11,10 +11,9 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" android:visibility="gone" />
 
-    <ScrollView android:id="@+id/login_form" android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
+
+        <LinearLayout android:id="@+id/login_form" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:orientation="vertical">
 
             <View
@@ -28,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
                 android:id="@+id/imageView"
-                android:background="@drawable/Lloyds_Bank_logo" />
+                android:background="@drawable/lloydsbanklogo" />
 
             <View
                 android:background="@color/lloyds_green"
@@ -99,7 +98,8 @@
                 android:textColor="#ffffff"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:onClick="login"/>
 
             <View
                 android:layout_marginTop="10dp"
@@ -110,7 +110,7 @@
                 android:layout_alignParentTop="true"/>
 
         </LinearLayout>
-    </ScrollView>
+
 
 </LinearLayout>
 
