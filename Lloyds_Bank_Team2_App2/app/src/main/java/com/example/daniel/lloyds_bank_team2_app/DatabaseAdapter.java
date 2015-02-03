@@ -51,7 +51,7 @@ public class DatabaseAdapter {
 
     static class DatabaseHelper extends SQLiteOpenHelper {
         private static final String DATABASE_NAME = "lloydsdb";
-        private static final int DATABASE_VERSION = 2;
+        private static final int DATABASE_VERSION = 3;
 
         private static final String CUSTOMER_TABLE_NAME = "Customers";
         private static final String FIELD_NAME = "FirstNAme";
@@ -75,15 +75,25 @@ public class DatabaseAdapter {
 
         private static final String ACCOUNTS_TABLE_NAME = "Accounts";
         private static final String FIELD_ACCOUNTNO = "AccountNumber";
+        private static final String FIELD_SORTCODE = "SortCode";
+        private static final String FIELD_ACCOUNTNAME = "Name";
+        private static final String FIELD_ACCOUNTTYPE = "Type";
         private static final String FIELD_BALANCE = "Balance";
+        private static final String FIELD_AVAILABLE_BALANCE = "Available";
+        private static final String FIELD_OVERDRAFT_LIMIT = "Overdraft";
         private static final String FIELD_OWNERID = "Owner";
 
         private static final String CREATE_ACCOUNTS_TABLE =
-                "CREATE TABLE "+
-                        ACCOUNTS_TABLE_NAME+" ("+
-                        FIELD_ACCOUNTNO+" INTEGER PRIMARY KEY NOT NULL UNIQUE,"+
-                        FIELD_BALANCE+"	INTEGER,"+
-                        FIELD_OWNERID+"	INTEGER REFERENCES Customers(ID));";
+                "CREATE TABLE " +
+                        ACCOUNTS_TABLE_NAME + " (" +
+                        FIELD_ACCOUNTNO + " INTEGER PRIMARY KEY NOT NULL UNIQUE," +
+                        FIELD_SORTCODE + " STRING NOT NULL," +
+                        FIELD_ACCOUNTNAME + " STRING DEFAULT 'Account'," +
+                        FIELD_ACCOUNTTYPE + " STRING," +
+                        FIELD_BALANCE + "	REAL," +
+                        FIELD_AVAILABLE_BALANCE + " REAL DEFAULT 0," +
+                        FIELD_OVERDRAFT_LIMIT + " REAL DEFAULT 0," +
+                        FIELD_OWNERID + "	INTEGER REFERENCES Customers(ID));";
 
 
         public DatabaseHelper(Context context){
@@ -103,7 +113,7 @@ public class DatabaseAdapter {
             ContentValues contentValCustomers = new ContentValues();
             contentValCustomers.put(FIELD_NAME, "Daniel");
             contentValCustomers.put(FIELD_SURNAME, "Baranowski");
-            contentValCustomers.put(FIELD_ADDRESSONE, "123 Streen Name");
+            contentValCustomers.put(FIELD_ADDRESSONE, "123 Street Name");
             contentValCustomers.put(FIELD_ADDRESSTWO, "Newcastle Upon Tyne");
             contentValCustomers.put(FIELD_POSTCODE, "NE9 9HA");
             contentValCustomers.put(FIELD_USERID, 123456789);
@@ -111,7 +121,9 @@ public class DatabaseAdapter {
 
             ContentValues contentValAccounts = new ContentValues();
             contentValAccounts.put(FIELD_ACCOUNTNO,1111111); //7 Digit account number
-            contentValAccounts.put(FIELD_BALANCE,50);
+            contentValAccounts.put(FIELD_SORTCODE,30-11-11);
+            contentValAccounts.put(FIELD_BALANCE,100.0);
+            contentValAccounts.put(FIELD_AVAILABLE_BALANCE,50.54);
             contentValAccounts.put(FIELD_OWNERID,1);
 
             db.insert(CUSTOMER_TABLE_NAME,null,contentValCustomers);
