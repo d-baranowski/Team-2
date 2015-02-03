@@ -51,10 +51,9 @@ public class DatabaseAdapter {
 
     static class DatabaseHelper extends SQLiteOpenHelper {
         private static final String DATABASE_NAME = "lloydsdb";
-        private static final int DATABASE_VERSION = 1;
+        private static final int DATABASE_VERSION = 2;
 
         private static final String CUSTOMER_TABLE_NAME = "Customers";
-        private static final String FIELD_ACCOUNTNO = "AccountNumber";
         private static final String FIELD_NAME = "FirstNAme";
         private static final String FIELD_SURNAME = "Surname";
         private static final String FIELD_ADDRESSONE = "AddressLine1";
@@ -62,6 +61,30 @@ public class DatabaseAdapter {
         private static final String FIELD_POSTCODE = "Postcode";
         private static final String FIELD_USERID = "UserID";
         private static final String FIELD_PASSWORD = "Password";
+
+        private static final String CREATE_CUSTOMER_TABLE =
+                "CREATE TABLE "+
+                        CUSTOMER_TABLE_NAME + " (_id	INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                        FIELD_NAME+"   TEXT NOT NULL,"+
+                        FIELD_SURNAME+"	TEXT NOT NULL,"+
+                        FIELD_ADDRESSONE+"	TEXT NOT NULL,"+
+                        FIELD_ADDRESSTWO+"	TEXT NOT NULL,"+
+                        FIELD_POSTCODE+"	TEXT NOT NULL,"+
+                        FIELD_USERID+"	INTEGER NOT NULL UNIQUE ,"+
+                        FIELD_PASSWORD+"	TEXT NOT NULL);";
+
+        private static final String ACCOUNTS_TABLE_NAME = "Accounts";
+        private static final String FIELD_ACCOUNTNO = "AccountNumber";
+        private static final String FIELD_BALANCE = "Balance";
+        private static final String FIELD_OWNERID = "Owner";
+
+        private static final String CREATE_ACCOUNTS_TABLE =
+                "CREATE TABLE "+
+                        ACCOUNTS_TABLE_NAME+" ("+
+                        FIELD_ACCOUNTNO+" INTEGER PRIMARY KEY NOT NULL UNIQUE,"+
+                        FIELD_BALANCE+"	INTEGER,"+
+                        FIELD_OWNERID+"	INTEGER REFERENCES Customers(ID));";
+
 
         public DatabaseHelper(Context context){
             super(context, DATABASE_NAME,null,DATABASE_VERSION);
@@ -71,40 +94,38 @@ public class DatabaseAdapter {
         @Override
         public void onCreate(SQLiteDatabase db) {
             //SQL query to create a table inside our database.
-            final String CREATE_CUSTOMER_TABLE =
-                    "CREATE TABLE "+
-                            CUSTOMER_TABLE_NAME + " (_id	INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                            FIELD_ACCOUNTNO+"	INTEGER NOT NULL UNIQUE,"+
-                            FIELD_NAME+"   TEXT NOT NULL,"+
-                            FIELD_SURNAME+"	TEXT NOT NULL,"+
-                            FIELD_ADDRESSONE+"	TEXT NOT NULL,"+
-                            FIELD_ADDRESSTWO+"	TEXT NOT NULL,"+
-                            FIELD_POSTCODE+"	TEXT NOT NULL,"+
-                            FIELD_USERID+"	INTEGER NOT NULL UNIQUE ,"+
-                            FIELD_PASSWORD+"	TEXT NOT NULL);";
+
 
             db.execSQL(CREATE_CUSTOMER_TABLE);
+            db.execSQL(CREATE_ACCOUNTS_TABLE);
 
             //Create sample dummy data and instert into database
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(FIELD_ACCOUNTNO, 12345678);
-            contentValues.put(FIELD_NAME, "Daniel");
-            contentValues.put(FIELD_SURNAME, "Baranowski");
-            contentValues.put(FIELD_ADDRESSONE,"123 Streen Name");
-            contentValues.put(FIELD_ADDRESSTWO,"Newcastle Upon Tyne");
-            contentValues.put(FIELD_POSTCODE,"NE9 9HA");
-            contentValues.put(FIELD_USERID,123456789);
-            contentValues.put(FIELD_PASSWORD,"password");
+            ContentValues contentValCustomers = new ContentValues();
+            contentValCustomers.put(FIELD_NAME, "Daniel");
+            contentValCustomers.put(FIELD_SURNAME, "Baranowski");
+            contentValCustomers.put(FIELD_ADDRESSONE, "123 Streen Name");
+            contentValCustomers.put(FIELD_ADDRESSTWO, "Newcastle Upon Tyne");
+            contentValCustomers.put(FIELD_POSTCODE, "NE9 9HA");
+            contentValCustomers.put(FIELD_USERID, 123456789);
+            contentValCustomers.put(FIELD_PASSWORD, "password");
 
-            db.insert(CUSTOMER_TABLE_NAME,null,contentValues);
+            ContentValues contentValAccounts = new ContentValues();
+            contentValAccounts.put(FIELD_ACCOUNTNO,1111111); //7 Digit account number
+            contentValAccounts.put(FIELD_BALANCE,50);
+            contentValAccounts.put(FIELD_OWNERID,1);
+
+            db.insert(CUSTOMER_TABLE_NAME,null,contentValCustomers);
+            db.insert(ACCOUNTS_TABLE_NAME,null,contentValAccounts);
         }
 
         //Executed when the DATABASE_VERSION variable value is increased, when we change something about the database, create new tables or change columns etc...
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             //SQL query to delete customer table if it exists
-            final String DROP_CUSTOMER_TABLE = "DROP TABLE" + CUSTOMER_TABLE_NAME + "IF EXISTS";
+            final String DROP_CUSTOMER_TABLE = "DROP TABLE IF EXISTS " + CUSTOMER_TABLE_NAME;
+            final String DROP_ACCOUNTS_TABLE = "DROP TABLE IF EXISTS " + ACCOUNTS_TABLE_NAME;
             db.execSQL(DROP_CUSTOMER_TABLE);
+            db.execSQL(DROP_ACCOUNTS_TABLE);
             onCreate(db);
         }
     }
