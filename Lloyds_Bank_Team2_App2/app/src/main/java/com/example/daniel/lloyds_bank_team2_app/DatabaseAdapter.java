@@ -16,17 +16,36 @@ public class DatabaseAdapter {
         helper = new DatabaseHelper(context);
     }
 
+    /*
+        Return true if password stored in database is same as the one passed as parameter
+
+        This method will access the dummy database table Customers that stores customer details.
+         It well then query the database to find a customer with given userID is in the database
+         If the query is successful cursor object won't be null and its size (count) will be larger than 1
+         Then the cursor will check if passed matches the password stored in database
+     */
     public boolean login(String userID, String password){
+        //Apostrophe is part of SQLite syntax. These lines prevent app from crashing if user entered values contain apostrphes
+        userID.replace("'","\'");
+        password.replace("'","\'");
+
         SQLiteDatabase db = helper.getReadableDatabase();
 
         String[] columns = {DatabaseHelper.FIELD_PASSWORD};
         String query = DatabaseHelper.FIELD_USERID + " = '" + userID + "'";
         Cursor cursor = db.query(DatabaseHelper.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
-        String pass= cursor.getString(cursor.getColumnIndex(DatabaseHelper.FIELD_PASSWORD));
 
-        if (password.equals(pass)){
-            return true;
+        if (cursor != null){
+            if (cursor.getCount() > 0){
+                cursor.moveToFirst();
+                String pass= cursor.getString(cursor.getColumnIndex(DatabaseHelper.FIELD_PASSWORD));
+                if (password.equals(pass)){
+                    db.close();
+                    return true;
+                }
+            }
         }
+        db.close();
         return false;
     }
 
