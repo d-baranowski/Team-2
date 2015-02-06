@@ -1,39 +1,40 @@
 package com.example.daniel.lloyds_bank_team2_app;
 
-import android.support.v7.app.ActionBarActivity;
+
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.TextView;
 
 
-public class MainScreen extends ActionBarActivity {
+public class MainScreen extends Activity {
+    private static DatabaseAdapter dbadapter;
+
+    //UI references
+    private TextView accountType;
+    private TextView accountNumber;
+    private TextView accountSortCode;
+    private TextView accountName;
+    private TextView accountBalance;
+    private TextView accountAvailable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-    }
 
+        accountType = (TextView) findViewById(R.id.account_type);
+        accountNumber = (TextView) findViewById(R.id.account_number);
+        accountSortCode = (TextView) findViewById(R.id.account_sort_code);
+        accountName = (TextView) findViewById(R.id.account_name);
+        accountBalance = (TextView) findViewById(R.id.account_balance);
+        accountAvailable = (TextView) findViewById(R.id.account_available);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_screen, menu);
-        return true;
-    }
+        dbadapter = new DatabaseAdapter(this);
+        Customer customer = dbadapter.getCustomer(getIntent().getExtras().getInt("customerId"));
+        Account account = dbadapter.getAccounts(customer.getId()).get(0);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        accountType.setText(String.valueOf(account.getAccountBalance()));
+        accountNumber.setText(String.valueOf(customer.getId()));
+        accountSortCode.setText(customer.getFirstName());
     }
 }

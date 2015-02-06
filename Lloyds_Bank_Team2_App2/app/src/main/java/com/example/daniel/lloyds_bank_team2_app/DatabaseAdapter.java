@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.ContactsContract;
+
+import java.util.ArrayList;
 
 /**
  * Created by Daniel on 01/02/2015.
@@ -25,7 +28,7 @@ public class DatabaseAdapter {
          Then the cursor will check if passed matches the password stored in database
      */
     public boolean login(String userID, String password){
-        //Apostrophe is part of SQLite syntax. These lines prevent app from crashing if user entered values contain apostrphes
+        //Apostrophe is part of SQLite syntax. These lines prevent app from crashing if user entered values contain apostrophes
         userID.replace("'","\'");
         password.replace("'","\'");
 
@@ -49,11 +52,84 @@ public class DatabaseAdapter {
         return false;
     }
 
+    public ArrayList<Account> getAccounts(int ownerid){
+        ArrayList<Account> accounts = new ArrayList<>();
+        String[] columns = DatabaseHelper.ACCOUNTS_COLUMNS;
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String query = DatabaseHelper.FIELD_OWNERID + " = '" + ownerid + "'";
+        Cursor cursor = db.query(DatabaseHelper.ACCOUNTS_TABLE_NAME,columns,query,null,null,null,null);
+
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                int accountNumber = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.FIELD_ACCOUNTNO));
+                String sortCode = cursor.getString(cursor.getColumnIndex(DatabaseHelper.FIELD_SORTCODE));
+                String accountName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.FIELD_ACCOUNTNAME));
+                String accountType = cursor.getString(cursor.getColumnIndex(DatabaseHelper.FIELD_AVAILABLE_BALANCE));
+                int accountBalance = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.FIELD_BALANCE));
+                int availableBalance = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.FIELD_AVAILABLE_BALANCE));
+                int overdraft = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.FIELD_OVERDRAFT_LIMIT));
+                int ownerId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.FIELD_OWNERID));
+
+                accounts.add(new Account(accountNumber, sortCode, accountName, accountType, accountBalance, availableBalance, overdraft, ownerId));
+            }
+        }
+        return accounts;
+    }
+
+    public int getId(String userID){
+        userID.replace("'","\'");
+        String[] columns = {DatabaseHelper.FIELD_CUSTOMER_ID};
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String query = DatabaseHelper.FIELD_USERID + " = '" + userID + "'";
+        Cursor cursor = db.query(DatabaseHelper.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
+
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                int id = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.FIELD_CUSTOMER_ID));
+                db.close();
+                return id;
+            }
+        }
+        db.close();
+        return -1;
+    }
+
+    public Customer getCustomer(int id){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String[] columns = DatabaseHelper.CUSTOMER_COLLUMNS;
+        String query = DatabaseHelper.FIELD_CUSTOMER_ID + " = '" + id + "'";
+        Cursor cursor = db.query(DatabaseHelper.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
+
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                String firstName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.FIELD_NAME));
+                String surname = cursor.getString(cursor.getColumnIndex(DatabaseHelper.FIELD_SURNAME));
+                String addressOne = cursor.getString(cursor.getColumnIndex(DatabaseHelper.FIELD_ADDRESSONE));
+                String addressTwo = cursor.getString(cursor.getColumnIndex(DatabaseHelper.FIELD_ADDRESSTWO));
+                String postcode = cursor.getString(cursor.getColumnIndex(DatabaseHelper.FIELD_POSTCODE));
+                String userId = cursor.getString(cursor.getColumnIndex(DatabaseHelper.FIELD_USERID));
+
+                Customer cust = new Customer(id,firstName,surname,addressOne,addressTwo,postcode,userId);
+
+                db.close();
+                return cust;
+            }
+        }
+
+        db.close();
+        return null;
+    }
+
     static class DatabaseHelper extends SQLiteOpenHelper {
         private static final String DATABASE_NAME = "lloydsdb";
-        private static final int DATABASE_VERSION = 3;
+        private static final int DATABASE_VERSION = 4;
 
         private static final String CUSTOMER_TABLE_NAME = "Customers";
+        private static final String FIELD_CUSTOMER_ID = "_id";
         private static final String FIELD_NAME = "FirstNAme";
         private static final String FIELD_SURNAME = "Surname";
         private static final String FIELD_ADDRESSONE = "AddressLine1";
@@ -61,17 +137,19 @@ public class DatabaseAdapter {
         private static final String FIELD_POSTCODE = "Postcode";
         private static final String FIELD_USERID = "UserID";
         private static final String FIELD_PASSWORD = "Password";
+        private static final String[] CUSTOMER_COLLUMNS = {FIELD_CUSTOMER_ID,FIELD_NAME,FIELD_SURNAME,FIELD_ADDRESSONE,FIELD_ADDRESSTWO,FIELD_POSTCODE,FIELD_USERID,FIELD_PASSWORD};
 
         private static final String CREATE_CUSTOMER_TABLE =
                 "CREATE TABLE "+
-                        CUSTOMER_TABLE_NAME + " (_id	INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                        FIELD_NAME+"   TEXT NOT NULL,"+
-                        FIELD_SURNAME+"	TEXT NOT NULL,"+
-                        FIELD_ADDRESSONE+"	TEXT NOT NULL,"+
-                        FIELD_ADDRESSTWO+"	TEXT NOT NULL,"+
-                        FIELD_POSTCODE+"	TEXT NOT NULL,"+
-                        FIELD_USERID+"	INTEGER NOT NULL UNIQUE ,"+
-                        FIELD_PASSWORD+"	TEXT NOT NULL);";
+                        CUSTOMER_TABLE_NAME + " (" +
+                        FIELD_CUSTOMER_ID + "	INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        FIELD_NAME + "   TEXT NOT NULL," +
+                        FIELD_SURNAME + "	TEXT NOT NULL," +
+                        FIELD_ADDRESSONE + "	TEXT NOT NULL," +
+                        FIELD_ADDRESSTWO + "	TEXT NOT NULL," +
+                        FIELD_POSTCODE + "	TEXT NOT NULL," +
+                        FIELD_USERID + "	INTEGER NOT NULL UNIQUE ," +
+                        FIELD_PASSWORD + "	TEXT NOT NULL);";
 
         private static final String ACCOUNTS_TABLE_NAME = "Accounts";
         private static final String FIELD_ACCOUNTNO = "AccountNumber";
@@ -82,6 +160,7 @@ public class DatabaseAdapter {
         private static final String FIELD_AVAILABLE_BALANCE = "Available";
         private static final String FIELD_OVERDRAFT_LIMIT = "Overdraft";
         private static final String FIELD_OWNERID = "Owner";
+        private static final String[] ACCOUNTS_COLUMNS = {FIELD_ACCOUNTNO,FIELD_SORTCODE,FIELD_ACCOUNTNAME,FIELD_ACCOUNTTYPE,FIELD_BALANCE,FIELD_AVAILABLE_BALANCE,FIELD_OVERDRAFT_LIMIT,FIELD_OWNERID};
 
         private static final String CREATE_ACCOUNTS_TABLE =
                 "CREATE TABLE " +

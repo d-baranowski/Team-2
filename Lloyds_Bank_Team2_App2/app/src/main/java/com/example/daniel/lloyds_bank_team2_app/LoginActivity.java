@@ -2,6 +2,7 @@ package com.example.daniel.lloyds_bank_team2_app;
 
 import android.app.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -15,14 +16,12 @@ import android.widget.EditText;
  */
 public class LoginActivity extends Activity {
 
-    DatabaseAdapter dbadapter;
+    private static DatabaseAdapter dbadapter;
 
 
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +32,16 @@ public class LoginActivity extends Activity {
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
         mPasswordView = (EditText) findViewById(R.id.password);
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
-
     }
     public void login(View view){
-        if (dbadapter.login(mEmailView.getText().toString(),mPasswordView.getText().toString())){
-            mEmailView.setBackgroundColor(Color.BLACK);
+        String userId = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+        if (dbadapter.login(userId,password)){
+            int databaseId = dbadapter.getId(userId);
+            Intent i = new Intent(this, MainScreen.class);
+            i.putExtra("customerId", databaseId);
+            startActivity(i);
+            finish();
         }
     }
 }
