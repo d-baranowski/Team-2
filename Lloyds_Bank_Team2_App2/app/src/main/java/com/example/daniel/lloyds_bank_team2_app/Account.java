@@ -8,12 +8,12 @@ public class Account {
     private String sortCode;
     private String accountName;
     private String accountType;
-    private int accountBalance;
-    private int availableBalance;
-    private int overdraft;
+    private double accountBalance;
+    private double availableBalance;
+    private double overdraft;
     private int ownerId;
 
-    public Account(int accountNumber, String sortCode, String accountName, String accountType, int accountBalance, int availableBalance, int overdraft, int ownerId) {
+    public Account(int accountNumber, String sortCode, String accountName, String accountType, double accountBalance, double availableBalance, double overdraft, int ownerId) {
         this.accountNumber = accountNumber;
         this.sortCode = sortCode;
         this.accountName = accountName;
@@ -28,15 +28,15 @@ public class Account {
         return ownerId;
     }
 
-    public int getOverdraft() {
+    public double getOverdraft() {
         return overdraft;
     }
 
-    public int getAvailableBalance() {
+    public double getAvailableBalance() {
         return availableBalance;
     }
 
-    public int getAccountBalance() {
+    public double getAccountBalance() {
         return accountBalance;
     }
 

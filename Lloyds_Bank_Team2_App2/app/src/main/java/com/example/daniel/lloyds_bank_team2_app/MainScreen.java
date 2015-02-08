@@ -2,7 +2,9 @@ package com.example.daniel.lloyds_bank_team2_app;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 
@@ -33,8 +35,17 @@ public class MainScreen extends Activity {
         Customer customer = dbadapter.getCustomer(getIntent().getExtras().getInt("customerId"));
         Account account = dbadapter.getAccounts(customer.getId()).get(0);
 
-        accountType.setText(String.valueOf(account.getAccountBalance()));
-        accountNumber.setText(String.valueOf(customer.getId()));
-        accountSortCode.setText(customer.getFirstName());
+        accountName.setText(account.getAccountName());
+        accountBalance.setText("£"+String.valueOf(account.getAccountBalance()));
+        accountAvailable.setText("£"+String.valueOf(account.getAvailableBalance()));
+        accountType.setText(account.getAccountType());
+        accountNumber.setText(String.valueOf(account.getAccountNumber()));
+        accountSortCode.setText(account.getSortCode());
+    }
+
+    public void openStatement(View view){
+        Intent i = new Intent(this, Statement.class);
+        i.putExtra("customerId", getIntent().getExtras().getInt("customerId"));
+        startActivity(i);
     }
 }

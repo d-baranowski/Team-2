@@ -21,6 +21,10 @@
             android:name=".MainScreen"
             android:label="@string/title_activity_main_screen" >
         </activity>
+        <activity
+            android:name=".Statement"
+            android:label="@string/title_activity_statement" >
+        </activity>
     </application>
 
 </manifest>
