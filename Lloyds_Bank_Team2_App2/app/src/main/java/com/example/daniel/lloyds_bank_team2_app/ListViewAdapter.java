@@ -80,8 +80,8 @@ public class ListViewAdapter extends BaseAdapter {
         holder.txtDate.setText(map.get("Date"));
         holder.txtDescription.setText(map.get("Description"));
         holder.txtType.setText(map.get("Type"));
-        holder.txtIn.setText(map.get("In"));
-        holder.txtOut.setText(map.get("Out"));
+        holder.txtIn.setText(map.get("Income"));
+        holder.txtOut.setText(map.get("Outcome"));
         holder.txtBalance.setText(map.get("Balance"));
 
         return convertView;

@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.google.android.gms.plus.People;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Daniel on 01/02/2015.
@@ -51,6 +54,63 @@ public class DatabaseAdapter {
         return false;
     }
 
+    public ArrayList<HashMap<String,String>> getTransactions(int accountNumber){
+        ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String[] columnsT = DbHelp.TRANSACTIONS_COLUMNS;
+        String queryT = DbHelp.FIELD_ACCOUNT_ID + " = '" + accountNumber + "'";
+        String order =  DbHelp.FIELD_DATE+" DESC";
+        Cursor t = db.query(DbHelp.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,null);
+
+        if (t != null) {
+            if (t.getCount() > 0) {
+                t.moveToFirst();
+
+                for (int j = 0; j < t.getCount(); j++) {
+                    HashMap<String, String> temp = new HashMap<String, String>();
+                    temp.put(DbHelp.FIELD_DATE, t.getString(t.getColumnIndex(DbHelp.FIELD_DATE)));
+                    temp.put(DbHelp.FIELD_DESCRIPTION, t.getString(t.getColumnIndex(DbHelp.FIELD_DESCRIPTION)));
+                    temp.put(DbHelp.FIELD_TYPE, t.getString(t.getColumnIndex(DbHelp.FIELD_TYPE)));
+                    temp.put(DbHelp.FIELD_IN, t.getString(t.getColumnIndex(DbHelp.FIELD_IN)));
+                    temp.put(DbHelp.FIELD_OUT, t.getString(t.getColumnIndex(DbHelp.FIELD_OUT)));
+                    temp.put(DbHelp.FIELD_BALANCE, t.getString(t.getColumnIndex(DbHelp.FIELD_BALANCE)));
+                    list.add(temp);
+
+                    t.moveToNext();
+                }
+            }
+        }
+        db.close();
+        return list;
+    }
+
+    public Account getAccount(int accountNumber){
+        String[] columns = DbHelp.ACCOUNTS_COLUMNS;
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String query = DbHelp.FIELD_ACCOUNTNO + " = '" + accountNumber + "'";
+        Cursor c = db.query(DbHelp.ACCOUNTS_TABLE_NAME,columns,query,null,null,null,null);
+
+        if (c != null) {
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+
+                String sortCode = c.getString(c.getColumnIndex(DbHelp.FIELD_SORTCODE));
+                String accountName = c.getString(c.getColumnIndex(DbHelp.FIELD_ACCOUNTNAME));
+                String accountType = c.getString(c.getColumnIndex(DbHelp.FIELD_ACCOUNTTYPE));
+                double accountBalance = c.getDouble(c.getColumnIndex(DbHelp.FIELD_BALANCE));
+                double availableBalance = c.getDouble(c.getColumnIndex(DbHelp.FIELD_AVAILABLE_BALANCE));
+                double overdraft = c.getDouble(c.getColumnIndex(DbHelp.FIELD_OVERDRAFT_LIMIT));
+                int ownerId = c.getInt(c.getColumnIndex(DbHelp.FIELD_OWNERID));
+
+                db.close();
+                return new Account(accountNumber, sortCode, accountName, accountType, accountBalance, availableBalance, overdraft, ownerId,getTransactions(accountNumber));
+            }
+        }
+        db.close();
+        return null;
+
+    }
+
     public ArrayList<Account> getAccounts(int ownerid){
         ArrayList<Account> accounts = new ArrayList<>();
         String[] columns = DbHelp.ACCOUNTS_COLUMNS;
@@ -71,7 +131,8 @@ public class DatabaseAdapter {
                     double availableBalance = c.getDouble(c.getColumnIndex(DbHelp.FIELD_AVAILABLE_BALANCE));
                     double overdraft = c.getDouble(c.getColumnIndex(DbHelp.FIELD_OVERDRAFT_LIMIT));
                     int ownerId = c.getInt(c.getColumnIndex(DbHelp.FIELD_OWNERID));
-                    accounts.add(new Account(accountNumber, sortCode, accountName, accountType, accountBalance, availableBalance, overdraft, ownerId));
+
+                    accounts.add(new Account(accountNumber, sortCode, accountName, accountType, accountBalance, availableBalance, overdraft, ownerId,getTransactions(accountNumber)));
 
                     c.moveToNext();
                 }
@@ -81,6 +142,8 @@ public class DatabaseAdapter {
         db.close();
         return accounts;
     }
+
+
 
     public int getId(String userID){
         userID.replace("'","\'");
@@ -129,8 +192,8 @@ public class DatabaseAdapter {
     }
 
     static class DbHelp extends SQLiteOpenHelper {
-        private static final String DATABASE_NAME = "lloydsdb";
-        private static final int DATABASE_VERSION = 5;
+        private static final String DATABASE_NAME = "lloyds";
+        private static final int DATABASE_VERSION = 6;
 
 
         //Customer Table SQL
@@ -179,8 +242,32 @@ public class DatabaseAdapter {
                         FIELD_BALANCE + "	REAL," +
                         FIELD_AVAILABLE_BALANCE + " REAL DEFAULT 0," +
                         FIELD_OVERDRAFT_LIMIT + " REAL DEFAULT 0," +
-                        FIELD_OWNERID + "	INTEGER REFERENCES Customers(ID));";
+                        FIELD_OWNERID + "	INTEGER REFERENCES "+CUSTOMER_TABLE_NAME+"("+FIELD_CUSTOMER_ID+"));";
 
+        //Transactions table SQL
+        private static final String TRANSACTIONS_TABLE_NAME = "Transactions";
+        private static final String FIELD_TRANSACTION_ID = "_id";
+        private static final String FIELD_DATE = "Date";
+        private static final String FIELD_DESCRIPTION = "Description";
+        private static final String FIELD_TYPE = "Type";
+        private static final String FIELD_IN = "Income";
+        private static final String FIELD_OUT = "Outcome";
+        private static final String FIELD_TRANSACTION_BALANCE = "Balance";
+        private static final String FIELD_ACCOUNT_ID = "Account";
+
+        private static final String[] TRANSACTIONS_COLUMNS = {FIELD_TRANSACTION_ID,FIELD_DATE,FIELD_DESCRIPTION,FIELD_TYPE,FIELD_IN,FIELD_OUT,FIELD_TRANSACTION_BALANCE,FIELD_ACCOUNT_ID};
+
+        private static final String CREATE_TRANSACTIONS_TABLE =
+                "CREATE TABLE " +
+                        TRANSACTIONS_TABLE_NAME + " (" +
+                        FIELD_TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        FIELD_DATE + " STRING NOT NULL, " +
+                        FIELD_DESCRIPTION + " STRING," +
+                        FIELD_TYPE + " STRING," +
+                        FIELD_IN + " REAL DEFAULT 0.00," +
+                        FIELD_OUT + " REAL DEFAULT 0.00," +
+                        FIELD_TRANSACTION_BALANCE + " REAL," +
+                        FIELD_ACCOUNT_ID + " INTEGER REFERENCES "+ACCOUNTS_TABLE_NAME+"("+FIELD_ACCOUNTNO+"));";
 
         public DbHelp(Context context){
             super(context, DATABASE_NAME,null,DATABASE_VERSION);
@@ -190,10 +277,9 @@ public class DatabaseAdapter {
         @Override
         public void onCreate(SQLiteDatabase db) {
             //SQL query to create a table inside our database.
-
-
             db.execSQL(CREATE_CUSTOMER_TABLE);
             db.execSQL(CREATE_ACCOUNTS_TABLE);
+            db.execSQL(CREATE_TRANSACTIONS_TABLE);
 
             //Create sample dummy data and instert into database
             ContentValues contentValCustomers = new ContentValues();
@@ -204,16 +290,127 @@ public class DatabaseAdapter {
             contentValCustomers.put(FIELD_POSTCODE, "NE9 9HA");
             contentValCustomers.put(FIELD_USERID, 123456789);
             contentValCustomers.put(FIELD_PASSWORD, "password");
+            db.insert(CUSTOMER_TABLE_NAME,null,contentValCustomers);
 
             ContentValues contentValAccounts = new ContentValues();
             contentValAccounts.put(FIELD_ACCOUNTNO,1111111); //7 Digit account number
             contentValAccounts.put(FIELD_SORTCODE,"30-11-11");
-            contentValAccounts.put(FIELD_BALANCE,100.0);
-            contentValAccounts.put(FIELD_AVAILABLE_BALANCE,50.54);
+            contentValAccounts.put(FIELD_BALANCE,992.49);
+            contentValAccounts.put(FIELD_AVAILABLE_BALANCE,1492.49);
             contentValAccounts.put(FIELD_OWNERID,1);
-
-            db.insert(CUSTOMER_TABLE_NAME,null,contentValCustomers);
+            contentValAccounts.put(FIELD_OVERDRAFT_LIMIT,500.00);
+            contentValAccounts.put(FIELD_TYPE,"Student");
             db.insert(ACCOUNTS_TABLE_NAME,null,contentValAccounts);
+
+            ContentValues contentValuesTransactions = new ContentValues();
+            contentValuesTransactions.put(FIELD_DATE,"2015-02-06");
+            contentValuesTransactions.put(FIELD_DESCRIPTION,"W M MORRISON PLC CD 7835");
+            contentValuesTransactions.put(FIELD_TYPE,"Debit Card");
+            contentValuesTransactions.put(FIELD_IN, 0.00);
+            contentValuesTransactions.put(FIELD_OUT, 51.83);
+            contentValuesTransactions.put(FIELD_BALANCE,992.49);
+            contentValuesTransactions.put(FIELD_ACCOUNT_ID,1111111);
+            db.insert(TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+            contentValuesTransactions = new ContentValues();
+            contentValuesTransactions.put(FIELD_DATE,"2015-02-05");
+            contentValuesTransactions.put(FIELD_DESCRIPTION,"W M MORRISON PLC CD 7835");
+            contentValuesTransactions.put(FIELD_TYPE,"Debit Card");
+            contentValuesTransactions.put(FIELD_IN, 0.00);
+            contentValuesTransactions.put(FIELD_OUT, 15.14);
+            contentValuesTransactions.put(FIELD_BALANCE,1044.32);
+            contentValuesTransactions.put(FIELD_ACCOUNT_ID,1111111);
+            db.insert(TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+            contentValuesTransactions = new ContentValues();
+            contentValuesTransactions.put(FIELD_DATE,"2015-02-05");
+            contentValuesTransactions.put(FIELD_DESCRIPTION,"Amazon UK Retail CD 7835");
+            contentValuesTransactions.put(FIELD_TYPE,"Debit Card");
+            contentValuesTransactions.put(FIELD_IN, 0.00);
+            contentValuesTransactions.put(FIELD_OUT, 10.99);
+            contentValuesTransactions.put(FIELD_BALANCE,1059.46);
+            contentValuesTransactions.put(FIELD_ACCOUNT_ID,1111111);
+            db.insert(TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+            contentValuesTransactions = new ContentValues();
+            contentValuesTransactions.put(FIELD_DATE,"2015-02-05");
+            contentValuesTransactions.put(FIELD_DESCRIPTION,"BOOTS/0680 CD 7835");
+            contentValuesTransactions.put(FIELD_TYPE,"Debit Card");
+            contentValuesTransactions.put(FIELD_IN, 0.00);
+            contentValuesTransactions.put(FIELD_OUT, 9.99);
+            contentValuesTransactions.put(FIELD_BALANCE,1070.45);
+            contentValuesTransactions.put(FIELD_ACCOUNT_ID,1111111);
+            db.insert(TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+            contentValuesTransactions = new ContentValues();
+            contentValuesTransactions.put(FIELD_DATE,"2015-02-03");
+            contentValuesTransactions.put(FIELD_DESCRIPTION,"Amazon UK Retail CD 7835");
+            contentValuesTransactions.put(FIELD_TYPE,"Debit Card");
+            contentValuesTransactions.put(FIELD_IN, 0.00);
+            contentValuesTransactions.put(FIELD_OUT, 2.82);
+            contentValuesTransactions.put(FIELD_BALANCE,1080.44);
+            contentValuesTransactions.put(FIELD_ACCOUNT_ID,1111111);
+            db.insert(TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+            contentValuesTransactions = new ContentValues();
+            contentValuesTransactions.put(FIELD_DATE,"2015-02-02");
+            contentValuesTransactions.put(FIELD_DESCRIPTION,"W M MORRISON PLC CD 7835");
+            contentValuesTransactions.put(FIELD_TYPE,"Debit Card");
+            contentValuesTransactions.put(FIELD_IN, 0.00);
+            contentValuesTransactions.put(FIELD_OUT, 7.84);
+            contentValuesTransactions.put(FIELD_BALANCE,1083.26);
+            contentValuesTransactions.put(FIELD_ACCOUNT_ID,1111111);
+            db.insert(TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+            contentValuesTransactions = new ContentValues();
+            contentValuesTransactions.put(FIELD_DATE,"2015-02-02");
+            contentValuesTransactions.put(FIELD_DESCRIPTION,"NPOWER 00000000000000");
+            contentValuesTransactions.put(FIELD_TYPE,"Direct Debit");
+            contentValuesTransactions.put(FIELD_IN, 0.00);
+            contentValuesTransactions.put(FIELD_OUT, 111.00);
+            contentValuesTransactions.put(FIELD_BALANCE,1091.10);
+            contentValuesTransactions.put(FIELD_ACCOUNT_ID,1111111);
+            db.insert(TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+            contentValuesTransactions = new ContentValues();
+            contentValuesTransactions.put(FIELD_DATE,"2015-01-27");
+            contentValuesTransactions.put(FIELD_DESCRIPTION,"LNK NCASTLE BARAS CD");
+            contentValuesTransactions.put(FIELD_TYPE,"Cashpoint");
+            contentValuesTransactions.put(FIELD_IN, 0.00);
+            contentValuesTransactions.put(FIELD_OUT, 10.00);
+            contentValuesTransactions.put(FIELD_BALANCE,1202.10);
+            contentValuesTransactions.put(FIELD_ACCOUNT_ID,1111111);
+            db.insert(TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+            contentValuesTransactions = new ContentValues();
+            contentValuesTransactions.put(FIELD_DATE,"2015-01-27");
+            contentValuesTransactions.put(FIELD_DESCRIPTION,"UNIVERSITY OF NEWC CD 7835");
+            contentValuesTransactions.put(FIELD_TYPE,"Debit Card");
+            contentValuesTransactions.put(FIELD_IN, 0.00);
+            contentValuesTransactions.put(FIELD_OUT, 987.84);
+            contentValuesTransactions.put(FIELD_BALANCE,1212.10);
+            contentValuesTransactions.put(FIELD_ACCOUNT_ID,1111111);
+            db.insert(TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+            contentValuesTransactions = new ContentValues();
+            contentValuesTransactions.put(FIELD_DATE,"2015-01-26");
+            contentValuesTransactions.put(FIELD_DESCRIPTION,"VIRGIN MEDIA PYMTS CD 7835");
+            contentValuesTransactions.put(FIELD_TYPE,"Debit Card");
+            contentValuesTransactions.put(FIELD_IN, 0.00);
+            contentValuesTransactions.put(FIELD_OUT, 29.00);
+            contentValuesTransactions.put(FIELD_BALANCE,2199.94);
+            contentValuesTransactions.put(FIELD_ACCOUNT_ID,1111111);
+            db.insert(TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+            contentValuesTransactions = new ContentValues();
+            contentValuesTransactions.put(FIELD_DATE,"2015-01-20");
+            contentValuesTransactions.put(FIELD_DESCRIPTION,"MUCH LUV MUM");
+            contentValuesTransactions.put(FIELD_TYPE,"Debit Card");
+            contentValuesTransactions.put(FIELD_IN, 2228.94);
+            contentValuesTransactions.put(FIELD_OUT, 0.00);
+            contentValuesTransactions.put(FIELD_BALANCE,2228.94);
+            contentValuesTransactions.put(FIELD_ACCOUNT_ID,1111111);
+            db.insert(TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
         }
 
         //Executed when the DATABASE_VERSION variable value is increased, when we change something about the database, create new tables or change columns etc...
@@ -222,8 +419,10 @@ public class DatabaseAdapter {
             //SQL query to delete customer table if it exists
             final String DROP_CUSTOMER_TABLE = "DROP TABLE IF EXISTS " + CUSTOMER_TABLE_NAME;
             final String DROP_ACCOUNTS_TABLE = "DROP TABLE IF EXISTS " + ACCOUNTS_TABLE_NAME;
+            final String DROP_TRANSACTIONS_TABLE = "DROP TABLE IF EXISTS " + TRANSACTIONS_TABLE_NAME;
             db.execSQL(DROP_CUSTOMER_TABLE);
             db.execSQL(DROP_ACCOUNTS_TABLE);
+            db.execSQL(DROP_TRANSACTIONS_TABLE);
             onCreate(db);
         }
     }

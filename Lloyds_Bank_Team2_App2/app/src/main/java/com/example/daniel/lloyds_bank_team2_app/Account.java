@@ -1,5 +1,8 @@
 package com.example.daniel.lloyds_bank_team2_app;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by danielbaranowski on 06/02/15.
  */
@@ -12,8 +15,9 @@ public class Account {
     private double availableBalance;
     private double overdraft;
     private int ownerId;
+    private ArrayList<HashMap<String,String>> transactions;
 
-    public Account(int accountNumber, String sortCode, String accountName, String accountType, double accountBalance, double availableBalance, double overdraft, int ownerId) {
+    public Account(int accountNumber, String sortCode, String accountName, String accountType, double accountBalance, double availableBalance, double overdraft, int ownerId,ArrayList<HashMap<String,String>> transactions) {
         this.accountNumber = accountNumber;
         this.sortCode = sortCode;
         this.accountName = accountName;
@@ -22,6 +26,7 @@ public class Account {
         this.availableBalance = availableBalance;
         this.overdraft = overdraft;
         this.ownerId = ownerId;
+        this.transactions = transactions;
     }
 
     public int getOwnerId() {
@@ -40,9 +45,7 @@ public class Account {
         return accountBalance;
     }
 
-    public String getAccountType() {
-        return accountType;
-    }
+    public String getAccountType() { return accountType; }
 
     public String getAccountName() {
         return accountName;
@@ -55,4 +58,7 @@ public class Account {
     public int getAccountNumber() {
         return accountNumber;
     }
+
+    public ArrayList<HashMap<String, String>> getTransactions() { return transactions; }
+
 }
