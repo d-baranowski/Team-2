@@ -193,7 +193,7 @@ public class DatabaseAdapter {
 
     static class DbHelp extends SQLiteOpenHelper {
         private static final String DATABASE_NAME = "lloyds";
-        private static final int DATABASE_VERSION = 6;
+        private static final int DATABASE_VERSION = 7;
 
 
         //Customer Table SQL
@@ -300,6 +300,28 @@ public class DatabaseAdapter {
             contentValAccounts.put(FIELD_OWNERID,1);
             contentValAccounts.put(FIELD_OVERDRAFT_LIMIT,500.00);
             contentValAccounts.put(FIELD_TYPE,"Student");
+            db.insert(ACCOUNTS_TABLE_NAME,null,contentValAccounts);
+
+            contentValAccounts = new ContentValues();
+            contentValAccounts.put(FIELD_ACCOUNTNAME, "Bills");
+            contentValAccounts.put(FIELD_ACCOUNTNO,1111112); //7 Digit account number
+            contentValAccounts.put(FIELD_SORTCODE,"30-11-11");
+            contentValAccounts.put(FIELD_BALANCE,0.00);
+            contentValAccounts.put(FIELD_AVAILABLE_BALANCE,0.00);
+            contentValAccounts.put(FIELD_OWNERID,1);
+            contentValAccounts.put(FIELD_OVERDRAFT_LIMIT,0.00);
+            contentValAccounts.put(FIELD_TYPE,"Subaccount");
+            db.insert(ACCOUNTS_TABLE_NAME,null,contentValAccounts);
+
+            contentValAccounts = new ContentValues();
+            contentValAccounts.put(FIELD_ACCOUNTNAME, "Holidays");
+            contentValAccounts.put(FIELD_ACCOUNTNO,1111113); //7 Digit account number
+            contentValAccounts.put(FIELD_SORTCODE,"30-11-11");
+            contentValAccounts.put(FIELD_BALANCE,100.00);
+            contentValAccounts.put(FIELD_AVAILABLE_BALANCE,100.00);
+            contentValAccounts.put(FIELD_OWNERID,1);
+            contentValAccounts.put(FIELD_OVERDRAFT_LIMIT,0.00);
+            contentValAccounts.put(FIELD_TYPE,"Subaccount");
             db.insert(ACCOUNTS_TABLE_NAME,null,contentValAccounts);
 
             ContentValues contentValuesTransactions = new ContentValues();

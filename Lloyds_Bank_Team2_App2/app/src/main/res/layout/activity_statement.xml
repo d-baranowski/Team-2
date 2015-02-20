@@ -31,9 +31,8 @@
         android:layout_centerVertical ="true"
         android:id="@+id/border" />
 
-    <TextView android:id="@+id/account_name"
+    <Spinner android:id="@+id/account_name"
         android:textColor="@color/lloyds_green"
-        android:text="@string/hello_world"
         android:layout_below="@+id/logo_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
