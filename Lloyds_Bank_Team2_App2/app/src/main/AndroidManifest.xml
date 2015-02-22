@@ -25,6 +25,10 @@
             android:name=".Statement"
             android:label="@string/title_activity_statement" >
         </activity>
+        <activity
+            android:name=".Transfer"
+            android:label="@string/title_activity_transfer" >
+        </activity>
     </application>
 
 </manifest>

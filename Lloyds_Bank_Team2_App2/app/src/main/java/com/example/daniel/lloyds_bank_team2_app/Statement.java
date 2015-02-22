@@ -71,8 +71,15 @@ public class Statement extends Activity {
         accountBalance.setText("£"+String.valueOf(account.getAccountBalance()));
         accountAvailable.setText("£"+String.valueOf(account.getAvailableBalance()));
         accountType.setText(account.getAccountType());
-        accountNumber.setText(String.valueOf(account.getAccountNumber()));
-        accountSortCode.setText(account.getSortCode());
+
+        if (!account.getAccountType().equals("Subaccount")){
+            accountNumber.setText(String.valueOf(account.getAccountNumber()));
+            accountSortCode.setText(account.getSortCode());
+        } else {
+            accountNumber.setText("");
+            accountSortCode.setText("");
+        }
+
 
         list = account.getTransactions();
 
