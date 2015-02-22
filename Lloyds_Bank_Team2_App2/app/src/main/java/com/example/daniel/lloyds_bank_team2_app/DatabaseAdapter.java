@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.google.android.gms.plus.People;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -54,13 +52,51 @@ public class DatabaseAdapter {
         return false;
     }
 
-    public ArrayList<HashMap<String,String>> getTransactions(int accountNumber){
+    public ArrayList<Account> getAccounts(int ownerid){
+        ArrayList<Account> accounts = new ArrayList<>();
+        String[] columns = DbHelp.ACCOUNTS_COLUMNS;
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String query = DbHelp.FIELD_OWNERID + " = '" + ownerid + "'";
+        Cursor c = db.query(DbHelp.ACCOUNTS_TABLE_NAME,columns,query,null,null,null,null);
+
+        if (c != null) {
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+
+                for(int i = 0; i < c.getCount(); i++){
+                    int id = c.getInt(c.getColumnIndex(DbHelp.FIELD_ACCOUNT_ID));
+                    String accountType = c.getString(c.getColumnIndex(DbHelp.FIELD_ACCOUNTTYPE));
+                    double accountBalance = c.getDouble(c.getColumnIndex(DbHelp.FIELD_BALANCE));
+                    double availableBalance = c.getDouble(c.getColumnIndex(DbHelp.FIELD_AVAILABLE_BALANCE));
+                    int ownerId = c.getInt(c.getColumnIndex(DbHelp.FIELD_OWNERID));
+                    String accountName = c.getString(c.getColumnIndex(DbHelp.FIELD_ACCOUNTNAME));
+
+                    if (!accountType.equals("Subaccount")){
+                        int accountNumber = c.getInt(c.getColumnIndex(DbHelp.FIELD_ACCOUNTNO));
+                        String sortCode = c.getString(c.getColumnIndex(DbHelp.FIELD_SORTCODE));
+                        double overdraft = c.getDouble(c.getColumnIndex(DbHelp.FIELD_OVERDRAFT_LIMIT));
+
+                        accounts.add(new Account(id, accountNumber, sortCode, accountName, accountType, accountBalance, availableBalance, overdraft, ownerId,getTransactions(id)));
+                    } else {
+                        accounts.add(new Account(id, accountName, accountType, accountBalance, availableBalance,ownerId,getTransactions(id)));
+                    }
+
+                    c.moveToNext();
+                }
+                db.close();
+            }
+        }
+        db.close();
+        return accounts;
+    }
+
+    public ArrayList<HashMap<String,String>> getTransactions(int id){
         ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columnsT = DbHelp.TRANSACTIONS_COLUMNS;
-        String queryT = DbHelp.FIELD_ACCOUNT_ID + " = '" + accountNumber + "'";
+        String queryT = DbHelp.FIELD_ACCOUNT_ID + " = '" + id + "'";
         String order =  DbHelp.FIELD_DATE+" DESC";
-        Cursor t = db.query(DbHelp.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,null);
+        Cursor t = db.query(DbHelp.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,order);
 
         if (t != null) {
             if (t.getCount() > 0) {
@@ -83,66 +119,6 @@ public class DatabaseAdapter {
         db.close();
         return list;
     }
-
-    public Account getAccount(int accountNumber){
-        String[] columns = DbHelp.ACCOUNTS_COLUMNS;
-        SQLiteDatabase db = helper.getReadableDatabase();
-        String query = DbHelp.FIELD_ACCOUNTNO + " = '" + accountNumber + "'";
-        Cursor c = db.query(DbHelp.ACCOUNTS_TABLE_NAME,columns,query,null,null,null,null);
-
-        if (c != null) {
-            if (c.getCount() > 0) {
-                c.moveToFirst();
-
-                String sortCode = c.getString(c.getColumnIndex(DbHelp.FIELD_SORTCODE));
-                String accountName = c.getString(c.getColumnIndex(DbHelp.FIELD_ACCOUNTNAME));
-                String accountType = c.getString(c.getColumnIndex(DbHelp.FIELD_ACCOUNTTYPE));
-                double accountBalance = c.getDouble(c.getColumnIndex(DbHelp.FIELD_BALANCE));
-                double availableBalance = c.getDouble(c.getColumnIndex(DbHelp.FIELD_AVAILABLE_BALANCE));
-                double overdraft = c.getDouble(c.getColumnIndex(DbHelp.FIELD_OVERDRAFT_LIMIT));
-                int ownerId = c.getInt(c.getColumnIndex(DbHelp.FIELD_OWNERID));
-
-                db.close();
-                return new Account(accountNumber, sortCode, accountName, accountType, accountBalance, availableBalance, overdraft, ownerId,getTransactions(accountNumber));
-            }
-        }
-        db.close();
-        return null;
-
-    }
-
-    public ArrayList<Account> getAccounts(int ownerid){
-        ArrayList<Account> accounts = new ArrayList<>();
-        String[] columns = DbHelp.ACCOUNTS_COLUMNS;
-        SQLiteDatabase db = helper.getReadableDatabase();
-        String query = DbHelp.FIELD_OWNERID + " = '" + ownerid + "'";
-        Cursor c = db.query(DbHelp.ACCOUNTS_TABLE_NAME,columns,query,null,null,null,null);
-
-        if (c != null) {
-            if (c.getCount() > 0) {
-                c.moveToFirst();
-
-                for(int i = 0; i < c.getCount(); i++){
-                    int accountNumber = c.getInt(c.getColumnIndex(DbHelp.FIELD_ACCOUNTNO));
-                    String sortCode = c.getString(c.getColumnIndex(DbHelp.FIELD_SORTCODE));
-                    String accountName = c.getString(c.getColumnIndex(DbHelp.FIELD_ACCOUNTNAME));
-                    String accountType = c.getString(c.getColumnIndex(DbHelp.FIELD_ACCOUNTTYPE));
-                    double accountBalance = c.getDouble(c.getColumnIndex(DbHelp.FIELD_BALANCE));
-                    double availableBalance = c.getDouble(c.getColumnIndex(DbHelp.FIELD_AVAILABLE_BALANCE));
-                    double overdraft = c.getDouble(c.getColumnIndex(DbHelp.FIELD_OVERDRAFT_LIMIT));
-                    int ownerId = c.getInt(c.getColumnIndex(DbHelp.FIELD_OWNERID));
-
-                    accounts.add(new Account(accountNumber, sortCode, accountName, accountType, accountBalance, availableBalance, overdraft, ownerId,getTransactions(accountNumber)));
-
-                    c.moveToNext();
-                }
-                db.close();
-            }
-        }
-        db.close();
-        return accounts;
-    }
-
 
 
     public int getId(String userID){
@@ -193,7 +169,7 @@ public class DatabaseAdapter {
 
     static class DbHelp extends SQLiteOpenHelper {
         private static final String DATABASE_NAME = "lloyds";
-        private static final int DATABASE_VERSION = 7;
+        private static final int DATABASE_VERSION = 8;
 
 
         //Customer Table SQL
@@ -222,6 +198,7 @@ public class DatabaseAdapter {
 
         //Accounts table SQL
         private static final String ACCOUNTS_TABLE_NAME = "Accounts";
+        private static final String FIELD_ACCOUNT_ID = "_id";
         private static final String FIELD_ACCOUNTNO = "AccountNumber";
         private static final String FIELD_SORTCODE = "SortCode";
         private static final String FIELD_ACCOUNTNAME = "Name";
@@ -230,18 +207,19 @@ public class DatabaseAdapter {
         private static final String FIELD_AVAILABLE_BALANCE = "Available";
         private static final String FIELD_OVERDRAFT_LIMIT = "Overdraft";
         private static final String FIELD_OWNERID = "Owner";
-        private static final String[] ACCOUNTS_COLUMNS = {FIELD_ACCOUNTNO,FIELD_SORTCODE,FIELD_ACCOUNTNAME,FIELD_ACCOUNTTYPE,FIELD_BALANCE,FIELD_AVAILABLE_BALANCE,FIELD_OVERDRAFT_LIMIT,FIELD_OWNERID};
+        private static final String[] ACCOUNTS_COLUMNS = {FIELD_ACCOUNT_ID,FIELD_ACCOUNTNO,FIELD_SORTCODE,FIELD_ACCOUNTNAME,FIELD_ACCOUNTTYPE,FIELD_BALANCE,FIELD_AVAILABLE_BALANCE,FIELD_OVERDRAFT_LIMIT,FIELD_OWNERID};
 
         private static final String CREATE_ACCOUNTS_TABLE =
                 "CREATE TABLE " +
                         ACCOUNTS_TABLE_NAME + " (" +
-                        FIELD_ACCOUNTNO + " INTEGER PRIMARY KEY NOT NULL UNIQUE," +
-                        FIELD_SORTCODE + " STRING NOT NULL," +
+                        FIELD_ACCOUNT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        FIELD_ACCOUNTNO + " INTEGER UNIQUE," +
+                        FIELD_SORTCODE + " STRING," +
                         FIELD_ACCOUNTNAME + " STRING DEFAULT 'Account'," +
                         FIELD_ACCOUNTTYPE + " STRING," +
-                        FIELD_BALANCE + "	REAL," +
-                        FIELD_AVAILABLE_BALANCE + " REAL DEFAULT 0," +
-                        FIELD_OVERDRAFT_LIMIT + " REAL DEFAULT 0," +
+                        FIELD_BALANCE + "	REAL DEFAULT 0.00," +
+                        FIELD_AVAILABLE_BALANCE + " REAL DEFAULT 0.00," +
+                        FIELD_OVERDRAFT_LIMIT + " REAL DEFAULT 0.00," +
                         FIELD_OWNERID + "	INTEGER REFERENCES "+CUSTOMER_TABLE_NAME+"("+FIELD_CUSTOMER_ID+"));";
 
         //Transactions table SQL
@@ -253,9 +231,9 @@ public class DatabaseAdapter {
         private static final String FIELD_IN = "Income";
         private static final String FIELD_OUT = "Outcome";
         private static final String FIELD_TRANSACTION_BALANCE = "Balance";
-        private static final String FIELD_ACCOUNT_ID = "Account";
+        private static final String FIELD_ACCOUNT_ID_REFERENCE = "Account";
 
-        private static final String[] TRANSACTIONS_COLUMNS = {FIELD_TRANSACTION_ID,FIELD_DATE,FIELD_DESCRIPTION,FIELD_TYPE,FIELD_IN,FIELD_OUT,FIELD_TRANSACTION_BALANCE,FIELD_ACCOUNT_ID};
+        private static final String[] TRANSACTIONS_COLUMNS = {FIELD_TRANSACTION_ID,FIELD_DATE,FIELD_DESCRIPTION,FIELD_TYPE,FIELD_IN,FIELD_OUT,FIELD_TRANSACTION_BALANCE, FIELD_ACCOUNT_ID_REFERENCE};
 
         private static final String CREATE_TRANSACTIONS_TABLE =
                 "CREATE TABLE " +
@@ -267,7 +245,7 @@ public class DatabaseAdapter {
                         FIELD_IN + " REAL DEFAULT 0.00," +
                         FIELD_OUT + " REAL DEFAULT 0.00," +
                         FIELD_TRANSACTION_BALANCE + " REAL," +
-                        FIELD_ACCOUNT_ID + " INTEGER REFERENCES "+ACCOUNTS_TABLE_NAME+"("+FIELD_ACCOUNTNO+"));";
+                        FIELD_ACCOUNT_ID_REFERENCE + " INTEGER REFERENCES "+ACCOUNTS_TABLE_NAME+"("+FIELD_ACCOUNT_ID+"));";
 
         public DbHelp(Context context){
             super(context, DATABASE_NAME,null,DATABASE_VERSION);
@@ -304,23 +282,15 @@ public class DatabaseAdapter {
 
             contentValAccounts = new ContentValues();
             contentValAccounts.put(FIELD_ACCOUNTNAME, "Bills");
-            contentValAccounts.put(FIELD_ACCOUNTNO,1111112); //7 Digit account number
-            contentValAccounts.put(FIELD_SORTCODE,"30-11-11");
-            contentValAccounts.put(FIELD_BALANCE,0.00);
-            contentValAccounts.put(FIELD_AVAILABLE_BALANCE,0.00);
             contentValAccounts.put(FIELD_OWNERID,1);
-            contentValAccounts.put(FIELD_OVERDRAFT_LIMIT,0.00);
             contentValAccounts.put(FIELD_TYPE,"Subaccount");
             db.insert(ACCOUNTS_TABLE_NAME,null,contentValAccounts);
 
             contentValAccounts = new ContentValues();
             contentValAccounts.put(FIELD_ACCOUNTNAME, "Holidays");
-            contentValAccounts.put(FIELD_ACCOUNTNO,1111113); //7 Digit account number
-            contentValAccounts.put(FIELD_SORTCODE,"30-11-11");
             contentValAccounts.put(FIELD_BALANCE,100.00);
             contentValAccounts.put(FIELD_AVAILABLE_BALANCE,100.00);
             contentValAccounts.put(FIELD_OWNERID,1);
-            contentValAccounts.put(FIELD_OVERDRAFT_LIMIT,0.00);
             contentValAccounts.put(FIELD_TYPE,"Subaccount");
             db.insert(ACCOUNTS_TABLE_NAME,null,contentValAccounts);
 

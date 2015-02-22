@@ -7,6 +7,7 @@ import java.util.HashMap;
  * Created by danielbaranowski on 06/02/15.
  */
 public class Account {
+    private int accountID;
     private int accountNumber;
     private String sortCode;
     private String accountName;
@@ -17,7 +18,8 @@ public class Account {
     private int ownerId;
     private ArrayList<HashMap<String,String>> transactions;
 
-    public Account(int accountNumber, String sortCode, String accountName, String accountType, double accountBalance, double availableBalance, double overdraft, int ownerId,ArrayList<HashMap<String,String>> transactions) {
+    public Account(int id, int accountNumber, String sortCode, String accountName, String accountType, double accountBalance, double availableBalance, double overdraft, int ownerId,ArrayList<HashMap<String,String>> transactions) {
+        this.accountID = id;
         this.accountNumber = accountNumber;
         this.sortCode = sortCode;
         this.accountName = accountName;
@@ -25,6 +27,16 @@ public class Account {
         this.accountBalance = accountBalance;
         this.availableBalance = availableBalance;
         this.overdraft = overdraft;
+        this.ownerId = ownerId;
+        this.transactions = transactions;
+    }
+
+    public Account(int id, String accountName, String accountType, double accountBalance, double availableBalance, int ownerId,ArrayList<HashMap<String,String>> transactions) {
+        this.accountID = id;
+        this.accountName = accountName;
+        this.accountType = accountType;
+        this.accountBalance = accountBalance;
+        this.availableBalance = availableBalance;
         this.ownerId = ownerId;
         this.transactions = transactions;
     }

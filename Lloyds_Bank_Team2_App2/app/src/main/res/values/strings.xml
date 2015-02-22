@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_statement">Statement</string>
+    <string name="title_activity_transfer">Transfer</string>
 
 </resources>
