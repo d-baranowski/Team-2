@@ -48,4 +48,10 @@ public class MainScreen extends Activity {
         i.putExtra("customerId", getIntent().getExtras().getInt("customerId"));
         startActivity(i);
     }
+
+    public void openTransfers(View view){
+        Intent i = new Intent(this, Transfer.class);
+        i.putExtra("customerId", getIntent().getExtras().getInt("customerId"));
+        startActivity(i);
+    }
 }

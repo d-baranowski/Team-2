@@ -94,9 +94,10 @@ public class DatabaseAdapter {
         ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columnsT = DbHelp.TRANSACTIONS_COLUMNS;
-        String queryT = DbHelp.FIELD_ACCOUNT_ID + " = '" + id + "'";
+        String queryT = DbHelp.FIELD_ACCOUNT_ID_REFERENCE + " = '" + id + "'";
         String order =  DbHelp.FIELD_DATE+" DESC";
-        Cursor t = db.query(DbHelp.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,order);
+
+        Cursor t = db.query(DbHelp.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,null);
 
         if (t != null) {
             if (t.getCount() > 0) {
@@ -169,7 +170,7 @@ public class DatabaseAdapter {
 
     static class DbHelp extends SQLiteOpenHelper {
         private static final String DATABASE_NAME = "lloyds";
-        private static final int DATABASE_VERSION = 10;
+        private static final int DATABASE_VERSION = 15;
 
 
         //Customer Table SQL
@@ -198,7 +199,7 @@ public class DatabaseAdapter {
 
         //Accounts table SQL
         private static final String ACCOUNTS_TABLE_NAME = "Accounts";
-        private static final String FIELD_ACCOUNT_ID = "_id";
+        private static final String FIELD_ACCOUNT_ID = "account_id";
         private static final String FIELD_ACCOUNTNO = "AccountNumber";
         private static final String FIELD_SORTCODE = "SortCode";
         private static final String FIELD_ACCOUNTNAME = "Name";
@@ -213,7 +214,7 @@ public class DatabaseAdapter {
                 "CREATE TABLE " +
                         ACCOUNTS_TABLE_NAME + " (" +
                         FIELD_ACCOUNT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        FIELD_ACCOUNTNO + " INTEGER UNIQUE," +
+                        FIELD_ACCOUNTNO + " INTEGER ," +
                         FIELD_SORTCODE + " STRING," +
                         FIELD_ACCOUNTNAME + " STRING DEFAULT 'Account'," +
                         FIELD_ACCOUNTTYPE + " STRING," +
@@ -224,7 +225,7 @@ public class DatabaseAdapter {
 
         //Transactions table SQL
         private static final String TRANSACTIONS_TABLE_NAME = "Transactions";
-        private static final String FIELD_TRANSACTION_ID = "_id";
+        private static final String FIELD_TRANSACTION_ID = "transaction_id";
         private static final String FIELD_DATE = "Date";
         private static final String FIELD_DESCRIPTION = "Description";
         private static final String FIELD_TYPE = "Type";
