@@ -1,12 +1,14 @@
 package com.example.daniel.lloyds_bank_team2_app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,11 +40,43 @@ public class Transfer extends Activity {
         to = (Spinner)findViewById(R.id.spinner_to);
         amountText = (EditText)findViewById(R.id.amount_text);
 
-        addItemsOnSpinners(getListExcept(""));
+        ArrayAdapter<String> fromAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, getListExcept(""));
+        ArrayAdapter<String> toAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, getListExcept(""));
+
+        from.setAdapter(fromAdapter);
+        from.setOnItemSelectedListener(new CustomOnItemSelectedListener(toAdapter));
+
+        to.setAdapter(toAdapter);
+        to.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 
     }
 
-    public void transfer(Account to, Account from, double ammount){
+    public void transfer(View view){
+        Account destination = map.get((String)to.getSelectedItem());
+        Account source = map.get((String)from.getSelectedItem());
+        Double balance = Double.parseDouble(amountText.getText().toString());
+        CharSequence result = "Hello toast!";
+
+        if (balance > 0){
+            if (balance <= source.getAvailableBalance()){
+                result = "Successful Transfer";
+                dbadapter.transfer(source,destination, balance);
+            } else {
+                result = "Not enough available balance";
+            }
+
+        } else {
+            result = "Balance can't be below 0";
+        }
+
+        Context context = getApplicationContext();
+
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, result, duration);
+        toast.show();
+
+
 
     }
 
@@ -63,20 +97,24 @@ public class Transfer extends Activity {
         return list;
     }
 
-    private void addItemsOnSpinners(List<String> list){
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        from.setAdapter(dataAdapter);
-        from.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-        to.setAdapter(dataAdapter);
-        to.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-    }
-
     class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+        private ArrayAdapter<String> dependent;
+
+        public CustomOnItemSelectedListener(ArrayAdapter<String> dependent){
+            this.dependent = dependent;
+        }
+
+        public CustomOnItemSelectedListener(){
+            dependent = null;
+        }
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            String accountName = (String)parent.getSelectedItem();
-            addItemsOnSpinners(getListExcept(accountName));
+            String selected = (String)parent.getSelectedItem();
+            if (dependent != null) {
+                dependent.clear();
+                dependent.addAll(getListExcept(selected));
+            }
+
         }
 
         @Override

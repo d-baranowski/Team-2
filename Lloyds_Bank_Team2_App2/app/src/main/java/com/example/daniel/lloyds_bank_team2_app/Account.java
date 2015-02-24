@@ -73,4 +73,5 @@ public class Account {
 
     public ArrayList<HashMap<String, String>> getTransactions() { return transactions; }
 
+    public int getAccountID() { return accountID; }
 }

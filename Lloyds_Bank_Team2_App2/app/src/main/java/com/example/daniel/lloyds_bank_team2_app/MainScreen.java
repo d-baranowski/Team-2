@@ -19,6 +19,8 @@ public class MainScreen extends Activity {
     private TextView accountBalance;
     private TextView accountAvailable;
 
+    Account account;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +35,23 @@ public class MainScreen extends Activity {
 
         dbadapter = new DatabaseAdapter(this);
         Customer customer = dbadapter.getCustomer(getIntent().getExtras().getInt("customerId"));
-        Account account = dbadapter.getAccounts(customer.getId()).get(0);
+        account = dbadapter.getAccounts(customer.getId()).get(0);
+
+        accountName.setText(account.getAccountName());
+        accountBalance.setText("£"+String.valueOf(account.getAccountBalance()));
+        accountAvailable.setText("£"+String.valueOf(account.getAvailableBalance()));
+        accountType.setText(account.getAccountType());
+        accountNumber.setText(String.valueOf(account.getAccountNumber()));
+        accountSortCode.setText(account.getSortCode());
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        dbadapter = new DatabaseAdapter(this);
+        Customer customer = dbadapter.getCustomer(getIntent().getExtras().getInt("customerId"));
+        account = dbadapter.getAccounts(customer.getId()).get(0);
 
         accountName.setText(account.getAccountName());
         accountBalance.setText("£"+String.valueOf(account.getAccountBalance()));
