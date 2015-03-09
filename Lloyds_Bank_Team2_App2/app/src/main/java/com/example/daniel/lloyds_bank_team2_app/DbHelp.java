@@ -42,7 +42,7 @@ class DbHelp extends SQLiteOpenHelper {
         contentValAccounts.put(SqlValues.FIELD_BALANCE,992.49);
         contentValAccounts.put(SqlValues.FIELD_AVAILABLE_BALANCE,1492.49);
         contentValAccounts.put(SqlValues.FIELD_OWNERID,1);
-        contentValAccounts.put(SqlValues.FIELD_OVERDRAFT_LIMIT,500.00);
+        contentValAccounts.put(SqlValues.FIELD_OVERDRAFT _LIMIT,500.00);
         contentValAccounts.put(SqlValues.FIELD_TYPE,"Student");
         db.insert(SqlValues.ACCOUNTS_TABLE_NAME,null,contentValAccounts);
 
