@@ -4,11 +4,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.team.two.lloyds_app.objects.Transfer">
-
+    tools:context="com.team.two.lloyds_app.Addrecipient">
 
     <TextView android:id="@+id/logo_label"
-        android:text="Transfers"
+        android:text="Add recipient"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,11 +32,11 @@
         android:id="@+id/border" />
 
     <TextView
-        android:id="@+id/transfers_label"
+        android:id="@+id/add_recipient_label"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Personal accounts"
+        android:text="Create a new recipient"
         android:textColor="@color/lloyds_green"
         android:textSize="20dp"
         android:layout_below="@+id/border"
@@ -48,62 +47,68 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Transfer from: "
+        android:text="Name of recipient: "
         android:textColor="@color/lloyds_green"
-        android:layout_below="@+id/transfers_label"
+        android:layout_below="@+id/add_recipient_label"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/from_label" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_from"
-        android:layout_below="@+id/from_label" />
-
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Transfer to: "
-        android:textColor="@color/lloyds_green"
-        android:layout_below="@+id/spinner_from"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/to_label" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_recipient"
-        android:layout_below="@+id/to_label" />
-
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Amount: "
-        android:textColor="@color/lloyds_green"
-        android:layout_below="@+id/spinner_recipient"
-        android:id="@+id/amount_label" />
+        android:id="@+id/name_label" />
 
     <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/description_text"
+        android:layout_below="@+id/name_label"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
+        android:text="Sort Code: "
+        android:textColor="@color/lloyds_green"
+        android:layout_below="@+id/description_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/sort_code_label" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
         android:ems="10"
-        android:id="@+id/amount_text"
-        android:layout_below="@+id/amount_label"/>
+        android:id="@+id/sort_code_text"
+        android:layout_below="@+id/sort_code_label"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account Number: "
+        android:textColor="@color/lloyds_green"
+        android:layout_below="@+id/sort_code_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/account_number_label" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/account_number_text"
+        android:layout_below="@+id/account_number_label"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Transfer"
-        android:id="@+id/button_payment"
-        android:onClick="transfer"
-        android:layout_alignTop="@+id/amount_text"
-        android:layout_toRightOf="@+id/amount_text"
-        android:layout_toEndOf="@+id/amount_text" />
+        android:text="Add"
+        android:onClick="addRecipient"
+        android:id="@+id/add_recipient_button"
+        android:layout_below="@+id/account_number_text"
+        android:layout_alignRight="@+id/account_number_text"
+        android:layout_alignEnd="@+id/account_number_text" />
 
 
 </RelativeLayout>

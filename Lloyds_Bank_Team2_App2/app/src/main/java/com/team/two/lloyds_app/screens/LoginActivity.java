@@ -1,14 +1,15 @@
-package com.example.daniel.lloyds_bank_team2_app;
+package com.team.two.lloyds_app.screens;
 
 import android.app.Activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
+
+import com.team.two.lloyds_app.database.DatabaseAdapter;
+import com.team.two.lloyds_app.R;
 
 
 /**

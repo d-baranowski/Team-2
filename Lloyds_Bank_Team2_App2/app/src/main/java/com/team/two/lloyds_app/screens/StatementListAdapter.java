@@ -1,4 +1,4 @@
-package com.example.daniel.lloyds_bank_team2_app;
+package com.team.two.lloyds_app.screens;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,17 +7,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.team.two.lloyds_app.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by Daniel on 08/02/2015.
  */
-public class ListViewAdapter extends BaseAdapter {
+public class StatementListAdapter extends BaseAdapter {
     public ArrayList<HashMap<String,String>> list;
     Activity activity;
 
-    public ListViewAdapter(Activity activity, ArrayList<HashMap<String,String>> list){
+    public StatementListAdapter(Activity activity, ArrayList<HashMap<String, String>> list){
         super();
         this.activity = activity;
         this.list = list;

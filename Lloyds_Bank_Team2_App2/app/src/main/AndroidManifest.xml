@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.daniel.lloyds_bank_team2_app" >
+    package="com.team.two.lloyds_app" >
 
     <application
         android:allowBackup="true"
@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".LoginActivity"
+            android:name="com.team.two.lloyds_app.screens.LoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
@@ -18,16 +18,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainScreen"
+            android:name="com.team.two.lloyds_app.screens.MainScreen"
             android:label="@string/title_activity_main_screen" >
         </activity>
         <activity
-            android:name=".Statement"
+            android:name="com.team.two.lloyds_app.screens.Statement"
             android:label="@string/title_activity_statement" >
         </activity>
         <activity
-            android:name=".Transfer"
+            android:name="com.team.two.lloyds_app.objects.Transfer"
             android:label="@string/title_activity_transfer" >
+        </activity>
+        <activity
+            android:name="com.team.two.lloyds_app.screens.Payments"
+            android:label="@string/title_activity_payments" >
+        </activity>
+        <activity
+            android:name="com.team.two.lloyds_app.screens.AddRecipient"
+            android:label="@string/title_activity_add_recipment" >
         </activity>
     </application>
 

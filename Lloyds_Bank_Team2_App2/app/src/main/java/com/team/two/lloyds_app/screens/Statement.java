@@ -1,17 +1,18 @@
-package com.example.daniel.lloyds_bank_team2_app;
+package com.team.two.lloyds_app.screens;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.team.two.lloyds_app.database.DatabaseAdapter;
+import com.team.two.lloyds_app.R;
+import com.team.two.lloyds_app.objects.Account;
+import com.team.two.lloyds_app.objects.Customer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,8 +50,8 @@ public class Statement extends Activity {
         transactions = (ListView) findViewById(R.id.transactions_list);
 
         dbadapter = new DatabaseAdapter(this);
-        Customer customer = dbadapter.getCustomer(getIntent().getExtras().getInt("customerId"));
-        Account account = dbadapter.getAccounts(customer.getId()).get(0);
+        customer = dbadapter.getCustomer(getIntent().getExtras().getInt("customerId"));
+        account = dbadapter.getAccounts(customer.getId()).get(0);
 
         addItemsOnSpinner();
         accountBalance.setText("£"+String.valueOf(account.getAccountBalance()));
@@ -61,7 +62,7 @@ public class Statement extends Activity {
 
         list = account.getTransactions();
 
-        ListViewAdapter adapter = new ListViewAdapter(this,list);
+        StatementListAdapter adapter = new StatementListAdapter(this,list);
         transactions.setAdapter(adapter);
 
     }
@@ -83,7 +84,7 @@ public class Statement extends Activity {
 
         list = account.getTransactions();
 
-        ListViewAdapter adapter = new ListViewAdapter(this,list);
+        StatementListAdapter adapter = new StatementListAdapter(this,list);
         transactions.setAdapter(adapter);
     }
 

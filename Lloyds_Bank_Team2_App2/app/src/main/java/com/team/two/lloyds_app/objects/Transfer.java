@@ -1,4 +1,4 @@
-package com.example.daniel.lloyds_bank_team2_app;
+package com.team.two.lloyds_app.objects;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.team.two.lloyds_app.database.DatabaseAdapter;
+import com.team.two.lloyds_app.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,10 +37,10 @@ public class Transfer extends Activity {
         dbadapter = new DatabaseAdapter(this);
         customer = dbadapter.getCustomer(getIntent().getExtras().getInt("customerId"));
         accounts = dbadapter.getAccounts(customer.getId());
-        mapAcconts();
+        mapAccounts();
 
         from = (Spinner)findViewById(R.id.spinner_from);
-        to = (Spinner)findViewById(R.id.spinner_to);
+        to = (Spinner)findViewById(R.id.spinner_recipient);
         amountText = (EditText)findViewById(R.id.amount_text);
 
         ArrayAdapter<String> fromAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, getListExcept(""));
@@ -75,12 +78,9 @@ public class Transfer extends Activity {
 
         Toast toast = Toast.makeText(context, result, duration);
         toast.show();
-
-
-
     }
 
-    private void mapAcconts(){
+    private void mapAccounts(){
         map = new HashMap<>();
         for (Account a: accounts){
             map.put(a.getAccountName(),a);

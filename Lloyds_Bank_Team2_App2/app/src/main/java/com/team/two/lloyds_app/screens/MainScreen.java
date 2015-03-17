@@ -1,4 +1,4 @@
-package com.example.daniel.lloyds_bank_team2_app;
+package com.team.two.lloyds_app.screens;
 
 
 import android.app.Activity;
@@ -6,6 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.team.two.lloyds_app.database.DatabaseAdapter;
+import com.team.two.lloyds_app.R;
+import com.team.two.lloyds_app.objects.Account;
+import com.team.two.lloyds_app.objects.Customer;
 
 
 public class MainScreen extends Activity {
@@ -68,7 +73,7 @@ public class MainScreen extends Activity {
     }
 
     public void openTransfers(View view){
-        Intent i = new Intent(this, Transfer.class);
+        Intent i = new Intent(this, Payments.class);
         i.putExtra("customerId", getIntent().getExtras().getInt("customerId"));
         startActivity(i);
     }

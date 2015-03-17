@@ -1,4 +1,4 @@
-package com.example.daniel.lloyds_bank_team2_app;
+package com.team.two.lloyds_app;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

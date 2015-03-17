@@ -8,7 +8,7 @@
 
 
     <TextView android:id="@+id/logo_label"
-        android:text="Transfers"
+        android:text="Payments"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Personal accounts"
+        android:text="Pay an account"
         android:textColor="@color/lloyds_green"
         android:textSize="20dp"
         android:layout_below="@+id/border"
@@ -82,9 +82,26 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Amount: "
+        android:text="Description: "
         android:textColor="@color/lloyds_green"
         android:layout_below="@+id/spinner_recipient"
+        android:id="@+id/description_label" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textAutoCorrect"
+        android:ems="10"
+        android:id="@+id/description_text"
+        android:layout_below="@+id/description_label"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount: "
+        android:textColor="@color/lloyds_green"
+        android:layout_below="@+id/description_text"
         android:id="@+id/amount_label" />
 
     <EditText
@@ -100,10 +117,20 @@
         android:layout_height="wrap_content"
         android:text="Transfer"
         android:id="@+id/button_payment"
-        android:onClick="transfer"
+        android:onClick="payment"
         android:layout_alignTop="@+id/amount_text"
         android:layout_toRightOf="@+id/amount_text"
         android:layout_toEndOf="@+id/amount_text" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="addRecipient"
+        android:text="Add recipient"
+        android:id="@+id/button_new_recipient"
+        android:layout_alignTop="@+id/spinner_recipient"
+        android:layout_alignRight="@+id/button_payment"
+        android:layout_alignEnd="@+id/button_payment" />
 
 
 </RelativeLayout>
