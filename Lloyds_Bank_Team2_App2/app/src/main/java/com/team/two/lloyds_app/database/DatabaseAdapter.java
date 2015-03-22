@@ -37,14 +37,14 @@ public class DatabaseAdapter {
 
         SQLiteDatabase db = helper.getReadableDatabase();
 
-        String[] columns = {SqlConst.CUSTOMER_PASSWORD};
-        String query = SqlConst.CUSTOMER_USERID + " = '" + userID + "'";
-        Cursor cursor = db.query(SqlConst.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
+        String[] columns = {SqlCons.CUSTOMER_PASSWORD};
+        String query = SqlCons.CUSTOMER_USERID + " = '" + userID + "'";
+        Cursor cursor = db.query(SqlCons.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
 
         if (cursor != null){
             if (cursor.getCount() > 0){
                 cursor.moveToFirst();
-                String pass= cursor.getString(cursor.getColumnIndex(SqlConst.CUSTOMER_PASSWORD));
+                String pass= cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_PASSWORD));
                 if (password.equals(pass)){
                     db.close();
                     return true;
@@ -57,26 +57,26 @@ public class DatabaseAdapter {
 
     public ArrayList<Account> getAccounts(int ownerId){
         ArrayList<Account> accounts = new ArrayList<>();
-        String[] columns = SqlConst.ACCOUNT_COLUMNS;
+        String[] columns = SqlCons.ACCOUNT_COLUMNS;
         SQLiteDatabase db = helper.getReadableDatabase();
-        String query = SqlConst.ACCOUNT_OWNERID + " = '" + ownerId + "'";
-        Cursor c = db.query(SqlConst.ACCOUNTS_TABLE_NAME,columns,query,null,null,null,null);
+        String query = SqlCons.ACCOUNT_OWNERID + " = '" + ownerId + "'";
+        Cursor c = db.query(SqlCons.ACCOUNTS_TABLE_NAME,columns,query,null,null,null,null);
 
         if (c != null) {
             if (c.getCount() > 0) {
                 c.moveToFirst();
 
                 for(int i = 0; i < c.getCount(); i++){
-                    int id = c.getInt(c.getColumnIndex(SqlConst.ACCOUNT_ID));
-                    String accountType = c.getString(c.getColumnIndex(SqlConst.ACCOUNT_TYPE));
-                    double accountBalance = c.getDouble(c.getColumnIndex(SqlConst.ACCOUNT_BALANCE));
-                    double availableBalance = c.getDouble(c.getColumnIndex(SqlConst.ACCOUNT_AVAILABLEBALANCE));
-                    String accountName = c.getString(c.getColumnIndex(SqlConst.ACCOUNT_NAME));
+                    int id = c.getInt(c.getColumnIndex(SqlCons.ACCOUNT_ID));
+                    String accountType = c.getString(c.getColumnIndex(SqlCons.ACCOUNT_TYPE));
+                    double accountBalance = c.getDouble(c.getColumnIndex(SqlCons.ACCOUNT_BALANCE));
+                    double availableBalance = c.getDouble(c.getColumnIndex(SqlCons.ACCOUNT_AVAILABLEBALANCE));
+                    String accountName = c.getString(c.getColumnIndex(SqlCons.ACCOUNT_NAME));
 
                     if (!accountType.equals("Subaccount")){
-                        int accountNumber = c.getInt(c.getColumnIndex(SqlConst.ACCOUNT_NUMBER));
-                        String sortCode = c.getString(c.getColumnIndex(SqlConst.ACCOUNT_SORTCODE));
-                        double overdraft = c.getDouble(c.getColumnIndex(SqlConst.ACCOUNT_OVERDRAFTLIMIT));
+                        int accountNumber = c.getInt(c.getColumnIndex(SqlCons.ACCOUNT_NUMBER));
+                        String sortCode = c.getString(c.getColumnIndex(SqlCons.ACCOUNT_SORTCODE));
+                        double overdraft = c.getDouble(c.getColumnIndex(SqlCons.ACCOUNT_OVERDRAFTLIMIT));
 
                         accounts.add(new Account(id, accountNumber, sortCode, accountName, accountType, accountBalance, availableBalance, overdraft, ownerId,getTransactions(id)));
                     } else {
@@ -95,11 +95,11 @@ public class DatabaseAdapter {
     public ArrayList<HashMap<String,String>> getTransactions(int id){
         ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
         SQLiteDatabase db = helper.getReadableDatabase();
-        String[] columnsT = SqlConst.TRANSACTION_COLUMNS;
-        String queryT = SqlConst.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + id + "'";
-        String order =  SqlConst.TRANSACTION_DATE +" DESC";
+        String[] columnsT = SqlCons.TRANSACTION_COLUMNS;
+        String queryT = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + id + "'";
+        String order =  SqlCons.TRANSACTION_DATE +" DESC";
 
-        Cursor t = db.query(SqlConst.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,null);
+        Cursor t = db.query(SqlCons.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,null);
 
         if (t != null) {
             if (t.getCount() > 0) {
@@ -107,12 +107,12 @@ public class DatabaseAdapter {
 
                 for (int j = 0; j < t.getCount(); j++) {
                     HashMap<String, String> temp = new HashMap<String, String>();
-                    temp.put(SqlConst.TRANSACTION_DATE, t.getString(t.getColumnIndex(SqlConst.TRANSACTION_DATE)));
-                    temp.put(SqlConst.TRANSACTION_DESCRIPTION, t.getString(t.getColumnIndex(SqlConst.TRANSACTION_DESCRIPTION)));
-                    temp.put(SqlConst.TRANSACTION_TYPE, t.getString(t.getColumnIndex(SqlConst.TRANSACTION_TYPE)));
-                    temp.put(SqlConst.TRANSACTION_IN, t.getString(t.getColumnIndex(SqlConst.TRANSACTION_IN)));
-                    temp.put(SqlConst.TRANSACTION_OUT, t.getString(t.getColumnIndex(SqlConst.TRANSACTION_OUT)));
-                    temp.put(SqlConst.TRANSACTION_BALANCE, t.getString(t.getColumnIndex(SqlConst.TRANSACTION_BALANCE)));
+                    temp.put(SqlCons.TRANSACTION_DATE, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_DATE)));
+                    temp.put(SqlCons.TRANSACTION_DESCRIPTION, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_DESCRIPTION)));
+                    temp.put(SqlCons.TRANSACTION_TYPE, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_TYPE)));
+                    temp.put(SqlCons.TRANSACTION_IN, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_IN)));
+                    temp.put(SqlCons.TRANSACTION_OUT, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_OUT)));
+                    temp.put(SqlCons.TRANSACTION_BALANCE, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_BALANCE)));
                     list.add(temp);
 
                     t.moveToNext();
@@ -135,37 +135,37 @@ public class DatabaseAdapter {
 
         //Source transaction
         ContentValues sourceTransaction = new ContentValues();
-        sourceTransaction.put(SqlConst.TRANSACTION_DATE, date);
-        sourceTransaction.put(SqlConst.TRANSACTION_DESCRIPTION, descSource);
-        sourceTransaction.put(SqlConst.TRANSACTION_TYPE, "User Transaction");
-        sourceTransaction.put(SqlConst.TRANSACTION_IN, 0.00);
-        sourceTransaction.put(SqlConst.TRANSACTION_OUT, (balance));
-        sourceTransaction.put(SqlConst.TRANSACTION_BALANCE, source.getAccountBalance() - balance);
-        sourceTransaction.put(SqlConst.TRANSACTION_ACCOUNT_ID_FOREIGN, source.getAccountID());
-        db.insert(SqlConst.TRANSACTIONS_TABLE_NAME,null,sourceTransaction);
+        sourceTransaction.put(SqlCons.TRANSACTION_DATE, date);
+        sourceTransaction.put(SqlCons.TRANSACTION_DESCRIPTION, descSource);
+        sourceTransaction.put(SqlCons.TRANSACTION_TYPE, "User Transaction");
+        sourceTransaction.put(SqlCons.TRANSACTION_IN, 0.00);
+        sourceTransaction.put(SqlCons.TRANSACTION_OUT, (balance));
+        sourceTransaction.put(SqlCons.TRANSACTION_BALANCE, source.getAccountBalance() - balance);
+        sourceTransaction.put(SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN, source.getAccountID());
+        db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,sourceTransaction);
 
         //Update Source
         ContentValues sourceAccount = new ContentValues();
-        sourceAccount.put(SqlConst.ACCOUNT_BALANCE, source.getAccountBalance() - balance);
-        sourceAccount.put(SqlConst.ACCOUNT_AVAILABLEBALANCE, source.getAvailableBalance() - balance);
-        db.update(SqlConst.ACCOUNTS_TABLE_NAME,sourceAccount, SqlConst.ACCOUNT_ID +"="+source.getAccountID(),null);
+        sourceAccount.put(SqlCons.ACCOUNT_BALANCE, source.getAccountBalance() - balance);
+        sourceAccount.put(SqlCons.ACCOUNT_AVAILABLEBALANCE, source.getAvailableBalance() - balance);
+        db.update(SqlCons.ACCOUNTS_TABLE_NAME,sourceAccount, SqlCons.ACCOUNT_ID +"="+source.getAccountID(),null);
 
         //Destination transaction
         ContentValues destinationTransaction = new ContentValues();
-        destinationTransaction.put(SqlConst.TRANSACTION_DATE, date);
-        destinationTransaction.put(SqlConst.TRANSACTION_DESCRIPTION, descDesctination);
-        destinationTransaction.put(SqlConst.TRANSACTION_TYPE, "User Transaction");
-        destinationTransaction.put(SqlConst.TRANSACTION_IN, balance);
-        destinationTransaction.put(SqlConst.TRANSACTION_OUT, 0.00);
-        destinationTransaction.put(SqlConst.TRANSACTION_BALANCE, destination.getAccountBalance() + balance);
-        destinationTransaction.put(SqlConst.TRANSACTION_ACCOUNT_ID_FOREIGN, destination.getAccountID());
-        db.insert(SqlConst.TRANSACTIONS_TABLE_NAME,null,destinationTransaction);
+        destinationTransaction.put(SqlCons.TRANSACTION_DATE, date);
+        destinationTransaction.put(SqlCons.TRANSACTION_DESCRIPTION, descDesctination);
+        destinationTransaction.put(SqlCons.TRANSACTION_TYPE, "User Transaction");
+        destinationTransaction.put(SqlCons.TRANSACTION_IN, balance);
+        destinationTransaction.put(SqlCons.TRANSACTION_OUT, 0.00);
+        destinationTransaction.put(SqlCons.TRANSACTION_BALANCE, destination.getAccountBalance() + balance);
+        destinationTransaction.put(SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN, destination.getAccountID());
+        db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,destinationTransaction);
 
         //Update destination
         ContentValues destinationAccount = new ContentValues();
-        destinationAccount.put(SqlConst.ACCOUNT_BALANCE, destination.getAccountBalance() + balance);
-        destinationAccount.put(SqlConst.ACCOUNT_AVAILABLEBALANCE, destination.getAvailableBalance() + balance);
-        db.update(SqlConst.ACCOUNTS_TABLE_NAME,destinationAccount, SqlConst.ACCOUNT_ID +"="+destination.getAccountID(),null);
+        destinationAccount.put(SqlCons.ACCOUNT_BALANCE, destination.getAccountBalance() + balance);
+        destinationAccount.put(SqlCons.ACCOUNT_AVAILABLEBALANCE, destination.getAvailableBalance() + balance);
+        db.update(SqlCons.ACCOUNTS_TABLE_NAME,destinationAccount, SqlCons.ACCOUNT_ID +"="+destination.getAccountID(),null);
 
         db.close();
     }
@@ -178,58 +178,63 @@ public class DatabaseAdapter {
 
         //Source transaction
         ContentValues sourceTransaction = new ContentValues();
-        sourceTransaction.put(SqlConst.TRANSACTION_DATE, date);
-        sourceTransaction.put(SqlConst.TRANSACTION_DESCRIPTION, description);
-        sourceTransaction.put(SqlConst.TRANSACTION_TYPE, "User Transaction");
-        sourceTransaction.put(SqlConst.TRANSACTION_IN, 0.00);
-        sourceTransaction.put(SqlConst.TRANSACTION_OUT, balance);
-        sourceTransaction.put(SqlConst.TRANSACTION_BALANCE, source.getAccountBalance() - balance);
-        sourceTransaction.put(SqlConst.TRANSACTION_ACCOUNT_ID_FOREIGN, source.getAccountID());
-        dba.insert(SqlConst.TRANSACTIONS_TABLE_NAME, null, sourceTransaction);
+        sourceTransaction.put(SqlCons.TRANSACTION_DATE, date);
+        sourceTransaction.put(SqlCons.TRANSACTION_DESCRIPTION, description);
+        sourceTransaction.put(SqlCons.TRANSACTION_TYPE, "User Transaction");
+        sourceTransaction.put(SqlCons.TRANSACTION_IN, 0.00);
+        sourceTransaction.put(SqlCons.TRANSACTION_OUT, balance);
+        sourceTransaction.put(SqlCons.TRANSACTION_BALANCE, source.getAccountBalance() - balance);
+        sourceTransaction.put(SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN, source.getAccountID());
+        dba.insert(SqlCons.TRANSACTIONS_TABLE_NAME, null, sourceTransaction);
 
         //Update Source
         ContentValues sourceAccount = new ContentValues();
-        sourceAccount.put(SqlConst.ACCOUNT_BALANCE, source.getAccountBalance() - balance);
-        sourceAccount.put(SqlConst.ACCOUNT_AVAILABLEBALANCE, source.getAvailableBalance() - balance);
-        dba.update(SqlConst.ACCOUNTS_TABLE_NAME, sourceAccount, SqlConst.ACCOUNT_ID + "=" + source.getAccountID(), null);
+        sourceAccount.put(SqlCons.ACCOUNT_BALANCE, source.getAccountBalance() - balance);
+        sourceAccount.put(SqlCons.ACCOUNT_AVAILABLEBALANCE, source.getAvailableBalance() - balance);
+        dba.update(SqlCons.ACCOUNTS_TABLE_NAME, sourceAccount, SqlCons.ACCOUNT_ID + "=" + source.getAccountID(), null);
 
-        String[] columnsA = SqlConst.ACCOUNT_COLUMNS;
-        String queryA = SqlConst.ACCOUNT_NUMBER + " = '" + destination.getAccountNumber() + "' AND " + SqlConst.ACCOUNT_SORTCODE + " = '" + destination.getSortCode() + "'";
+        String[] columnsA = SqlCons.ACCOUNT_COLUMNS;
+        String queryA = SqlCons.ACCOUNT_NUMBER + " = '" + destination.getAccountNumber() + "' AND " + SqlCons.ACCOUNT_SORTCODE + " = '" + destination.getSortCode() + "'";
+        dba.close();
+
         dba = helper.getWritableDatabase();
-        Cursor c = dba.query(SqlConst.ACCOUNTS_TABLE_NAME,columnsA,queryA,null,null,null,null);
+
+        Cursor c = dba.query(SqlCons.ACCOUNTS_TABLE_NAME,columnsA,queryA,null,null,null,null);
 
         if (c != null) {
             if (c.getCount() > 0) {
                 Account destinationAccount;
                 c.moveToFirst();
 
-                int id = c.getInt(c.getColumnIndex(SqlConst.ACCOUNT_ID));
-                String accountType = c.getString(c.getColumnIndex(SqlConst.ACCOUNT_TYPE));
-                double accountBalance = c.getDouble(c.getColumnIndex(SqlConst.ACCOUNT_BALANCE));
-                double availableBalance = c.getDouble(c.getColumnIndex(SqlConst.ACCOUNT_AVAILABLEBALANCE));
-                String accountName = c.getString(c.getColumnIndex(SqlConst.ACCOUNT_NAME));
-                int accountNumber = c.getInt(c.getColumnIndex(SqlConst.ACCOUNT_NUMBER));
-                String sortCode = c.getString(c.getColumnIndex(SqlConst.ACCOUNT_SORTCODE));
-                double overdraft = c.getDouble(c.getColumnIndex(SqlConst.ACCOUNT_OVERDRAFTLIMIT));
+                int id = c.getInt(c.getColumnIndex(SqlCons.ACCOUNT_ID));
+                String accountType = c.getString(c.getColumnIndex(SqlCons.ACCOUNT_TYPE));
+                double accountBalance = c.getDouble(c.getColumnIndex(SqlCons.ACCOUNT_BALANCE));
+                double availableBalance = c.getDouble(c.getColumnIndex(SqlCons.ACCOUNT_AVAILABLEBALANCE));
+                String accountName = c.getString(c.getColumnIndex(SqlCons.ACCOUNT_NAME));
+                int accountNumber = c.getInt(c.getColumnIndex(SqlCons.ACCOUNT_NUMBER));
+                String sortCode = c.getString(c.getColumnIndex(SqlCons.ACCOUNT_SORTCODE));
+                double overdraft = c.getDouble(c.getColumnIndex(SqlCons.ACCOUNT_OVERDRAFTLIMIT));
                 destinationAccount = new Account(id, accountNumber, sortCode, accountName, accountType, accountBalance, availableBalance, overdraft, id,getTransactions(id));
 
+                dba.close();
+                dba = helper.getWritableDatabase();
 
                 //Destination transaction
                 ContentValues destinationTransaction = new ContentValues();
-                destinationTransaction.put(SqlConst.TRANSACTION_DATE, date);
-                destinationTransaction.put(SqlConst.TRANSACTION_DESCRIPTION, description);
-                destinationTransaction.put(SqlConst.TRANSACTION_TYPE, "User Transaction");
-                destinationTransaction.put(SqlConst.TRANSACTION_IN, balance);
-                destinationTransaction.put(SqlConst.TRANSACTION_OUT, 0.00);
-                destinationTransaction.put(SqlConst.TRANSACTION_BALANCE, destinationAccount.getAccountBalance() + balance);
-                destinationTransaction.put(SqlConst.TRANSACTION_ACCOUNT_ID_FOREIGN, destinationAccount.getAccountID());
-                dba.insert(SqlConst.TRANSACTIONS_TABLE_NAME,null,destinationTransaction);
+                destinationTransaction.put(SqlCons.TRANSACTION_DATE, date);
+                destinationTransaction.put(SqlCons.TRANSACTION_DESCRIPTION, description);
+                destinationTransaction.put(SqlCons.TRANSACTION_TYPE, "User Transaction");
+                destinationTransaction.put(SqlCons.TRANSACTION_IN, balance);
+                destinationTransaction.put(SqlCons.TRANSACTION_OUT, 0.00);
+                destinationTransaction.put(SqlCons.TRANSACTION_BALANCE, destinationAccount.getAccountBalance() + balance);
+                destinationTransaction.put(SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN, destinationAccount.getAccountID());
+                dba.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,destinationTransaction);
 
                 //Update destination
                 ContentValues destinationAccountContent = new ContentValues();
-                destinationAccountContent.put(SqlConst.ACCOUNT_BALANCE, destinationAccount.getAccountBalance() + balance);
-                destinationAccountContent.put(SqlConst.ACCOUNT_AVAILABLEBALANCE, destinationAccount.getAvailableBalance() + balance);
-                dba.update(SqlConst.ACCOUNTS_TABLE_NAME,destinationAccountContent, SqlConst.ACCOUNT_ID +"="+destinationAccount.getAccountID(),null);
+                destinationAccountContent.put(SqlCons.ACCOUNT_BALANCE, destinationAccount.getAccountBalance() + balance);
+                destinationAccountContent.put(SqlCons.ACCOUNT_AVAILABLEBALANCE, destinationAccount.getAvailableBalance() + balance);
+                dba.update(SqlCons.ACCOUNTS_TABLE_NAME,destinationAccountContent, SqlCons.ACCOUNT_ID +"="+destinationAccount.getAccountID(),null);
 
 
             }
@@ -241,29 +246,31 @@ public class DatabaseAdapter {
     public void addRecipient(int ownerId, String name, String sortCode, int accountNumber){
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues contentRecipient = new ContentValues();
-        contentRecipient.put(SqlConst.RECIPIENT_OWNER_ID,ownerId);
-        contentRecipient.put(SqlConst.RECIPIENT_NAME, name);
-        contentRecipient.put(SqlConst.RECIPIENT_ACCOUNTNUMBER,accountNumber);
-        contentRecipient.put(SqlConst.RECIPIENT_SORTCODE,sortCode);
-        db.insert(SqlConst.RECIPIENTS_TABLE_NAME,null,contentRecipient);
+        contentRecipient.put(SqlCons.RECIPIENT_OWNER_ID,ownerId);
+        contentRecipient.put(SqlCons.RECIPIENT_NAME, name);
+        contentRecipient.put(SqlCons.RECIPIENT_ACCOUNTNUMBER,accountNumber);
+        contentRecipient.put(SqlCons.RECIPIENT_SORTCODE,sortCode);
+        db.insert(SqlCons.RECIPIENTS_TABLE_NAME,null,contentRecipient);
+
+        db.close();
     }
     public ArrayList<Recipient> getRecipments(int ownerId){
         ArrayList<Recipient> temp = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
-        String[] columnsR = SqlConst.RECIPIENT_COLUMNS;
-        String queryR = SqlConst.RECIPIENT_OWNER_ID + " = '" + ownerId + "'";
+        String[] columnsR = SqlCons.RECIPIENT_COLUMNS;
+        String queryR = SqlCons.RECIPIENT_OWNER_ID + " = '" + ownerId + "'";
 
-        Cursor t = db.query(SqlConst.RECIPIENTS_TABLE_NAME,columnsR,queryR,null,null,null,null);
+        Cursor t = db.query(SqlCons.RECIPIENTS_TABLE_NAME,columnsR,queryR,null,null,null,null);
 
         if (t != null) {
             if (t.getCount() > 0) {
                 t.moveToFirst();
 
                 for (int j = 0; j < t.getCount(); j++) {
-                    int id = t.getInt(t.getColumnIndex(SqlConst.RECIPIENT_ID));
-                    String name = t.getString(t.getColumnIndex(SqlConst.RECIPIENT_NAME));
-                    String sortCode = t.getString(t.getColumnIndex(SqlConst.RECIPIENT_SORTCODE));
-                    int accountNumber = t.getInt(t.getColumnIndex(SqlConst.RECIPIENT_ACCOUNTNUMBER));
+                    int id = t.getInt(t.getColumnIndex(SqlCons.RECIPIENT_ID));
+                    String name = t.getString(t.getColumnIndex(SqlCons.RECIPIENT_NAME));
+                    String sortCode = t.getString(t.getColumnIndex(SqlCons.RECIPIENT_SORTCODE));
+                    int accountNumber = t.getInt(t.getColumnIndex(SqlCons.RECIPIENT_ACCOUNTNUMBER));
 
                     temp.add(new Recipient(id, name, sortCode, accountNumber, ownerId));
 
@@ -281,19 +288,19 @@ public class DatabaseAdapter {
 
     public Customer getCustomer(int id){
         SQLiteDatabase db = helper.getReadableDatabase();
-        String[] columns = SqlConst.CUSTOMER_COLUMNS;
-        String query = SqlConst.CUSTOMER_ID + " = '" + id + "'";
-        Cursor cursor = db.query(SqlConst.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
+        String[] columns = SqlCons.CUSTOMER_COLUMNS;
+        String query = SqlCons.CUSTOMER_ID + " = '" + id + "'";
+        Cursor cursor = db.query(SqlCons.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
 
         if (cursor != null) {
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                String firstName = cursor.getString(cursor.getColumnIndex(SqlConst.CUSTOMER_NAME));
-                String surname = cursor.getString(cursor.getColumnIndex(SqlConst.CUSTOMER_SURNAME));
-                String addressOne = cursor.getString(cursor.getColumnIndex(SqlConst.CUSTOMER_ADDRESSONE));
-                String addressTwo = cursor.getString(cursor.getColumnIndex(SqlConst.CUSTOMER_ADDRESSTWO));
-                String postcode = cursor.getString(cursor.getColumnIndex(SqlConst.CUSTOMER_POSTCODE));
-                String userId = cursor.getString(cursor.getColumnIndex(SqlConst.CUSTOMER_USERID));
+                String firstName = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_NAME));
+                String surname = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_SURNAME));
+                String addressOne = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_ADDRESSONE));
+                String addressTwo = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_ADDRESSTWO));
+                String postcode = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_POSTCODE));
+                String userId = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_USERID));
 
                 Customer cust = new Customer(id,firstName,surname,addressOne,addressTwo,postcode,userId);
 
@@ -308,15 +315,15 @@ public class DatabaseAdapter {
 
     public int getId(String userID){
         userID.replace("'","\'");
-        String[] columns = {SqlConst.CUSTOMER_ID};
+        String[] columns = {SqlCons.CUSTOMER_ID};
         SQLiteDatabase db = helper.getReadableDatabase();
-        String query = SqlConst.CUSTOMER_USERID + " = '" + userID + "'";
-        Cursor cursor = db.query(SqlConst.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
+        String query = SqlCons.CUSTOMER_USERID + " = '" + userID + "'";
+        Cursor cursor = db.query(SqlCons.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
 
         if (cursor != null) {
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                int id = cursor.getInt(cursor.getColumnIndex(SqlConst.CUSTOMER_ID));
+                int id = cursor.getInt(cursor.getColumnIndex(SqlCons.CUSTOMER_ID));
                 db.close();
                 return id;
             }
@@ -324,8 +331,4 @@ public class DatabaseAdapter {
         db.close();
         return -1;
     }
-
-
-
-
 }

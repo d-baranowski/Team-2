@@ -37,9 +37,12 @@ public class LoginActivity extends Activity {
     public void login(View view){
         String userId = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-        if (dbadapter.login(userId,password)){
-            int databaseId = dbadapter.getId(userId);
-            Intent i = new Intent(this, MainScreen.class);
+        if (true){
+        //if (dbadapter.login(userId,password)){
+            int databaseId = dbadapter.getId("123456789");
+            //int databaseId = dbadapter.getId(userId);
+            //Intent i = new Intent(this, MainScreen.class);
+            Intent i = new Intent(this, MainActivity.class);
             i.putExtra("customerId", databaseId);
             startActivity(i);
             finish();

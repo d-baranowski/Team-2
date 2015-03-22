@@ -3,7 +3,7 @@ package com.team.two.lloyds_app.database;
 /**
  * Created by danielbaranowski on 24/02/15.
  */
-public class SqlConst {
+public class SqlCons {
     //Customer Table SQL
     static final String CUSTOMER_TABLE_NAME = "Customers";
     static final String CUSTOMER_ID = "_id";
