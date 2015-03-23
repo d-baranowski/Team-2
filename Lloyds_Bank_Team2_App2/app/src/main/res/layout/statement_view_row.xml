@@ -12,7 +12,7 @@
         android:text="Date"
         android:layout_weight="1"
         android:background="#ffe0e0e0"
-        android:textColor="FF000000">
+        android:textColor="#ff0a0a0a">
     </TextView>
 
     <TextView
