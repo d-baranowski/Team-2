@@ -10,7 +10,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Date"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#d506664c"
+        android:textColor="#ffffffff">
     </TextView>
 
     <TextView
@@ -18,7 +20,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Description"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:textColor="#ffffffff"
+        android:background="#d506664c">
     </TextView>
 
     <TextView
@@ -26,7 +30,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Type"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#d506664c"
+        android:textColor="#ffffffff">
     </TextView>
 
     <TextView
@@ -34,7 +40,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="In"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#d506664c"
+        android:textColor="#ffffffff">
     </TextView>
 
     <TextView
@@ -42,7 +50,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Out"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#d506664c"
+        android:textColor="#ffffffff">
     </TextView>
 
     <TextView
@@ -50,6 +60,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Balance"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#d506664c"
+        android:textColor="#ffffffff">
     </TextView>
 </LinearLayout>
