@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView2"
         android:layout_above="@+id/border"
-        android:src="#ff066b4c"
+        android:src="@drawable/headertest"
         android:visibility="visible"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -96,7 +96,7 @@
         android:textSize="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/account_available"/>
+        android:layout_alignBaseline="@+id/account_available" />
 
 
     <TextView android:id="@+id/account_available" android:text="@string/hello_world" android:layout_width="wrap_content"
