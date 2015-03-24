@@ -15,7 +15,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/hello_world"
         android:textColor="@color/lloyds_green"
         android:textSize="20dp" />
 
@@ -24,16 +23,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/account_name"
-        android:layout_marginTop="5dp"
-        android:text="@string/hello_world" />
+        android:layout_marginTop="5dp" />
 
     <TextView
         android:id="@+id/account_sort_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/account_number"
-        android:layout_centerHorizontal="true"
-        android:text="@string/hello_world" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/account_type"
@@ -41,8 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/account_sort_code"
-        android:text="@string/hello_world" />
+        android:layout_alignTop="@+id/account_sort_code" />
 
     <TextView
         android:id="@+id/account_balance_label"
@@ -60,7 +56,6 @@
         android:layout_below="@+id/account_sort_code"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="@string/hello_world"
         android:textColor="@color/lloyds_green"
         android:textSize="20dp" />
 
@@ -81,7 +76,6 @@
         android:layout_alignLeft="@+id/account_balance"
         android:layout_below="@+id/account_balance"
         android:layout_marginTop="15dp"
-        android:text="@string/hello_world"
         android:textColor="@color/lloyds_green"
         android:textSize="25dp" />
 

@@ -1,6 +1,5 @@
 package com.team.two.lloyds_app.screens.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +50,7 @@ public class MainScreenFragment extends android.support.v4.app.Fragment {
         Customer customer = ((MainActivity)getActivity()).getCustomer();
         Account account = ((MainActivity)getActivity()).getAccounts().get(0);
 
-        root = inflater.inflate(R.layout.activity_main_screen, container, false);
+        root = inflater.inflate(R.layout.fragment_main_screen, container, false);
         accountType = (TextView) root.findViewById(R.id.account_type);
         accountNumber = (TextView) root.findViewById(R.id.account_number);
         accountSortCode = (TextView) root.findViewById(R.id.account_sort_code);

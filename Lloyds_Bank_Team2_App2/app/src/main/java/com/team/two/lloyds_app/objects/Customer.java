@@ -4,13 +4,13 @@ package com.team.two.lloyds_app.objects;
  * Created by danielbaranowski on 06/02/15.
  */
 public class Customer {
-    private static int id;
-    private static String firstName;
-    private static String surname;
-    private static String addressOne;
-    private static String addressTwo;
-    private static String postCode;
-    private static String userId;
+    private int id;
+    private String firstName;
+    private String surname;
+    private String addressOne;
+    private String addressTwo;
+    private String postCode;
+    private String userId;
 
     public Customer(int id, String firstName, String surname, String addressOne, String addressTwo, String postCode, String userId){
         this.id = id;
@@ -22,31 +22,31 @@ public class Customer {
         this.userId = userId;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public static String getSurname() {
+    public String getSurname() {
         return surname;
     }
 
-    public static String getAddressOne() {
+    public String getAddressOne() {
         return addressOne;
     }
 
-    public static String getAddressTwo() {
+    public String getAddressTwo() {
         return addressTwo;
     }
 
-    public static String getPostCode() {
+    public String getPostCode() {
         return postCode;
     }
 
-    public static String getUserId() {
+    public String getUserId() {
         return userId;
     }
 }

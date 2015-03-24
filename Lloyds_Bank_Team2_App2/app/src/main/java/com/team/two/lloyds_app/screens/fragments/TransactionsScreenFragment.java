@@ -71,7 +71,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         customer =((MainActivity)getActivity()).getCustomer();
         accounts = ((MainActivity)getActivity()).getAccounts();
 
-        root = inflater.inflate(R.layout.activity_transfer, container, false);
+        root = inflater.inflate(R.layout.fragment_transfer, container, false);
 
         //Transfers
         mapAccounts();

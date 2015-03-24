@@ -39,7 +39,6 @@
         android:layout_alignBaseline="@+id/account_balance"/>
 
     <TextView android:id="@+id/account_balance"
-        android:text="@string/hello_world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/lloyds_green"
@@ -57,7 +56,8 @@
         android:layout_alignBaseline="@+id/account_available"/>
 
 
-    <TextView android:id="@+id/account_available" android:text="@string/hello_world" android:layout_width="wrap_content"
+    <TextView android:id="@+id/account_available"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/account_balance"
         android:layout_marginTop="15dp"

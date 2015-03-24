@@ -56,7 +56,7 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
         Customer customer = ((MainActivity)getActivity()).getCustomer();
         Account account = ((MainActivity)getActivity()).getAccounts().get(0);
 
-        root = inflater.inflate(R.layout.activity_statement, container, false);
+        root = inflater.inflate(R.layout.fragment_statement, container, false);
 
         accountName = (Spinner) root.findViewById(R.id.account_name);
         accountType = (TextView) root.findViewById(R.id.account_type);

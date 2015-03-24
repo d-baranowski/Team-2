@@ -30,13 +30,14 @@ public class MainActivity extends ActionBarActivity  {
     private Account account;
     private Toolbar toolbar;
     private int customerId;
+    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbadapter = new DatabaseAdapter(this);
         customerId = getIntent().getExtras().getInt("customerId");
-
+        fm = getSupportFragmentManager();
 
         setContentView(R.layout.activity_main_appbar);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -80,29 +81,20 @@ public class MainActivity extends ActionBarActivity  {
 
     public void openHome(){
         Fragment bf = new MainScreenFragment();
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.mainFragmentHolder, bf);
         toolbar.setTitle(MainScreenFragment.TITLE);
-        ft.commit();
+        fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
     public void openStatement(){
         Fragment bf = new StatementScreenFragment();
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.mainFragmentHolder, bf);
         toolbar.setTitle(StatementScreenFragment.TITLE);
-        ft.commit();
+        fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
     public void openTransfers(){
         Fragment bf = new TransactionsScreenFragment();
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.mainFragmentHolder, bf);
         toolbar.setTitle(TransactionsScreenFragment.TITLE);
-        ft.commit();
+        fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
     public Customer getCustomer(){

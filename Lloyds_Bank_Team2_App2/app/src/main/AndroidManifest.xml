@@ -20,30 +20,6 @@
         </activity>
 
         <activity
-            android:name=".screens.MainScreen"
-            android:label="@string/title_activity_main_screen">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.team.two.lloyds_app.screens.MainScreen"/></activity>
-
-        <activity
-            android:name=".screens.Statement"
-            android:label="@string/title_activity_statement">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.team.two.lloyds_app.screens.MainScreen"/></activity>
-
-        <activity
-            android:name=".screens.Transfer"
-            android:label="@string/title_activity_transfer">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.team.two.lloyds_app.screens.MainScreen"/></activity>
-
-        <activity
-            android:name=".screens.Payments"
-            android:label="@string/title_activity_payments">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.team.two.lloyds_app.screens.MainScreen"/></activity>
-
-        <activity
             android:name=".screens.activities.AddRecipient"
             android:label="@string/title_activity_add_recipment">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
