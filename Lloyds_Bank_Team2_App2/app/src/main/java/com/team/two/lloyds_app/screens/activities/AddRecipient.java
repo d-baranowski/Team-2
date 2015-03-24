@@ -1,4 +1,4 @@
-package com.team.two.lloyds_app.screens;
+package com.team.two.lloyds_app.screens.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.team.two.lloyds_app.database.DatabaseAdapter;
 import com.team.two.lloyds_app.R;
-
 
 public class AddRecipient extends Activity {
     private int ownerId;

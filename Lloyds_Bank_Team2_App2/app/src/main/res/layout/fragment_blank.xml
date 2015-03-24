@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/blank_fragment"
     android:background="@color/lloyds_green"
-    tools:context="com.team.two.lloyds_app.screens.MainScreenFragment">
+    tools:context="com.team.two.lloyds_app.screens.fragments.MainScreenFragment">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"

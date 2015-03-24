@@ -16,11 +16,13 @@ import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
+import com.team.two.lloyds_app.screens.activities.AddRecipient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+//NOT USED ANYMORE
 
 public class Payments extends Activity {
     //UI references
@@ -44,11 +46,11 @@ public class Payments extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payments);
+        //setContentView(R.layout.activity_payments);
 
-        from = (Spinner) findViewById(R.id.spinner_from);
-        recipient = (Spinner) findViewById(R.id.spinner_recipient);
-        amountText = (EditText) findViewById(R.id.amount_text);
+        from = (Spinner) findViewById(R.id.spinner_transfer_from);
+        recipient = (Spinner) findViewById(R.id.spinner_transfer_recipient);
+        amountText = (EditText) findViewById(R.id.payment_amount_text);
         descriptionText = (EditText) findViewById(R.id.description_text);
 
         dbadapter = new DatabaseAdapter(this);

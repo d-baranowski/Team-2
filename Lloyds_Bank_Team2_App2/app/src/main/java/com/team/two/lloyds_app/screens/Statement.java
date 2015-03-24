@@ -13,11 +13,13 @@ import com.team.two.lloyds_app.database.DatabaseAdapter;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Customer;
+import com.team.two.lloyds_app.screens.fragments.StatementListAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+//NOT USED ANYMORE
 
 public class Statement extends Activity {
     private static DatabaseAdapter dbadapter;

@@ -21,6 +21,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"></FrameLayout>
 
+        <FrameLayout
+            android:id="@+id/mainFragmentHolder"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent" android:layout_height="match_parent"/>
+
         <fragment
             android:id="@+id/fragment_navigation_drawer"
             android:name="com.team.two.lloyds_app.screens.drawer.NavigationDrawerFragment"
@@ -29,11 +34,6 @@
             android:layout_gravity="start"
             app:layout="@layout/fragment_navigation_drawer"
             tools:layout="@layout/fragment_navigation_drawer" />
-
-        <FrameLayout
-            android:id="@+id/mainFragmentHolder"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent" android:layout_height="match_parent"/>
 
     </android.support.v4.widget.DrawerLayout>
 

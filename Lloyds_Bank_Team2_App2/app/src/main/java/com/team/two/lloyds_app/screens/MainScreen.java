@@ -12,6 +12,7 @@ import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Customer;
 
+//NOT USED ANYMORE
 
 public class MainScreen extends Activity {
     private static DatabaseAdapter dbadapter;

@@ -1,4 +1,4 @@
-package com.team.two.lloyds_app.screens;
+package com.team.two.lloyds_app.screens.activities;
 
 import android.app.Activity;
 

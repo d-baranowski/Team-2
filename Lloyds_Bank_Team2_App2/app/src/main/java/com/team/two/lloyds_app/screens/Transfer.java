@@ -1,4 +1,4 @@
-package com.team.two.lloyds_app.objects;
+package com.team.two.lloyds_app.screens;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,11 +12,14 @@ import android.widget.Toast;
 
 import com.team.two.lloyds_app.database.DatabaseAdapter;
 import com.team.two.lloyds_app.R;
+import com.team.two.lloyds_app.objects.Account;
+import com.team.two.lloyds_app.objects.Customer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+//NOT USED ANYMORE
 
 public class Transfer extends Activity {
     //UI references
@@ -39,9 +42,9 @@ public class Transfer extends Activity {
         accounts = dbadapter.getAccounts(customer.getId());
         mapAccounts();
 
-        from = (Spinner)findViewById(R.id.spinner_from);
-        to = (Spinner)findViewById(R.id.spinner_recipient);
-        amountText = (EditText)findViewById(R.id.amount_text);
+       //from = (Spinner)findViewById(R.id.spinner_transfer_from);
+       // to = (Spinner)findViewById(R.id.spinner_recipient);
+        amountText = (EditText)findViewById(R.id.payment_amount_text);
 
         ArrayAdapter<String> fromAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, getListExcept(""));
         ArrayAdapter<String> toAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, getListExcept(""));

@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.team.two.lloyds_app.R;
+import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 import java.util.ArrayList;
 
@@ -62,7 +63,7 @@ public class NavigationDrawerFragment extends Fragment {
         drawerList.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), drawerList, new ClickListener() {
             @Override
             public void onClick(final View view, int position) {
-                Toast.makeText(getActivity(), "On click " + position, Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), "On click " + position, Toast.LENGTH_SHORT).show();
                 Log.d("VIVZ"," Shit happened");
                 Integer colorFrom = Color.WHITE;
                 Integer colorTo = Color.BLUE;
@@ -78,12 +79,26 @@ public class NavigationDrawerFragment extends Fragment {
                 thereAnimation.start();
                 thereAnimation.reverse();
                 toolbar.setTitle(Constants.SCREEN_NAMES[position]);
+
+                switch (position){
+                    case 0:
+                        ((MainActivity)getActivity()).openHome();
+                        break;
+                    case 1:
+                        ((MainActivity)getActivity()).openStatement();
+                        break;
+                    case 2:
+                        ((MainActivity)getActivity()).openTransfers();
+                        break;
+                }
+
+                drawerLayout.closeDrawers();
                 
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(getActivity(), "On long click " + position, Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), "On long click " + position, Toast.LENGTH_SHORT).show();
                 Log.d("VIVZ"," Long Shit happened");
             }
         }));
@@ -99,6 +114,7 @@ public class NavigationDrawerFragment extends Fragment {
         this.drawerLayout = drawerLayout;
         this.toolbar = toolbar;
         containerView = getActivity().findViewById(fragmentId);
+
         //using brackets to Override methods of ActionBarDrawerToggle
         drawerToggle = new ActionBarDrawerToggle(getActivity(),drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close){
             @Override
