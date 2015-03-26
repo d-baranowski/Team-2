@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="summary_title">Summary</string>
-    <string name="summary_1">On average, you are currently spending </string>
+
+    <string name="balance_graph_title">"Balance"</string>
+    <string name="spending_graph_title">"Average Spending"</string>
+    <string name="summary_title">"Summary"</string>
+
+    <string name="summary_1">"On average, you are currently spending "</string>
+    <string name="summary_2">" per day. If this average continues then "</string>
+    <string name="overdraft_danger">"you will enter your overdraft on "</string>
+    <string name="overdraft_safe">"you are in no danger of entering your overdraft. Well done!"</string>
 </resources>
