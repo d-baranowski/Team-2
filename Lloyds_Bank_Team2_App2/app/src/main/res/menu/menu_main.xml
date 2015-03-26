@@ -6,6 +6,6 @@
     <item android:id="@+id/logo_horsey"
         android:title="logo"
         android:orderInCategory="200"
-        android:icon="@drawable/horse"
+        android:icon="@drawable/ic_launcher"
         app:showAsAction="always"/>
 </menu>

@@ -1,5 +1,6 @@
 package com.team.two.lloyds_app.screens.activities;
 
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -42,6 +43,8 @@ public class MainActivity extends ActionBarActivity  {
         setContentView(R.layout.activity_main_appbar);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         openHome();
@@ -67,10 +70,6 @@ public class MainActivity extends ActionBarActivity  {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         if (id == R.id.logo_horsey){
             openHome();
