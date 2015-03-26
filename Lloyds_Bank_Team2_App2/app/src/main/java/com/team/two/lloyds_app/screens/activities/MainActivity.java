@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
-
+import com.google.android.gms.maps.*;
 import android.os.Bundle;
 
 import android.support.v7.app.ActionBarActivity;
@@ -23,12 +23,15 @@ import com.team.two.lloyds_app.screens.drawer.NavigationDrawerFragment;
 import com.team.two.lloyds_app.screens.fragments.MainScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.StatementScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.TransactionsScreenFragment;
+import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
+import com.team.two.lloyds_app.screens.fragments.BranchFinderFragment;
 
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity  {
     private static DatabaseAdapter dbadapter;
     private Account account;
+    GoogleMap googleMap;
     private Toolbar toolbar;
     private int customerId;
     private FragmentManager fm;
@@ -93,6 +96,12 @@ public class MainActivity extends ActionBarActivity  {
     public void openTransfers(){
         Fragment bf = new TransactionsScreenFragment();
         toolbar.setTitle(TransactionsScreenFragment.TITLE);
+        fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
+    }
+
+    public void openPlanner(){
+        Fragment bf = new MoneyPlannerFragment();
+        toolbar.setTitle(MoneyPlannerFragment.TITLE);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
