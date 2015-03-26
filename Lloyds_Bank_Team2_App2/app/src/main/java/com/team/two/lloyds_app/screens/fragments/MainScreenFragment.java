@@ -79,6 +79,13 @@ public class MainScreenFragment extends android.support.v4.app.Fragment {
             }
         });
 
+        openPlanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).openPlanner();
+            }
+        });
+
         accountName.setText(account.getAccountName());
         accountBalance.setText("£"+String.valueOf(account.getAccountBalance()));
         accountAvailable.setText("£"+String.valueOf(account.getAvailableBalance()));

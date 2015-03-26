@@ -25,4 +25,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:6.5.87'
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.github.traex.rippleeffect:library:1.2.4'
+    compile 'com.jjoe64:graphview:4.0.0'
 }

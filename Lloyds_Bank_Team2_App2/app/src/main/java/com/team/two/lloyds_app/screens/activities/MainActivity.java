@@ -22,6 +22,7 @@ import com.team.two.lloyds_app.screens.drawer.NavigationDrawerFragment;
 import com.team.two.lloyds_app.screens.fragments.MainScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.StatementScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.TransactionsScreenFragment;
+import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
 
 import java.util.ArrayList;
 
@@ -94,6 +95,12 @@ public class MainActivity extends ActionBarActivity  {
     public void openTransfers(){
         Fragment bf = new TransactionsScreenFragment();
         toolbar.setTitle(TransactionsScreenFragment.TITLE);
+        fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
+    }
+
+    public void openPlanner(){
+        Fragment bf = new MoneyPlannerFragment();
+        toolbar.setTitle(MoneyPlannerFragment.TITLE);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
