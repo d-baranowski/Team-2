@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.team.two.lloyds_app.screens.drawer.NavigationDrawerFragment"
-    android:background= "#FFFFFF">
+    android:background= "#FFFFFF"
+    android:theme="@style/CustomStyle">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/drawer_recycler"
@@ -10,5 +11,11 @@
         android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@color/lloyds_green" />
 
 </RelativeLayout>

@@ -2,144 +2,190 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#FFFFFF"
     tools:context="com.team.two.lloyds_app.screens.MainScreen">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/drop_shadow" />
 
-    <TextView
-        android:id="@+id/account_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/lloyds_green"
-        android:textSize="20dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
-    <TextView
-        android:id="@+id/account_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/account_name"
-        android:layout_marginTop="5dp" />
+        <TextView
+            android:id="@+id/account_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/lloyds_green"
+            android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/account_sort_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/account_number"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/account_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/account_name"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text_color" />
 
-    <TextView
-        android:id="@+id/account_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/account_sort_code" />
+        <TextView
+            android:id="@+id/account_sort_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/account_number"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/secondary_text_color" />
 
-    <TextView
-        android:id="@+id/account_balance_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/account_balance"
-        android:text="Balance:"
-        android:textColor="@color/lloyds_green"
-        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/account_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/account_sort_code"
+            android:textColor="@color/secondary_text_color" />
 
-    <TextView
-        android:id="@+id/account_balance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/account_sort_code"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/lloyds_green"
-        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/account_balance_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/account_balance"
+            android:text="Balance:"
+            android:textColor="@color/lloyds_green"
+            android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/account_available_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/account_available"
-        android:text="Avaliable:"
-        android:textColor="@color/lloyds_green"
-        android:textSize="25dp" />
+        <TextView
+            android:id="@+id/account_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/account_sort_code"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/lloyds_green"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/account_available_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/account_available"
+            android:text="Avaliable:"
+            android:textColor="@color/lloyds_green"
+            android:textSize="20dp" />
 
 
-    <TextView
-        android:id="@+id/account_available"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/account_balance"
-        android:layout_below="@+id/account_balance"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/lloyds_green"
-        android:textSize="25dp" />
+        <TextView
+            android:id="@+id/account_available"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/account_balance"
+            android:layout_below="@+id/account_balance"
+            android:textColor="@color/lloyds_green"
+            android:textSize="20dp" />
 
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <GridLayout
+            android:id="@+id/grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/account_available"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:textAlignment="center">
+
+            <Button
+                android:id="@+id/statement_button"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_column="0"
+                android:layout_row="12"
+                android:background="@drawable/ic_statement_icon" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_gravity="center_horizontal"
+                android:layout_row="13"
+                android:text="Statement"></TextView>
+
+            <Button
+                android:id="@+id/transfers_button"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_column="1"
+                android:layout_row="12"
+                android:background="@drawable/ic_transfers_icon" />
+
+            <TextView
+                android:layout_column="1"
+                android:layout_gravity="center_horizontal"
+                android:layout_row="13"
+                android:text="Transfers"></TextView>
+
+            <Button
+                android:id="@+id/achievements_button"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_column="0"
+                android:layout_row="14"
+                android:background="@drawable/ic_achievements_icon" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_gravity="center_horizontal"
+                android:layout_row="15"
+                android:text="Achievements"></TextView>
+
+            <Button
+                android:id="@+id/finder_button"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_column="1"
+                android:layout_row="14"
+                android:background="@drawable/ic_branch_finder_icon" />
+
+            <TextView
+                android:layout_column="1"
+                android:layout_gravity="center_horizontal"
+                android:layout_row="15"
+                android:text="Branch Finder"></TextView>
+
+            <Button
+                android:id="@+id/planner_button"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_column="0"
+                android:layout_row="16"
+                android:background="@drawable/ic_money_planner_icon" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_gravity="center_horizontal"
+                android:layout_row="17"
+                android:text="Planner"></TextView>
+
+            <Button
+                android:id="@+id/deals_button"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_column="1"
+                android:layout_row="16"
+                android:background="@drawable/ic_offers_icon" />
+
+            <TextView
+                android:layout_column="1"
+                android:layout_gravity="center_horizontal"
+                android:layout_row="17"
+                android:text="Offers and Deals"></TextView>
+        </GridLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-
-        <Button
-            android:id="@+id/statement_button"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_column="0"
-            android:layout_margin="10dp"
-            android:layout_marginRight="30dp"
-            android:layout_row="12"
-            android:text="Statement" />
-
-        <Button
-            android:id="@+id/transfers_button"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_column="1"
-            android:layout_margin="10dp"
-            android:layout_row="12"
-            android:text="Transfers" />
-
-        <Button
-            android:id="@+id/achievements_button"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_column="0"
-            android:layout_margin="10dp"
-            android:layout_row="14"
-            android:text="Achievements" />
-
-        <Button
-            android:id="@+id/finder_button"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_column="1"
-            android:layout_margin="10dp"
-            android:layout_row="14"
-            android:text="Branch Finder" />
-
-        <Button
-            android:id="@+id/planner_button"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_column="0"
-            android:layout_margin="10dp"
-            android:layout_row="16"
-            android:text="Money Planner" />
-
-        <Button
-            android:id="@+id/deals_button"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_column="1"
-            android:layout_margin="10dp"
-            android:layout_row="16"
-            android:text="Offers and Deals" />
-    </GridLayout>
-
+        android:background="@color/lloyds_green" />
 
 </RelativeLayout>

@@ -4,17 +4,19 @@
     <color name="lloyds_green">#06664c</color>
     <color name="appbar_gradient_start">#065942</color>
     <color name="appbar_gradient_finish">#21846a</color>
+    <color name="secondary_text_color">#A9A9A9</color>
 
-
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
-
+    <style name="CustomStyle" parent="Theme.AppCompat.Light.NoActionBar">
 
     </style>
 
-    <style name= "MyCustomToolBar" parent = "MyTheme">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColor">@color/lloyds_green</item>
+    </style>
+
+    <style name="MyCustomToolBar" parent="MyTheme">
 
     </style>
 

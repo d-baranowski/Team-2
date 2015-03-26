@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.team.two.lloyds_app.screens.Transfer">
+    tools:context="com.team.two.lloyds_app.screens.Transfer"
+    android:background="#FFFFFF">
 
     <TextView
         android:id="@+id/transfers_label"

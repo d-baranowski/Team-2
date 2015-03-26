@@ -1,7 +1,9 @@
 package com.team.two.lloyds_app.screens.fragments;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -69,6 +71,25 @@ public class MainScreenFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).openStatement();
+            }
+        });
+
+        openStatement.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(0xe0add8e6, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
             }
         });
 
