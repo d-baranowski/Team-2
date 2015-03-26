@@ -1,23 +1,70 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment">
+    tools:context="com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment"
+    android:background="@color/WHITE">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="@string/balance_graph_title"
+        android:textSize="25sp"
+        android:id="@+id/balance_graph_title"
+        android:paddingLeft="10px"
+        android:paddingRight="10px"
+    />
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
         android:layout_height="150dip"
-        android:id="@+id/graph"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="center_horizontal|top" />
+        android:id="@+id/balance_graph"
+        android:layout_below="@+id/balance_graph_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+    />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/spending_average"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_height="40dp"
+        android:text="@string/spending_graph_title"
+        android:textSize="25sp"
+        android:id="@+id/spending_graph_title"
+        android:layout_below="@+id/balance_graph"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="10px"
+        android:paddingRight="10px" />
 
-</FrameLayout>
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="150dip"
+        android:id="@+id/spending_graph"
+        android:layout_below="@+id/spending_graph_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="@string/summary_title"
+        android:textSize="25sp"
+        android:id="@+id/summary_title"
+        android:layout_below="@+id/spending_graph"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="10px"
+        android:paddingRight="10px" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_below="@+id/summary_title"
+        android:id="@+id/summary"
+        android:textSize="15sp"
+        android:text="text"
+        android:paddingLeft="10px"
+        android:paddingRight="10px"
+    />
+
+</RelativeLayout>
