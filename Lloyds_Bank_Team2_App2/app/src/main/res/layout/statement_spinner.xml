@@ -8,5 +8,6 @@
     android:ellipsize="marquee"
     android:textAlignment="inherit"
     android:textSize="20dp"
-    android:textColor="@color/lloyds_green"/>
+    android:textColor="@color/lloyds_green"
+    android:background="#FFFFFF"/>
 

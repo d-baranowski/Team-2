@@ -19,7 +19,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/horse"
-        android:background="@drawable/horse"
+        android:background="@drawable/ic_launcher"
         android:layout_above="@+id/border"
         android:layout_alignParentRight="true" />
 

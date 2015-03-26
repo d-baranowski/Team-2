@@ -1,5 +1,8 @@
 package com.team.two.lloyds_app.screens.fragments;
 
+import android.app.ActionBar;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +11,26 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +52,7 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
     private TextView accountSortCode;
     private TextView accountBalance;
     private TextView accountAvailable;
-    private ListView transactions;
+    private TableLayout table;
 
     public static StatementScreenFragment newInstance() {
         StatementScreenFragment fragment = new StatementScreenFragment();
@@ -64,12 +81,9 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
         accountSortCode = (TextView) root.findViewById(R.id.account_sort_code);
         accountBalance = (TextView) root.findViewById(R.id.account_balance);
         accountAvailable = (TextView) root.findViewById(R.id.account_available);
-        transactions = (ListView) root.findViewById(R.id.transactions_list);
+        table = (TableLayout) root.findViewById(R.id.tableLayout1);
 
         list = account.getTransactions();
-
-        StatementListAdapter adapter = new StatementListAdapter(getActivity(),list);
-        transactions.setAdapter(adapter);
         addItemsOnSpinner();
 
         return root;
@@ -106,9 +120,44 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
 
 
         list = account.getTransactions();
+        buildTable();
+        table.setBackgroundResource(R.drawable.cell_shape);
+    }
 
-        StatementListAdapter adapter = new StatementListAdapter(getActivity(),list);
-        transactions.setAdapter(adapter);
+    public void buildTable(){
+        int rows = list.size();
+        int cols = 6;
+        String[] keys = {"Date","Description","TransactionType","Income","Outcome","TransactionBalance"};
+        String[] labels = {"Date","Description","Type","Income","Outcome","Balance"};
+
+        for (int i = 0; i < rows; i++){
+            TableRow row = new TableRow(getActivity());
+            row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+            for (int j = 0; j < cols; j++){
+                HashMap<String, String> map = list.get(i);
+                String test = map.get(keys[j]);
+                TextView text = new TextView(getActivity());
+                text.setTextSize(7);
+                text.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+                text.setPadding(5,5,5,5);
+
+                if(i == 0){
+                    text.setBackgroundColor(getResources().getColor(R.color.lloyds_green));
+                    text.setText(labels[j]);
+                    text.setTextColor(Color.WHITE);
+                } else{
+                    text.setText(test);
+
+                    if (i % 2 == 0){
+                        text.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                    }
+                }
+                row.addView(text);
+            }
+
+            table.addView(row);
+        }
     }
 
     class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {

@@ -5,7 +5,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,13 +13,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
@@ -28,7 +25,6 @@ import com.team.two.lloyds_app.screens.activities.MainActivity;
 import java.util.ArrayList;
 
 public class NavigationDrawerFragment extends Fragment {
-    private OnFragmentInteractionListener mListener;
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
     private View containerView;
@@ -64,10 +60,9 @@ public class NavigationDrawerFragment extends Fragment {
         drawerList.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), drawerList, new ClickListener() {
             @Override
             public void onClick(final View view, int position) {
-                Toast.makeText(getActivity(), "On click " + position, Toast.LENGTH_SHORT).show();
-                Log.d("VIVZ"," Shit happened");
                 Integer colorFrom = Color.WHITE;
                 Integer colorTo = Color.parseColor("#add8e6");
+
                 ValueAnimator thereAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
                 thereAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
@@ -99,8 +94,7 @@ public class NavigationDrawerFragment extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(getActivity(), "On long click " + position, Toast.LENGTH_SHORT).show();
-                Log.d("VIVZ"," Long Shit happened");
+
             }
         }));
 
@@ -216,10 +210,10 @@ public class NavigationDrawerFragment extends Fragment {
         data.add(new DrawerItem(Constants.SCREEN_NAMES[0],R.drawable.lloydsbanklogo));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[1],R.drawable.ic_statement_icon));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[2],R.drawable.ic_transfers_icon));
-        data.add(new DrawerItem(Constants.SCREEN_NAMES[3],R.drawable.ic_achievements_icon));
-        data.add(new DrawerItem(Constants.SCREEN_NAMES[4],R.drawable.ic_branch_finder_icon));
-        data.add(new DrawerItem(Constants.SCREEN_NAMES[5],R.drawable.ic_money_planner_icon));
-        data.add(new DrawerItem(Constants.SCREEN_NAMES[6],R.drawable.ic_offers_icon));
+        data.add(new DrawerItem(Constants.SCREEN_NAMES[3],R.drawable.ic_branch_finder_icon));
+        data.add(new DrawerItem(Constants.SCREEN_NAMES[4],R.drawable.ic_money_planner_icon));
+        data.add(new DrawerItem(Constants.SCREEN_NAMES[5],R.drawable.ic_offers_icon));
+        data.add(new DrawerItem(Constants.SCREEN_NAMES[6],R.drawable.ic_achievements_icon));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[7],R.drawable.lloydsbanklogo));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[8],R.drawable.lloydsbanklogo));
         return data;
