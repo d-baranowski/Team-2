@@ -118,13 +118,14 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
             accountSortCode.setText("");
         }
 
-
+        list.clear();
         list = account.getTransactions();
         buildTable();
         table.setBackgroundResource(R.drawable.cell_shape);
     }
 
     public void buildTable(){
+        table.removeAllViews();
         int rows = list.size();
         int cols = 6;
         String[] keys = {"Date","Description","TransactionType","Income","Outcome","TransactionBalance"};
@@ -151,6 +152,8 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
 
                     if (i % 2 == 0){
                         text.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                    } else {
+                        text.setBackgroundColor(Color.WHITE);
                     }
                 }
                 row.addView(text);
