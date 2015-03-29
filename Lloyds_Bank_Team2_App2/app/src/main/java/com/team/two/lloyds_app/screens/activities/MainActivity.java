@@ -12,8 +12,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
+import com.team.two.lloyds_app.Exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.database.DatabaseAdapter;
 import com.team.two.lloyds_app.objects.Account;
@@ -27,6 +29,7 @@ import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
 import com.team.two.lloyds_app.screens.fragments.BranchFinderFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity  {
     private static DatabaseAdapter dbadapter;
@@ -121,6 +124,12 @@ public class MainActivity extends ActionBarActivity  {
 
     public void addRecipinet(String name, String sortCode, int accountNumber){
         dbadapter.addRecipient(customerId,name,sortCode,accountNumber);
+    }
+
+    public void checkEmptyField(TextView field, String errorMsg) throws EmptyMandatoryFieldException {
+        if (field.getText().toString().isEmpty()){
+            throw new EmptyMandatoryFieldException(errorMsg);
+        }
     }
 
 

@@ -16,11 +16,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.team.two.lloyds_app.Exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
-import com.team.two.lloyds_app.screens.activities.AddRecipient;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -141,6 +141,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         Double balance;
 
         try {
+            ((MainActivity)getActivity()).checkEmptyField(transferAmountText, "Balance");
             balance = Double.parseDouble(transferAmountText.getText().toString());
 
             CharSequence result = "Hello toast!";
@@ -173,6 +174,14 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
             Toast toast = Toast.makeText(context, "Please enter a value you want to transfer", duration);
             toast.show();
 
+        } catch (EmptyMandatoryFieldException e) {
+            balance = 0.0;
+            Context context = getActivity().getApplicationContext();
+
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, "Please enter a value you want to transfer", duration);
+            toast.show();
         }
 
 
@@ -185,6 +194,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
         try {
             balance = Double.parseDouble(paymentAmountText.getText().toString());
+            ((MainActivity)getActivity()).checkEmptyField(descriptionText, "Description");
             String description = descriptionText.getText().toString();
             CharSequence result = "Hello toast!";
 
@@ -215,13 +225,14 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
             Toast toast = Toast.makeText(context, "Please enter a value you want to transfer", duration);
             toast.show();
-        }
-    }
+        } catch (EmptyMandatoryFieldException e) {
+            Context context = getActivity().getApplicationContext();
 
-    public void addRecipient(){
-        Intent i = new Intent(getActivity(), AddRecipient.class);
-        i.putExtra("ownerId", customer.getId());
-        startActivity(i);
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, "Make sure you filled all mandatory fields", duration);
+            toast.show();
+        }
     }
 
     public void addRecipientDialog(){
@@ -246,10 +257,12 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         addRecipient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nameText = name.getText().toString();
-                String sortCodeText = sortCode.getText().toString();
                 int accountNumberText;
                 try {
+                    ((MainActivity)getActivity()).checkEmptyField(name, "Name");
+                    ((MainActivity)getActivity()).checkEmptyField(sortCode,"Sort Code");
+                    String nameText = name.getText().toString();
+                    String sortCodeText = sortCode.getText().toString();
                     accountNumberText = Integer.parseInt(accountNumber.getText().toString());
                     ((MainActivity)getActivity()).addRecipinet(nameText,sortCodeText,accountNumberText);
                     int duration = Toast.LENGTH_SHORT;
@@ -261,6 +274,10 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                     accountNumberText = 0;
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(getActivity(), "Please enter account number", duration);
+                    toast.show();
+                } catch (EmptyMandatoryFieldException e) {
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(getActivity(), "Please make sure you entered all mandatory data", duration);
                     toast.show();
                 }
 
