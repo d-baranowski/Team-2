@@ -139,7 +139,7 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
                 HashMap<String, String> map = list.get(i);
                 String test = map.get(keys[j]);
                 TextView text = new TextView(getActivity());
-                text.setTextSize(7);
+                text.setTextSize(8);
                 text.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
                 text.setPadding(5,5,5,5);
 
@@ -156,6 +156,7 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
                         text.setBackgroundColor(Color.WHITE);
                     }
                 }
+
                 row.addView(text);
             }
 

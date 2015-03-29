@@ -56,8 +56,10 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:textColor="#000"
             android:layout_marginTop="3dp"
             android:background="@drawable/back"
+            android:paddingLeft="3dp"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true" />
@@ -69,7 +71,8 @@
             android:layout_marginTop="10dp"
             android:text="@string/password_label"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/lloyds_green" />
+            android:textColor="@color/lloyds_green"
+            />
 
         <EditText
             android:id="@+id/password"
@@ -77,9 +80,9 @@
             android:layout_height="30dp"
             android:layout_marginTop="3dp"
             android:background="@drawable/back"
+            android:paddingLeft="3dp"
             android:imeActionId="@+id/login"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionUnspecified"
+            android:textColor="#000"
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true" />

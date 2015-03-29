@@ -1,9 +1,12 @@
 package com.team.two.lloyds_app.screens.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -114,11 +117,11 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         addRecipmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addRecipient();
+                addRecipientDialog();
             }
         });
 
-        recipients = ((MainActivity) getActivity()).getRecipments();
+        recipients = ((MainActivity) getActivity()).getRecipients();
         mapRecipients();
 
         ArrayAdapter<String> paymentFromAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item, accountNames);
@@ -135,60 +138,155 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
     public void transfer(){
         Account destination = mapAccounts.get((String)transferTo.getSelectedItem());
         Account source = mapAccounts.get((String)transferFrom.getSelectedItem());
-        Double balance = Double.parseDouble(transferAmountText.getText().toString());
-        CharSequence result = "Hello toast!";
+        Double balance;
 
-        if (balance > 0){
-            if (balance <= source.getAvailableBalance()){
-                result = "Successful Transfer";
-                ((MainActivity)getActivity()).getAdapter().transfer(source,destination, balance);
+        try {
+            balance = Double.parseDouble(transferAmountText.getText().toString());
+
+            CharSequence result = "Hello toast!";
+
+            if (balance > 0){
+                if (balance <= source.getAvailableBalance()){
+                    result = "Successful Transfer";
+                    ((MainActivity)getActivity()).getAdapter().transfer(source,destination, balance);
+                } else {
+                    result = "Not enough available balance";
+                }
+
             } else {
-                result = "Not enough available balance";
+                result = "Balance can't be below 0";
             }
 
-        } else {
-            result = "Balance can't be below 0";
+            Context context = getActivity().getApplicationContext();
+
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, result, duration);
+            toast.show();
+
+        } catch (NumberFormatException e){
+            balance = 0.0;
+            Context context = getActivity().getApplicationContext();
+
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, "Please enter a value you want to transfer", duration);
+            toast.show();
+
         }
 
-        Context context = getActivity().getApplicationContext();
 
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, result, duration);
-        toast.show();
     }
 
     public void payment(){
         Account source = mapAccounts.get((String)paymentFrom.getSelectedItem());
         Recipient destination = mapRecipients.get((String)paymentRecipient.getSelectedItem());
-        Double balance = Double.parseDouble(paymentAmountText.getText().toString());
-        String description = descriptionText.getText().toString();
-        CharSequence result = "Hello toast!";
+        Double balance;
 
-        if (balance > 0){
-            if (balance <= source.getAvailableBalance()){
-                result = "Successful Payment";
-                ((MainActivity)getActivity()).getAdapter().payment(source, destination, balance, description);
+        try {
+            balance = Double.parseDouble(paymentAmountText.getText().toString());
+            String description = descriptionText.getText().toString();
+            CharSequence result = "Hello toast!";
+
+            if (balance > 0) {
+                if (balance <= source.getAvailableBalance()) {
+                    result = "Successful Payment";
+                    ((MainActivity) getActivity()).getAdapter().payment(source, destination, balance, description);
+                } else {
+                    result = "Not enough available balance";
+                }
+
             } else {
-                result = "Not enough available balance";
+                result = "Balance can't be below 0";
             }
 
-        } else {
-            result = "Balance can't be below 0";
+            Context context = getActivity().getApplicationContext();
+
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, result, duration);
+            toast.show();
+
+        } catch (NumberFormatException e){
+            balance = 0.0;
+            Context context = getActivity().getApplicationContext();
+
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, "Please enter a value you want to transfer", duration);
+            toast.show();
         }
-
-        Context context = getActivity().getApplicationContext();
-
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, result, duration);
-        toast.show();
     }
 
     public void addRecipient(){
         Intent i = new Intent(getActivity(), AddRecipient.class);
         i.putExtra("ownerId", customer.getId());
         startActivity(i);
+    }
+
+    public void addRecipientDialog(){
+        // Create custom dialog object
+        final Dialog dialog = new Dialog(getActivity());
+        // Include dialog.xml file
+        dialog.setContentView(R.layout.add_recipment_dialog);
+        // Set dialog title
+        dialog.setTitle("Add Recipient");
+
+        //UI References
+        final EditText name;
+        final EditText accountNumber;
+        final EditText sortCode;
+        Button addRecipient;
+
+        name = (EditText)dialog.findViewById(R.id.description_text);
+        accountNumber = (EditText)dialog.findViewById(R.id.account_number_text);
+        sortCode = (EditText)dialog.findViewById(R.id.sort_code_text);
+        addRecipient = (Button)dialog.findViewById(R.id.add_recipient_button);
+
+        addRecipient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nameText = name.getText().toString();
+                String sortCodeText = sortCode.getText().toString();
+                int accountNumberText;
+                try {
+                    accountNumberText = Integer.parseInt(accountNumber.getText().toString());
+                    ((MainActivity)getActivity()).addRecipinet(nameText,sortCodeText,accountNumberText);
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(getActivity(), "Recipient Added", duration);
+                    toast.show();
+                    getParentFragment().onResume();
+                    dialog.dismiss();
+                } catch (NumberFormatException e){
+                    accountNumberText = 0;
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(getActivity(), "Please enter account number", duration);
+                    toast.show();
+                }
+
+            }
+        });
+
+        addRecipient.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(0xe0add8e6, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+
+        dialog.show();
     }
 
     private void mapAccounts(){
@@ -250,7 +348,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
     @Override
     public void onResume() {
         accounts = ((MainActivity) getActivity()).getAccounts();
-        recipients = ((MainActivity) getActivity()).getRecipments();
+        recipients = ((MainActivity) getActivity()).getRecipients();
         mapAccounts();
         mapRecipients();
 

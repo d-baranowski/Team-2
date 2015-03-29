@@ -111,12 +111,16 @@ public class MainActivity extends ActionBarActivity  {
         return dbadapter.getAccounts(customerId);
     }
 
-    public ArrayList<Recipient> getRecipments() {
+    public ArrayList<Recipient> getRecipients() {
         return dbadapter.getRecipments(customerId);
     }
 
     public DatabaseAdapter getAdapter(){
         return dbadapter;
+    }
+
+    public void addRecipinet(String name, String sortCode, int accountNumber){
+        dbadapter.addRecipient(customerId,name,sortCode,accountNumber);
     }
 
 
