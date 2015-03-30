@@ -145,6 +145,32 @@ public class MainScreenFragment extends android.support.v4.app.Fragment {
             }
         });
 
+        openFinder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).openFinder();
+            }
+        });
+
+        openFinder.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(0xe0add8e6, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+
         accountName.setText(account.getAccountName());
         accountBalance.setText("£"+String.valueOf(account.getAccountBalance()));
         accountAvailable.setText("£"+String.valueOf(account.getAvailableBalance()));

@@ -2,16 +2,18 @@ package com.team.two.lloyds_app.screens.fragments;
 
 
 
-import android.app.Fragment;
+
 import android.os.Bundle;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import com.google.android.gms.maps.*;
 
@@ -19,8 +21,10 @@ import com.team.two.lloyds_app.R;
 
 
 
-public class BranchFinderFragment extends Fragment {
+public class BranchFinderFragment extends android.support.v4.app.Fragment {
 
+
+    public static final String TITLE = "Branch Finder";
     GoogleMap googleMap;
     /**
      * Initialises the mapview
@@ -32,7 +36,7 @@ public class BranchFinderFragment extends Fragment {
          */
         try {
             if(null == googleMap){
-                googleMap = ((MapFragment) getFragmentManager().findFragmentById(
+                googleMap = ((SupportMapFragment) getFragmentManager().findFragmentById(
                         R.id.mapView)).getMap();
 
                 /**
@@ -73,6 +77,7 @@ public class BranchFinderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         createMapView();
         addMarker();
