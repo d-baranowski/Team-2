@@ -264,7 +264,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                     String nameText = name.getText().toString();
                     String sortCodeText = sortCode.getText().toString();
                     accountNumberText = Integer.parseInt(accountNumber.getText().toString());
-                    ((MainActivity)getActivity()).addRecipinet(nameText,sortCodeText,accountNumberText);
+                    ((MainActivity)getActivity()).addRecipient(nameText,sortCodeText,accountNumberText);
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(getActivity(), "Recipient Added", duration);
                     toast.show();
