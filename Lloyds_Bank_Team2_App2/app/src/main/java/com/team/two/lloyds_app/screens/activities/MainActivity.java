@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.content.Intent;
+
 import com.google.android.gms.maps.*;
 import android.os.Bundle;
 
@@ -26,10 +26,8 @@ import com.team.two.lloyds_app.screens.fragments.MainScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.StatementScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.TransactionsScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
-import com.team.two.lloyds_app.screens.fragments.BranchFinderFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity  {
     private static DatabaseAdapter dbadapter;
@@ -45,7 +43,6 @@ public class MainActivity extends ActionBarActivity  {
         dbadapter = new DatabaseAdapter(this);
         customerId = getIntent().getExtras().getInt("customerId");
         fm = getSupportFragmentManager();
-
         setContentView(R.layout.activity_main_appbar);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);

@@ -1,14 +1,83 @@
 package com.team.two.lloyds_app.screens.fragments;
 
-/**
- * Created by Matthew on 26/03/2015.
- */
+
+
+import android.app.Fragment;
+import android.os.Bundle;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.*;
+
 import com.team.two.lloyds_app.R;
 
-public class BranchFinderFragment extends android.support.v4.app.Fragment {
 
+
+public class BranchFinderFragment extends Fragment {
+
+    GoogleMap googleMap;
+    /**
+     * Initialises the mapview
+     */
+    private void createMapView(){
+        /**
+         * Catch the null pointer exception that
+         * may be thrown when initialising the map
+         */
+        try {
+            if(null == googleMap){
+                googleMap = ((MapFragment) getFragmentManager().findFragmentById(
+                        R.id.mapView)).getMap();
+
+                /**
+                 * If the map is still null after attempted initialisation,
+                 * show an error to the user
+                 */
+                if(null == googleMap) {
+                    Toast.makeText(getActivity(),
+                            "Error creating map", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (NullPointerException exception){
+            Log.e("mapApp", exception.toString());
+        }
+    }
+
+    /**
+     * Adds a marker to the map
+     */
+    private void addMarker(){
+
+        /** Make sure that the map has been initialised **/
+        if(null != googleMap){
+            googleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(0, 0))
+                            .title("TEST Marker")
+                            .draggable(true)
+            );
+        }
+    }
+
+
+    public BranchFinderFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        createMapView();
+        addMarker();
+        return inflater.inflate(R.layout.fragment_branch_finder, container, false);
+    }
 
 
 }
