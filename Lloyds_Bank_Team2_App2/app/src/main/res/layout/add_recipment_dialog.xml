@@ -83,7 +83,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/account_number_text"
         android:text="@string/add"
-        android:background="@color/lloyds_green"
+        android:background="@drawable/mybutton"
         android:textColor="@color/WHITE"
         android:textSize="@dimen/text_size_button" />
 

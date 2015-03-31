@@ -1,6 +1,7 @@
 package com.team.two.lloyds_app.screens.fragments;
 
 import android.app.ActionBar;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -54,6 +55,8 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+        getActivity().setTitle("Statement");
     }
 
     @Override

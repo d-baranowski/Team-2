@@ -89,18 +89,12 @@
             android:singleLine="true"
             tools:ignore="RtlHardcoded" />
 
-        <TextView
-            android:id="@+id/forgotten_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/forgotten_password" />
-
         <CheckBox
             android:id="@+id/remember_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:textColor="#000"
             android:text="@string/login_remember_Id" />
 
         <Button

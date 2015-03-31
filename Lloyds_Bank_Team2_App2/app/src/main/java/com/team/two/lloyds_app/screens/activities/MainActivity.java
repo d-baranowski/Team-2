@@ -20,6 +20,7 @@ import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
 import com.team.two.lloyds_app.screens.drawer.NavigationDrawerFragment;
+import com.team.two.lloyds_app.screens.fragments.BranchFinderFragment;
 import com.team.two.lloyds_app.screens.fragments.MainScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.StatementScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.TransactionsScreenFragment;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity  {
     private static DatabaseAdapter dbadapter;
+    private String title;
     private Account account;
     GoogleMap googleMap;
     private Toolbar toolbar;
@@ -53,11 +55,11 @@ public class MainActivity extends ActionBarActivity  {
         if (savedInstanceState == null){
             openHome();
         } else {
-
         }
 
         NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer,(android.support.v4.widget.DrawerLayout) findViewById(R.id.drawer_layout),toolbar);
+
     }
 
 
@@ -85,31 +87,36 @@ public class MainActivity extends ActionBarActivity  {
 
     public void openHome(){
         Fragment bf = new MainScreenFragment();
-        toolbar.setTitle(MainScreenFragment.TITLE);
+        title = MainScreenFragment.TITLE;
+        toolbar.setTitle(title);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
     public void openStatement(){
         Fragment bf = new StatementScreenFragment();
-        toolbar.setTitle(StatementScreenFragment.TITLE);
+        title = StatementScreenFragment.TITLE;
+        toolbar.setTitle(title);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
     public void openTransfers(){
         Fragment bf = new TransactionsScreenFragment();
-        toolbar.setTitle(TransactionsScreenFragment.TITLE);
+        title = TransactionsScreenFragment.TITLE;
+        toolbar.setTitle(title);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
     public void openPlanner(){
         Fragment bf = new MoneyPlannerFragment();
+        title = MoneyPlannerFragment.TITLE;
         toolbar.setTitle(MoneyPlannerFragment.TITLE);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
     public void openFinder(){
         Fragment bf = new BranchFinderFragment();
-        toolbar.setTitle(BranchFinderFragment.TITLE);
+        title = BranchFinderFragment.TITLE;
+        toolbar.setTitle(title);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 

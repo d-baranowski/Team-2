@@ -19,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.team.two.lloyds_app.Constants;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 
