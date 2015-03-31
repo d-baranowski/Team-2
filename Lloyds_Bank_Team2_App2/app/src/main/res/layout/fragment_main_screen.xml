@@ -87,6 +87,7 @@
             android:textColor="@color/lloyds_green"
             android:textSize="@dimen/text_size_twenty"
             tools:ignore="RtlHardcoded" />
+            android:textSize="20sp" />
 
         <GridLayout
             android:id="@+id/grid"
@@ -103,7 +104,11 @@
                 android:layout_height="90dp"
                 android:layout_column="0"
                 android:layout_row="12"
-                android:background="@drawable/ic_statement_icon" />
+                android:background="@drawable/ic_statement_icon"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="2dp"/>
 
             <TextView
                 android:layout_column="0"
@@ -117,7 +122,11 @@
                 android:layout_height="90dp"
                 android:layout_column="1"
                 android:layout_row="12"
-                android:background="@drawable/ic_transfers_icon" />
+                android:background="@drawable/ic_transfers_icon"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="2dp"/>
 
             <TextView
                 android:layout_column="1"
@@ -131,7 +140,11 @@
                 android:layout_height="90dp"
                 android:layout_column="0"
                 android:layout_row="14"
-                android:background="@drawable/ic_achievements_icon" />
+                android:background="@drawable/ic_achievements_icon"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="2dp"/>
 
             <TextView
                 android:layout_column="0"
@@ -145,7 +158,11 @@
                 android:layout_height="90dp"
                 android:layout_column="1"
                 android:layout_row="14"
-                android:background="@drawable/ic_branch_finder_icon" />
+                android:background="@drawable/ic_branch_finder_icon"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="2dp"/>
 
             <TextView
                 android:layout_column="1"
@@ -159,7 +176,11 @@
                 android:layout_height="90dp"
                 android:layout_column="0"
                 android:layout_row="16"
-                android:background="@drawable/ic_money_planner_icon" />
+                android:background="@drawable/ic_money_planner_icon"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="2dp"/>
 
             <TextView
                 android:layout_column="0"
@@ -173,7 +194,11 @@
                 android:layout_height="90dp"
                 android:layout_column="1"
                 android:layout_row="16"
-                android:background="@drawable/ic_offers_icon" />
+                android:background="@drawable/ic_offers_icon"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="2dp"/>
 
             <TextView
                 android:layout_column="1"

@@ -10,8 +10,14 @@ import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by Daniel on 01/02/2015.
@@ -255,7 +261,7 @@ public class DatabaseAdapter {
 
         db.close();
     }
-    public ArrayList<Recipient> getRecipments(int ownerId){
+    public ArrayList<Recipient> getRecipients(int ownerId){
         ArrayList<Recipient> temp = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columnsR = SqlCons.RECIPIENT_COLUMNS;
@@ -333,4 +339,38 @@ public class DatabaseAdapter {
         db.close();
         return -1;
     }
+
+    public TreeMap<Date, Double> getBalanceDateMap(int customerID){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String[] columns = SqlCons.TRANSACTION_COLUMNS;
+        String query = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + customerID + "'";
+        Cursor cursor = db.query(SqlCons.TRANSACTIONS_TABLE_NAME,columns,query,null,null,null,null);
+
+        Map<Date, Double> map = new HashMap<>();
+        DateFormat format = new SimpleDateFormat("yyyy-M-d", Locale.ENGLISH);
+
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    String date = cursor.getString(cursor.getColumnIndex(SqlCons.TRANSACTION_DATE));
+                    Double balance = cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_BALANCE));
+                    try {
+                        map.put(format.parse(date), balance);
+                    } catch(Exception e){
+                    }
+                    cursor.moveToNext();
+                }
+
+                db.close();
+                return new TreeMap<Date,Double>(map);
+            }
+        }
+
+        db.close();
+        return null;
+    }
+
+
+
 }

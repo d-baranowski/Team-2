@@ -107,6 +107,12 @@ public class MainActivity extends ActionBarActivity  {
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
+    public void openFinder(){
+        Fragment bf = new BranchFinderFragment();
+        toolbar.setTitle(BranchFinderFragment.TITLE);
+        fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
+    }
+
     public Customer getCustomer(){
         return dbadapter.getCustomer(customerId);
     }
@@ -116,14 +122,14 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     public ArrayList<Recipient> getRecipients() {
-        return dbadapter.getRecipments(customerId);
+        return dbadapter.getRecipients(customerId);
     }
 
     public DatabaseAdapter getAdapter(){
         return dbadapter;
     }
 
-    public void addRecipinet(String name, String sortCode, int accountNumber){
+    public void addRecipient(String name, String sortCode, int accountNumber){
         dbadapter.addRecipient(customerId,name,sortCode,accountNumber);
     }
 

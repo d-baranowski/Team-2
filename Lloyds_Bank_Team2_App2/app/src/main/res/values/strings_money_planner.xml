@@ -2,9 +2,9 @@
 <resources>
 
     <string name="balance_graph_title">"Balance"</string>
-    <string name="spending_graph_title">"Average Spending"</string>
+    <string name="spending_graph_title">"Average spending"</string>
     <string name="summary_title">"Summary"</string>
-
+    <string name="overdraft_desc">"Overdraft limit"</string>
     <string name="summary_1">"On average, you are currently spending "</string>
     <string name="summary_2">" per day. If this average continues then "</string>
     <string name="overdraft_danger">"you will enter your overdraft on "</string>
