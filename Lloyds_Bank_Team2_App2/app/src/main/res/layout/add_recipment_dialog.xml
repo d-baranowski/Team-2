@@ -14,10 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/border"
-        android:text="Create a new recipient"
+        android:text="@string/new_recipient"
         android:textColor="@color/lloyds_green"
-        android:textSize="20dp" />
+        android:textSize="@dimen/text_size_twenty" />
 
     <TextView
         android:id="@+id/name_label"
@@ -27,7 +26,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/add_recipient_label"
         android:layout_marginTop="10dp"
-        android:text="Name of recipient: "
+        android:text="@string/recipient_name"
         android:textColor="@color/lloyds_green" />
 
     <EditText
@@ -46,7 +45,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/description_text"
         android:layout_marginTop="10dp"
-        android:text="Sort Code: "
+        android:text="@string/sort_code"
         android:textColor="@color/lloyds_green" />
 
     <EditText
@@ -65,7 +64,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/sort_code_text"
         android:layout_marginTop="10dp"
-        android:text="Account Number: "
+        android:text="@string/account_number"
         android:textColor="@color/lloyds_green" />
 
     <EditText
@@ -83,10 +82,11 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/account_number_text"
-        android:text="Add"
+        android:text="@string/add"
         android:background="@color/lloyds_green"
         android:textColor="@color/WHITE"
-        android:textSize="15dp" />
+        android:textSize="@dimen/text_size_button" />
+
 
 
 </RelativeLayout>

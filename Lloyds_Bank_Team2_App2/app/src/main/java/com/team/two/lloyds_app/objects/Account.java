@@ -7,15 +7,15 @@ import java.util.HashMap;
  * Created by danielbaranowski on 06/02/15.
  */
 public class Account {
-    private int accountID;
+    private final int accountID;
     private int accountNumber;
     private String sortCode;
-    private String accountName;
-    private String accountType;
+    private final String accountName;
+    private final String accountType;
     private double accountBalance;
     private double availableBalance;
     private double overdraft;
-    private int ownerId;
+    private final int ownerId;
     private ArrayList<HashMap<String,String>> transactions;
 
     public Account(int id, int accountNumber, String sortCode, String accountName, String accountType, double accountBalance, double availableBalance, double overdraft, int ownerId,ArrayList<HashMap<String,String>> transactions) {

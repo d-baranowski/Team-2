@@ -3,7 +3,8 @@
     android:layout_height="match_parent"
     tools:context="com.team.two.lloyds_app.screens.drawer.NavigationDrawerFragment"
     android:background= "#FFFFFF"
-    android:theme="@style/CustomStyle">
+    android:theme="@style/CustomStyle"
+    tools:ignore="Overdraw">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/drawer_recycler"
@@ -16,6 +17,7 @@
         android:layout_width="3dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:background="@color/lloyds_green" />
+        android:background="@color/lloyds_green"
+        tools:ignore="RtlHardcoded" />
 
 </RelativeLayout>

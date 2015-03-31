@@ -24,6 +24,7 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
         // Required empty public constructor
     }
 
+    @SuppressWarnings("EmptyMethod")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

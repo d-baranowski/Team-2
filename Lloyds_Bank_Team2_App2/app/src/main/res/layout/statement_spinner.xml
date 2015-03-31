@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
     style="?android:attr/spinnerItemStyle"
     android:singleLine="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
-    android:textAlignment="inherit"
-    android:textSize="20dp"
+    android:textSize="@dimen/text_size_twenty"
     android:textColor="@color/lloyds_green"
-    android:background="#FFFFFF"/>
+    android:background="#FFFFFF"
+    tools:ignore="Overdraw" />
 

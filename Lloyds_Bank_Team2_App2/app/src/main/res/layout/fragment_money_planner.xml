@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/WHITE"
-    tools:context="com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment">
+    tools:context="com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment"
+    tools:ignore="Overdraw">
 
     <View
         android:layout_width="match_parent"
@@ -22,8 +23,8 @@
             android:id="@+id/balance_graph_title"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:paddingLeft="10px"
-            android:paddingRight="10px"
+            android:paddingLeft="@dimen/ten_text_view_padding_side"
+            android:paddingRight="@dimen/ten_text_view_padding_side"
             android:text="@string/balance_graph_title"
             android:textSize="25sp" />
 
@@ -42,8 +43,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/balance_graph"
-            android:paddingLeft="10px"
-            android:paddingRight="10px"
+            android:paddingLeft="@dimen/ten_text_view_padding_side"
+            android:paddingRight="@dimen/ten_text_view_padding_side"
             android:text="@string/spending_graph_title"
             android:textSize="25sp" />
 
@@ -62,8 +63,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/spending_graph"
-            android:paddingLeft="10px"
-            android:paddingRight="10px"
+            android:paddingLeft="@dimen/ten_text_view_padding_side"
+            android:paddingRight="@dimen/ten_text_view_padding_side"
             android:text="@string/summary_title"
             android:textSize="25sp" />
 
@@ -72,8 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_below="@+id/summary_title"
-            android:paddingLeft="10px"
-            android:paddingRight="10px"
+            android:paddingLeft="@dimen/ten_text_view_padding_side"
+            android:paddingRight="@dimen/ten_text_view_padding_side"
             android:text="text"
             android:textSize="15sp" />
 

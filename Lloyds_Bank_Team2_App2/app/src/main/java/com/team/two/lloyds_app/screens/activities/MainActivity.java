@@ -3,8 +3,6 @@ package com.team.two.lloyds_app.screens.activities;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.content.Intent;
 import com.google.android.gms.maps.*;
 import android.os.Bundle;
 
@@ -26,10 +24,8 @@ import com.team.two.lloyds_app.screens.fragments.MainScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.StatementScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.TransactionsScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
-import com.team.two.lloyds_app.screens.fragments.BranchFinderFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity  {
     private static DatabaseAdapter dbadapter;
@@ -42,6 +38,7 @@ public class MainActivity extends ActionBarActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         dbadapter = new DatabaseAdapter(this);
         customerId = getIntent().getExtras().getInt("customerId");
         fm = getSupportFragmentManager();
@@ -53,7 +50,11 @@ public class MainActivity extends ActionBarActivity  {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        openHome();
+        if (savedInstanceState == null){
+            openHome();
+        } else {
+
+        }
 
         NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer,(android.support.v4.widget.DrawerLayout) findViewById(R.id.drawer_layout),toolbar);

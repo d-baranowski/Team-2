@@ -17,7 +17,7 @@ import java.util.HashMap;
  * Created by Daniel on 01/02/2015.
  */
 public class DatabaseAdapter {
-    DbHelp helper;
+    private final DbHelp helper;
 
     public DatabaseAdapter(Context context){
         helper = new DbHelp(context);
@@ -30,6 +30,7 @@ public class DatabaseAdapter {
          If the query is successful cursor object won't be null and its size (count) will be larger than 1
          Then the cursor will check if passed matches the password stored in database
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public boolean login(String userID, String password){
         //Apostrophe is part of SQLite syntax. These lines prevent app from crashing if user entered values contain apostrophes
         userID.replace("'","\'");
@@ -93,20 +94,20 @@ public class DatabaseAdapter {
     }
 
     public ArrayList<HashMap<String,String>> getTransactions(int id){
-        ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+        ArrayList<HashMap<String,String>> list = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columnsT = SqlCons.TRANSACTION_COLUMNS;
         String queryT = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + id + "'";
         String order =  SqlCons.TRANSACTION_DATE +" DESC";
 
-        Cursor t = db.query(SqlCons.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,null);
+        Cursor t = db.query(SqlCons.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,order);
 
         if (t != null) {
             if (t.getCount() > 0) {
                 t.moveToFirst();
 
                 for (int j = 0; j < t.getCount(); j++) {
-                    HashMap<String, String> temp = new HashMap<String, String>();
+                    HashMap<String, String> temp = new HashMap<>();
                     temp.put(SqlCons.TRANSACTION_DATE, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_DATE)));
                     temp.put(SqlCons.TRANSACTION_DESCRIPTION, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_DESCRIPTION)));
                     temp.put(SqlCons.TRANSACTION_TYPE, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_TYPE)));
@@ -313,6 +314,7 @@ public class DatabaseAdapter {
         return null;
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public int getId(String userID){
         userID.replace("'","\'");
         String[] columns = {SqlCons.CUSTOMER_ID};

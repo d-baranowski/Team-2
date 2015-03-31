@@ -4,7 +4,7 @@
     tools:context="com.team.two.lloyds_app.screens.activities.MainActivity">
 
     <item android:id="@+id/logo_horsey"
-        android:title="logo"
+        android:title="@string/logo"
         android:orderInCategory="200"
         android:icon="@drawable/ic_launcher"
         app:showAsAction="always"/>
