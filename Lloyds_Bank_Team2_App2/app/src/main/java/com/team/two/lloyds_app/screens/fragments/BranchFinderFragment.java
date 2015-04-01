@@ -2,7 +2,6 @@ package com.team.two.lloyds_app.screens.fragments;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +33,7 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
          */
         try {
             if(null == googleMap){
-                googleMap = ((SupportMapFragment) getFragmentManager().findFragmentById(
+                googleMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(
                         R.id.mapView)).getMap();
 
                 /**
