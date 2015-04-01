@@ -1,6 +1,8 @@
 package com.team.two.lloyds_app.screens.fragments;
 
 import com.team.two.lloyds_app.R;
+import com.team.two.lloyds_app.screens.activities.MainActivity;
+import android.util.Log;
 
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -11,23 +13,23 @@ import android.widget.TextView;
 
 import com.jjoe64.graphview.*;
 import com.jjoe64.graphview.series.*;
-import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Locale;
-import java.util.Map;
+import java.util.TreeMap;
 
 public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
 
-    public static final String TITLE = "Money Planner";
     private View root;
-    private final DateFormat df = new SimpleDateFormat("dd-M", Locale.ENGLISH);
-    //private final int BALANCE_DAYS_TO_PLOT = 9;
-    //private final int SPENDING_DAYS_TO_PLOT = 7;
+    public static final String TITLE = "Money Planner";
+
+    private final DateFormat df = new SimpleDateFormat("dd-MM", Locale.ENGLISH);
+    private final int KNOWN_BALANCE_DAYS_TO_PLOT = 16;
     private final int NUMBER_OF_DATE_LABELS = 5;
+    private Calendar DATE_CONSIDERED_NOW = Calendar.getInstance();
 
     public MoneyPlannerFragment() {
         // Required empty public constructor
@@ -43,8 +45,10 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_money_planner, container, false);
 
+        DATE_CONSIDERED_NOW.set(2015,Calendar.FEBRUARY, 15);
+
         generateBalanceGraph();
-        generateSpendingGraph();
+       // generateSpendingGraph();
         generateSummary();
 
         return root;
@@ -67,20 +71,65 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
         graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);/**/
 
     }
+
     private void generateBalanceGraph(){
         ArrayList<LineGraphSeries<DataPoint>> seriesList = new ArrayList();
 
-        DataPoint[] points = getBalancePoints();
-        LineGraphSeries<DataPoint> dataSeries = new LineGraphSeries<>(points);
-        dataSeries.setTitle(getString(R.string.balance_graph_title));
+        //Calculate initial date to start getting balance from
+        Calendar startDate = (Calendar) DATE_CONSIDERED_NOW.clone();
+        startDate.add(Calendar.DAY_OF_YEAR, -KNOWN_BALANCE_DAYS_TO_PLOT);
 
-        seriesList.add(dataSeries);
-        seriesList.add(getOverdraftSeries(points));
+        DataPoint[] knownBalancePoints = getKnownBalancePoints(startDate);
 
-        generateGraph(seriesList, R.id.balance_graph, points[0].getX(), points[points.length - 1].getX());
+        LineGraphSeries<DataPoint> knownBalanceSeries = new LineGraphSeries<>(knownBalancePoints);
+        knownBalanceSeries.setTitle(getString(R.string.actual_balance_title));
+
+        LineGraphSeries<DataPoint> estimateBalanceSeries = new LineGraphSeries<>(getEstimateBalancePoints(knownBalancePoints));
+        estimateBalanceSeries.setTitle(getString(R.string.estimated_balance_title));
+
+        seriesList.add(knownBalanceSeries);
+        seriesList.add(estimateBalanceSeries);
+        seriesList.add(getOverdraftSeries(startDate));
+
+        Calendar endDate = (Calendar) DATE_CONSIDERED_NOW.clone();
+        endDate.add(Calendar.DAY_OF_YEAR, KNOWN_BALANCE_DAYS_TO_PLOT);
+        generateGraph(seriesList, R.id.balance_graph, startDate.getTimeInMillis(), endDate.getTimeInMillis());
     }
 
-    private void generateSpendingGraph(){
+    private DataPoint[] getKnownBalancePoints(Calendar startDate){
+
+        int customerID = ((MainActivity) getActivity()).getCustomer().getId();
+
+        //Get balance/date map
+        TreeMap<Calendar, Double> balanceByDate = ((MainActivity) getActivity()).getAdapter().getBalanceDateMap(customerID, startDate, KNOWN_BALANCE_DAYS_TO_PLOT);
+
+        DataPoint[] dataPoints = new DataPoint[KNOWN_BALANCE_DAYS_TO_PLOT];
+
+        int i = 0;
+        for(Calendar c: balanceByDate.keySet()){
+            dataPoints[i] = new DataPoint(c.getTime(), balanceByDate.get(c));
+            i++;
+        }
+
+        return dataPoints;
+    }
+
+    private DataPoint[] getEstimateBalancePoints(DataPoint[] knownPoints){
+        Calendar date = Calendar.getInstance();
+        date.setTimeInMillis((long) knownPoints[KNOWN_BALANCE_DAYS_TO_PLOT - 1].getX());
+        date.add(Calendar.DAY_OF_YEAR, 1);
+
+        DataPoint[] estimateBalancePoints = new DataPoint[KNOWN_BALANCE_DAYS_TO_PLOT];
+        for(int i = 0 ;i < KNOWN_BALANCE_DAYS_TO_PLOT; i++){
+            estimateBalancePoints[i] = new DataPoint(date.getTime(), 2000);
+            date = (Calendar) date.clone();
+            date.add(Calendar.DAY_OF_YEAR,1);
+        }
+
+        return knownPoints;
+    }
+
+    /*private void generateSpendingGraph(){
 
         ArrayList<LineGraphSeries<DataPoint>> seriesList = new ArrayList();
 
@@ -91,41 +140,38 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
         seriesList.add(dataSeries);
 
         generateGraph(seriesList, R.id.spending_graph, points[0].getX(), points[points.length - 1].getX());
-    }
+    }*/
 
-    private DataPoint[] getBalancePoints(){
+   /* private DataPoint[] getSpendingPoints(){
 
-        ArrayList<DataPoint> dataPoints = new ArrayList<>();
         int customerID = ((MainActivity) getActivity()).getCustomer().getId();
-        Map<Date, Double> transactions = ((MainActivity) getActivity()).getAdapter().getBalanceDateMap(customerID);
+        Map<Date, Double> spending = ((MainActivity) getActivity()).getAdapter().getSpendingDateMap(customerID);
+        for(Date d: spending.keySet()){
+            android.util.Log.i("trans", d + " " + spending.get(d));
+        }
+       return null;
+    }*/
 
-        for(Date date: transactions.keySet()){
-            dataPoints.add(new DataPoint(date, transactions.get(date)));
+    private LineGraphSeries<DataPoint> getOverdraftSeries(Calendar startDate){
+        DataPoint[] overdraftPoints = new DataPoint[KNOWN_BALANCE_DAYS_TO_PLOT*2];
+        Calendar date = (Calendar) startDate.clone();
+
+        for(int i = 0; i < KNOWN_BALANCE_DAYS_TO_PLOT*2; i++){
+            overdraftPoints[i] = new DataPoint(date.getTime(), 0);
+            date.add(Calendar.DAY_OF_YEAR, 1);
         }
 
-        DataPoint[] arr = new DataPoint[dataPoints.size()];
-        return dataPoints.toArray(arr);
-    }
-
-    private DataPoint[] getSpendingPoints(){
-        return null;
-    }
-
-    private LineGraphSeries<DataPoint> getOverdraftSeries(DataPoint[] points){
-        DataPoint[] overdraftPoints = new DataPoint[points.length];
-        for(int i = 0; i < points.length; i++){
-            overdraftPoints[i] = new DataPoint(points[i].getX(), 0);
-        }
-        LineGraphSeries<DataPoint> overdraftSeries = new LineGraphSeries<>(overdraftPoints);
-        overdraftSeries.setTitle(getString(R.string.overdraft_desc));
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(5);
         paint.setPathEffect(new DashPathEffect(new float[]{10.0f, 5.0f}, 0));
         paint.setColor(Color.RED);
 
+        LineGraphSeries<DataPoint> overdraftSeries = new LineGraphSeries<>(overdraftPoints);
+        overdraftSeries.setTitle(getString(R.string.overdraft_desc));
         overdraftSeries.setCustomPaint(paint);
         overdraftSeries.setColor(Color.RED);
+
         return overdraftSeries;
     }
 
@@ -152,7 +198,7 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
         return new DefaultLabelFormatter() {
             public String formatLabel(double value, boolean isValueX) {
                 if (isValueX) {
-                    return df.format(new Date((long) value)) + "\n";
+                    return df.format(new java.util.Date((long) value)) + "\n";
                 } else {
                     return "£" + super.formatLabel(value, isValueX) + " ";
                 }

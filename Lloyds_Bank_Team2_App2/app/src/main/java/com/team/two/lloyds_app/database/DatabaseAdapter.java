@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.format.Time;
+import android.util.Log;
 
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Customer;
@@ -13,10 +14,10 @@ import com.team.two.lloyds_app.objects.Recipient;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -24,6 +25,9 @@ import java.util.TreeMap;
  */
 public class DatabaseAdapter {
     DbHelp helper;
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    private final int MAX_TRACKBACK_DAYS = 50;
+    private final double FALLBACK_BALANCE = 0;
 
     public DatabaseAdapter(Context context){
         helper = new DbHelp(context);
@@ -260,6 +264,7 @@ public class DatabaseAdapter {
 
         db.close();
     }
+
     public ArrayList<Recipient> getRecipients(int ownerId){
         ArrayList<Recipient> temp = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -338,30 +343,83 @@ public class DatabaseAdapter {
         return -1;
     }
 
-    public TreeMap<Date, Double> getBalanceDateMap(int customerID){
+    public TreeMap<Calendar, Double> getBalanceDateMap(int customerID, Calendar startDate, int numDays){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String query;
+
+        TreeMap<Calendar, Double> balanceByDate = new TreeMap<>();
+        Calendar date = (Calendar) startDate.clone();
+        Double balance = getPreviousBalance(startDate, customerID);
+
+        for(int i = 0; i < numDays; i++){
+            query = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + customerID + "' AND " + SqlCons.TRANSACTION_DATE + " = '" + df.format(date.getTime()) + "'";
+            Cursor cursor = db.query(SqlCons.TRANSACTIONS_TABLE_NAME, SqlCons.TRANSACTION_COLUMNS, query, null, null, null, null);
+
+            //If there was a transaction on this date, update the latest balance
+            if(cursor.getCount() > 0){
+                cursor.moveToLast();
+                balance = cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_BALANCE));
+            }
+
+            //Use the latest balance and add to map
+            balanceByDate.put(date, balance);
+            date = (Calendar) date.clone();
+            date.add(Calendar.DAY_OF_YEAR, 1);
+        }
+
+        return balanceByDate;
+    }
+
+    private double getPreviousBalance(Calendar beforeDate, int customerID){
+        Calendar date = (Calendar) beforeDate.clone();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String query;
+
+        for(int i = 0; i < MAX_TRACKBACK_DAYS;i++) {
+
+            query = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + customerID + "' AND " + SqlCons.TRANSACTION_DATE + " = '" + df.format(date.getTime()) + "'";
+            Cursor cursor = db.query(SqlCons.TRANSACTIONS_TABLE_NAME, SqlCons.TRANSACTION_COLUMNS, query, null, null, null, null);
+
+            if(cursor.getCount() > 0){
+                cursor.moveToLast();
+                return cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_BALANCE));
+            }
+
+            date.add(Calendar.DAY_OF_YEAR, -1);
+        }
+        return FALLBACK_BALANCE;
+    }
+
+    public TreeMap<Date, Double> getSpendingDateMap(int customerID){
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columns = SqlCons.TRANSACTION_COLUMNS;
         String query = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + customerID + "'";
         Cursor cursor = db.query(SqlCons.TRANSACTIONS_TABLE_NAME,columns,query,null,null,null,null);
 
-        Map<Date, Double> map = new HashMap<>();
+        TreeMap<Date, Double> map = new TreeMap<>();
         DateFormat format = new SimpleDateFormat("yyyy-M-d", Locale.ENGLISH);
 
         if (cursor != null) {
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 for (int i = 0; i < cursor.getCount(); i++) {
-                    String date = cursor.getString(cursor.getColumnIndex(SqlCons.TRANSACTION_DATE));
-                    Double balance = cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_BALANCE));
+                    String dateStr = cursor.getString(cursor.getColumnIndex(SqlCons.TRANSACTION_DATE));
+                    Double spend = cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_OUT));
                     try {
-                        map.put(format.parse(date), balance);
+                        Date date = format.parse(dateStr);
+                        if(map.containsKey(date)){
+                            map.put(date, map.get(date)+spend);
+                        } else {
+                            map.put(date, spend);
+                        }
                     } catch(Exception e){
+
                     }
                     cursor.moveToNext();
                 }
 
                 db.close();
-                return new TreeMap<Date,Double>(map);
+                return map;
             }
         }
 
