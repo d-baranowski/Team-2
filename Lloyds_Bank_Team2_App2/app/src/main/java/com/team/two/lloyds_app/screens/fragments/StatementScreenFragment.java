@@ -33,7 +33,7 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
     protected Account account;
 
     //List of Transactions
-    private ArrayList<HashMap<String,String>> transationsList;
+    private ArrayList<HashMap<String, String>> transactionsList;
 
     //UI references
     private Spinner accountName;
@@ -61,8 +61,8 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        customer = ((MainActivity)getActivity()).getCustomer();
-        account = ((MainActivity)getActivity()).getAccounts().get(0);
+        customer = ((MainActivity) getActivity()).getCustomer();
+        account = ((MainActivity) getActivity()).getAccounts().get(0);
 
         root = inflater.inflate(R.layout.fragment_statement, container, false);
 
@@ -74,34 +74,34 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
         accountAvailable = (TextView) root.findViewById(R.id.account_available);
         table = (TableLayout) root.findViewById(R.id.tableLayout1);
 
-        transationsList = account.getTransactions();
+        transactionsList = account.getTransactions();
         addItemsOnSpinner();
 
         return root;
     }
 
 
-    public void addItemsOnSpinner(){
-        ArrayList<Account> accounts = ((MainActivity)getActivity()).getAccounts();
+    public void addItemsOnSpinner() {
+        ArrayList<Account> accounts = ((MainActivity) getActivity()).getAccounts();
         List<String> list = new ArrayList<>();
 
-        for (int i = 0; i < accounts.size(); i++){
+        for (int i = 0; i < accounts.size(); i++) {
             list.add(accounts.get(i).getAccountName());
         }
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),R.layout.statement_spinner, list);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), R.layout.statement_spinner, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountName.setAdapter(dataAdapter);
         accountName.setOnItemSelectedListener(new CustomOnItemSelectedListener());
     }
 
-    public void updateAccount(int position){
-        account = ((MainActivity)getActivity()).getAccounts().get(position);
-        accountBalance.setText("£"+String.valueOf(account.getAccountBalance()));
-        accountAvailable.setText("£"+String.valueOf(account.getAvailableBalance()));
+    public void updateAccount(int position) {
+        account = ((MainActivity) getActivity()).getAccounts().get(position);
+        accountBalance.setText("£" + String.valueOf(account.getAccountBalance()));
+        accountAvailable.setText("£" + String.valueOf(account.getAvailableBalance()));
         accountType.setText(account.getAccountType());
 
-        if (!account.getAccountType().equals("Subaccount")){
+        if (!account.getAccountType().equals("Subaccount")) {
             accountNumber.setText(String.valueOf(account.getAccountNumber()));
             accountSortCode.setText(account.getSortCode());
         } else {
@@ -109,14 +109,14 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
             accountSortCode.setText("");
         }
 
-        transationsList.clear();
-        transationsList = account.getTransactions();
+        transactionsList.clear();
+        transactionsList = account.getTransactions();
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             buildTableVertical();
         }
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             buildTableHorizontal();
         }
 
@@ -124,33 +124,34 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
         table.setBackgroundResource(R.drawable.cell_shape);
     }
 
-    public void buildTableHorizontal(){
+    public void buildTableHorizontal() {
         table.removeAllViews();
-        int rows = transationsList.size();
+        int rows = transactionsList.size();
         int cols = 6;
-        String[] keys = {"Date","Description","TransactionType","Income","Outcome","TransactionBalance"};
-        String[] labels = {"Date","Description","Type","Income","Outcome","Balance"};
+        String[] keys = {"Date", "Description", "TransactionType", "Income", "Outcome", "TransactionBalance"};
+        String[] labels = {"Date", "Description", "Type", "Income", "Outcome", "Balance"};
 
-        for (int i = 0; i < rows; i++){
+        for (int i = 0; i < rows + 1; i++) {
             TableRow row = new TableRow(getActivity());
             row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
-            for (int j = 0; j < cols; j++){
-                HashMap<String, String> transactionRow = transationsList.get(i);
-                String cellData = transactionRow.get(keys[j]);
+            for (int j = 0; j < cols; j++) {
+
                 TextView textBox = new TextView(getActivity());
                 textBox.setTextSize(15);
                 textBox.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 textBox.setPadding(5, 5, 5, 5);
 
-                if(i == 0){
+                if (i == 0) {
                     textBox.setBackgroundColor(getResources().getColor(R.color.lloyds_green));
                     textBox.setText(labels[j]);
                     textBox.setTextColor(Color.WHITE);
-                } else{
+                } else {
+                    HashMap<String, String> transactionRow = transactionsList.get(i - 1);
+                    String cellData = transactionRow.get(keys[j]);
                     textBox.setText(cellData);
 
-                    if (i % 2 == 0){
+                    if (i % 2 == 0) {
                         textBox.setBackgroundColor(getResources().getColor(R.color.light_gray));
                     } else {
                         textBox.setBackgroundColor(Color.WHITE);
@@ -164,43 +165,43 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
         }
     }
 
-    public void buildTableVertical(){
+    public void buildTableVertical() {
         table.removeAllViews();
-        int rows = transationsList.size();
+        int rows = transactionsList.size();
         int cols = 4;
-        String[] keys = {"Date","Description","Income","TransactionBalance"};
-        String[] labels = {"Date","Description","Cash Flow","Balance"};
+        String[] keys = {"Date", "Description", "Income", "TransactionBalance"};
+        String[] labels = {"Date", "Description", "Cash Flow", "Balance"};
 
-        for (int i = 0; i < rows; i++){
+        for (int i = 0; i < rows + 1; i++) {
             TableRow row = new TableRow(getActivity());
             row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
-            for (int j = 0; j < cols; j++){
-                HashMap<String, String> transactionRow = transationsList.get(i);
-                String cellData = transactionRow.get(keys[j]);
+            for (int j = 0; j < cols; j++) {
                 TextView textBox = new TextView(getActivity());
                 textBox.setTextSize(12);
                 textBox.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 textBox.setPadding(5, 5, 5, 5);
 
-                if(i == 0){
+                if (i == 0) {
                     textBox.setBackgroundColor(getResources().getColor(R.color.lloyds_green));
                     textBox.setText(labels[j]);
                     textBox.setTextColor(Color.WHITE);
-                } else{
-                    if  (j == 2){
+                } else {
+                    HashMap<String, String> transactionRow = transactionsList.get(i - 1);
+                    String cellData = transactionRow.get(keys[j]);
+                    if (j == 2) {
                         double income = Double.parseDouble(transactionRow.get(keys[2]));
                         double outcome = Double.parseDouble(transactionRow.get("Outcome"));
 
-                        if (income > 0){
-                            cellData = income+"";
-                        } else if (outcome > 0 ){
+                        if (income > 0) {
+                            cellData = income + "";
+                        } else if (outcome > 0) {
                             cellData = "- " + outcome;
                         }
                     }
                     textBox.setText(cellData);
 
-                    if (i % 2 == 0){
+                    if (i % 2 == 0) {
                         textBox.setBackgroundColor(getResources().getColor(R.color.light_gray));
                     } else {
                         textBox.setBackgroundColor(Color.WHITE);

@@ -3,10 +3,8 @@ package com.team.two.lloyds_app.screens.fragments;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -42,7 +40,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
     private EditText paymentAmountText;
     private EditText descriptionText;
     private Button paymentButton;
-    private Button addRecipmentButton;
+    private Button addRecipientButton;
 
     private ArrayList<Account> accounts;
     private List<String> accountNames;
@@ -69,7 +67,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         accounts = ((MainActivity)getActivity()).getAccounts();
 
         root = inflater.inflate(R.layout.fragment_transfer, container, false);
@@ -103,7 +101,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         paymentAmountText = (EditText) root.findViewById(R.id.payment_amount_text);
         descriptionText = (EditText) root.findViewById(R.id.description_text);
         paymentButton = (Button) root.findViewById(R.id.button_payment);
-        addRecipmentButton = (Button) root.findViewById(R.id.button_new_recipient);
+        addRecipientButton = (Button) root.findViewById(R.id.button_new_recipient);
 
         paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +110,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
             }
         });
 
-        addRecipmentButton.setOnClickListener(new View.OnClickListener() {
+        addRecipientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addRecipientDialog();
@@ -148,6 +146,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                 if (balance <= source.getAvailableBalance()){
                     result = "Successful Transfer";
                     ((MainActivity)getActivity()).getAdapter().transfer(source,destination, balance);
+                    ((MainActivity) getActivity()).openHome();
                 } else {
                     result = "Not enough available balance";
                 }
@@ -199,7 +198,10 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
             if (balance > 0) {
                 if (balance <= source.getAvailableBalance()) {
                     result = "Successful Payment";
+                    paymentAmountText.setText("");
+                    descriptionText.setText("");
                     ((MainActivity) getActivity()).getAdapter().payment(source, destination, balance, description);
+                    accounts = ((MainActivity)getActivity()).getAccounts();
                 } else {
                     result = "Not enough available balance";
                 }

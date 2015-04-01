@@ -60,6 +60,7 @@ public class SqlCons {
     static final String TRANSACTIONS_TABLE_NAME = "Transactions";
     private static final String TRANSACTION_ID = "transaction_id";
     static final String TRANSACTION_DATE = "Date";
+    static final String TRANSACTION_TIME = "Time";
     static final String TRANSACTION_DESCRIPTION = "Description";
     static final String TRANSACTION_TYPE = "TransactionType";
     static final String TRANSACTION_IN = "Income";
@@ -67,11 +68,13 @@ public class SqlCons {
     static final String TRANSACTION_BALANCE = "TransactionBalance";
     static final String TRANSACTION_ACCOUNT_ID_FOREIGN = "AccountReference";
 
+
     static final String CREATE_TRANSACTIONS_TABLE =
             "CREATE TABLE " +
                     TRANSACTIONS_TABLE_NAME + " (" +
                     TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     TRANSACTION_DATE + " STRING NOT NULL, " +
+                    TRANSACTION_TIME + " INTEGER NOT NULL, " +
                     TRANSACTION_DESCRIPTION + " STRING," +
                     TRANSACTION_TYPE + " STRING," +
                     TRANSACTION_IN + " REAL DEFAULT 0.00," +
@@ -79,7 +82,7 @@ public class SqlCons {
                     TRANSACTION_BALANCE + " REAL," +
                     TRANSACTION_ACCOUNT_ID_FOREIGN + " INTEGER REFERENCES "+ACCOUNTS_TABLE_NAME+"("+ ACCOUNT_ID +"));";
 
-    static final String[] TRANSACTION_COLUMNS = {TRANSACTION_ID, TRANSACTION_DATE, TRANSACTION_DESCRIPTION, TRANSACTION_TYPE, TRANSACTION_IN, TRANSACTION_OUT, TRANSACTION_BALANCE, TRANSACTION_ACCOUNT_ID_FOREIGN};
+    static final String[] TRANSACTION_COLUMNS = {TRANSACTION_ID, TRANSACTION_DATE, TRANSACTION_TIME, TRANSACTION_DESCRIPTION, TRANSACTION_TYPE, TRANSACTION_IN, TRANSACTION_OUT, TRANSACTION_BALANCE, TRANSACTION_ACCOUNT_ID_FOREIGN};
 
     //Recipients table SQL
     static final String RECIPIENTS_TABLE_NAME = "Recipients";

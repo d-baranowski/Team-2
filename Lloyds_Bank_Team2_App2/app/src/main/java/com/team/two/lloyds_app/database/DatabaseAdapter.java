@@ -104,7 +104,7 @@ public class DatabaseAdapter {
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columnsT = SqlCons.TRANSACTION_COLUMNS;
         String queryT = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + id + "'";
-        String order =  SqlCons.TRANSACTION_DATE +" DESC";
+        String order =  SqlCons.TRANSACTION_DATE +" DESC, " + SqlCons.TRANSACTION_TIME + " DESC";
 
         Cursor t = db.query(SqlCons.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,order);
 
@@ -135,6 +135,7 @@ public class DatabaseAdapter {
 
         Time now = new Time();
         now.setToNow();
+        long time = System.currentTimeMillis() / 1000L;
         String date = now.year + "-" + now.month + "-" + now.monthDay;
 
         String descSource = "To " + destination.getAccountName();
@@ -143,6 +144,7 @@ public class DatabaseAdapter {
         //Source transaction
         ContentValues sourceTransaction = new ContentValues();
         sourceTransaction.put(SqlCons.TRANSACTION_DATE, date);
+        sourceTransaction.put(SqlCons.TRANSACTION_TIME, time);
         sourceTransaction.put(SqlCons.TRANSACTION_DESCRIPTION, descSource);
         sourceTransaction.put(SqlCons.TRANSACTION_TYPE, "User Transaction");
         sourceTransaction.put(SqlCons.TRANSACTION_IN, 0.00);
@@ -160,6 +162,7 @@ public class DatabaseAdapter {
         //Destination transaction
         ContentValues destinationTransaction = new ContentValues();
         destinationTransaction.put(SqlCons.TRANSACTION_DATE, date);
+        destinationTransaction.put(SqlCons.TRANSACTION_TIME, time);
         destinationTransaction.put(SqlCons.TRANSACTION_DESCRIPTION, descDesctination);
         destinationTransaction.put(SqlCons.TRANSACTION_TYPE, "User Transaction");
         destinationTransaction.put(SqlCons.TRANSACTION_IN, balance);
