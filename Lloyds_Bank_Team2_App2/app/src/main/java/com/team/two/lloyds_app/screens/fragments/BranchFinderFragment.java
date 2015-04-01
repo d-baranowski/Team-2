@@ -2,7 +2,6 @@ package com.team.two.lloyds_app.screens.fragments;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,9 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
 
 
     public static final String TITLE = "Branch Finder";
+    View Root;
     GoogleMap googleMap;
+
     /**
      * Initialises the mapview
      */
@@ -32,7 +33,7 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
          */
         try {
             if(null == googleMap){
-                googleMap = ((SupportMapFragment) getFragmentManager().findFragmentById(
+                googleMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(
                         R.id.mapView)).getMap();
 
                 /**
@@ -68,19 +69,14 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
         // Required empty public constructor
     }
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        createMapView();
-        addMarker();
-        getActivity().setTitle("Branch Finder");
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_branch_finder, container, false);
+        Root = inflater.inflate(R.layout.fragment_branch_finder, container, false);
+        createMapView();
+        addMarker();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        return Root;
     }
 
 

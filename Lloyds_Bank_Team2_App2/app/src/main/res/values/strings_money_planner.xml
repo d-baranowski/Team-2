@@ -12,14 +12,14 @@
     <string name="summary_2">" per day. This average has "</string>
     <string name="average_increase">increased </string>
     <string name="average_decrease">decreased </string>
-    <string name="average_no_change">decreased </string>
+    <string name="average_no_change">"stayed the same over the past "</string>
     <string name="summary_3">" by "</string>
     <string name="summary_4">"% over the past "</string>
     <string name="summary_5">" If this average continues then you will enter your overdraft in "</string>
     <string name="days">" days."</string>
-    <string name="overdraft_danger">"\nYou are in great danger to entering your overdraft! Take consideration immediately."</string>
-    <string name="overdraft_caution">"\nYou are in slight danger of entering your overdraft. Try to be cautious."</string>
-    <string name="overdraft_safe">"\nYou are in no danger of entering your overdraft. Well done!"</string>
+    <string name="overdraft_danger">"\n\nYou are in great danger to entering your overdraft! Take consideration immediately."</string>
+    <string name="overdraft_caution">"\n\nYou are in slight danger of entering your overdraft. Try to be cautious."</string>
+    <string name="overdraft_safe">"\n\nYou are in no danger of entering your overdraft. Well done!"</string>
     <string name="in_overdraft">"You are currently in your overdraft. Try to spend as little as you can! For reference, you are currently spending "</string>
     <string name="on_average">" a day on average."</string>
 
