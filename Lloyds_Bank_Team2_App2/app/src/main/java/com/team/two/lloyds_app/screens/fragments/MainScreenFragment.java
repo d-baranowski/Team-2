@@ -15,6 +15,8 @@ import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 
+import java.text.DecimalFormat;
+
 public class MainScreenFragment extends android.support.v4.app.Fragment {
     public static final String TITLE = "Home";
     protected View root;
@@ -177,9 +179,10 @@ public class MainScreenFragment extends android.support.v4.app.Fragment {
             }
         });
 
+        DecimalFormat df = new DecimalFormat("#.00");
         accountName.setText(account.getAccountName());
-        accountBalance.setText("£"+String.valueOf(account.getAccountBalance()));
-        accountAvailable.setText("£"+String.valueOf(account.getAvailableBalance()));
+        accountBalance.setText("£"+String.valueOf(df.format(account.getAccountBalance())));
+        accountAvailable.setText("£"+String.valueOf(df.format(account.getAvailableBalance())));
         accountType.setText(account.getAccountType());
         accountNumber.setText(String.valueOf(account.getAccountNumber()));
         accountSortCode.setText(account.getSortCode());

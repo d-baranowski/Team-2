@@ -14,7 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.team.two.lloyds_app.Exceptions.EmptyMandatoryFieldException;
+import com.team.two.lloyds_app.Constants;
+import com.team.two.lloyds_app.exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Recipient;
@@ -148,11 +149,11 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                     ((MainActivity)getActivity()).getAdapter().transfer(source,destination, balance);
                     ((MainActivity) getActivity()).openHome();
                 } else {
-                    result = "Not enough available balance";
+                    result = Constants.TOAST_NO_FUNDS;
                 }
 
             } else {
-                result = "Balance can't be below 0";
+                result =  Constants.TOAST_BELOW_ZERO;
             }
 
             Context context = getActivity().getApplicationContext();
@@ -168,7 +169,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
             int duration = Toast.LENGTH_SHORT;
 
-            Toast toast = Toast.makeText(context, "Please enter a value you want to transfer", duration);
+            Toast toast = Toast.makeText(context, Constants.TOAST_NO_VALUE, duration);
             toast.show();
 
         } catch (EmptyMandatoryFieldException e) {
@@ -177,7 +178,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
             int duration = Toast.LENGTH_SHORT;
 
-            Toast toast = Toast.makeText(context, "Please enter a value you want to transfer", duration);
+            Toast toast = Toast.makeText(context, Constants.TOAST_NO_VALUE, duration);
             toast.show();
         }
 
@@ -202,11 +203,11 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                     ((MainActivity) getActivity()).openHome();
 
                 } else {
-                    result = "Not enough available balance";
+                    result = Constants.TOAST_NO_FUNDS;
                 }
 
             } else {
-                result = "Balance can't be below 0";
+                result = Constants.TOAST_BELOW_ZERO;
             }
 
             Context context = getActivity().getApplicationContext();
@@ -222,14 +223,14 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
             int duration = Toast.LENGTH_SHORT;
 
-            Toast toast = Toast.makeText(context, "Please enter a value you want to transfer", duration);
+            Toast toast = Toast.makeText(context, Constants.TOAST_NO_VALUE, duration);
             toast.show();
         } catch (EmptyMandatoryFieldException e) {
             Context context = getActivity().getApplicationContext();
 
             int duration = Toast.LENGTH_SHORT;
 
-            Toast toast = Toast.makeText(context, "Make sure you filled all mandatory fields", duration);
+            Toast toast = Toast.makeText(context, Constants.TOAST_MANDATORY_DATA, duration);
             toast.show();
         }
     }
@@ -277,7 +278,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                     toast.show();
                 } catch (EmptyMandatoryFieldException e) {
                     int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(getActivity(), "Please make sure you entered all mandatory data", duration);
+                    Toast toast = Toast.makeText(getActivity(), Constants.TOAST_MANDATORY_DATA, duration);
                     toast.show();
                 }
             }
