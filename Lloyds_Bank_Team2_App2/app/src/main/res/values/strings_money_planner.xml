@@ -3,10 +3,16 @@
 
     <string name="balance_graph_title">"Balance"</string>
     <string name="spending_graph_title">"Average spending"</string>
+    <string name="actual_balance_title">"Actual"</string>
+    <string name="estimated_balance_title">"Estimated"</string>
+    <string name="pound_sign">"£"</string>
     <string name="summary_title">"Summary"</string>
     <string name="overdraft_desc">"Overdraft limit"</string>
     <string name="summary_1">"On average, you are currently spending "</string>
     <string name="summary_2">" per day. If this average continues then "</string>
-    <string name="overdraft_danger">"you will enter your overdraft on "</string>
+    <string name="overdraft_danger">"you are in great danger to entering your overdraft! Take consideration immediately."</string>
+    <string name="overdraft_caution">you are in slight danger of entering your overdraft. Try to be cautious.</string>
     <string name="overdraft_safe">"you are in no danger of entering your overdraft. Well done!"</string>
+    <string name="in_overdraft">"You are currently in your overdraft. Try to spend as little as you can! For reference, you are currently spending "</string>
+    <string name="on_average">" a day on average."</string>
 </resources>

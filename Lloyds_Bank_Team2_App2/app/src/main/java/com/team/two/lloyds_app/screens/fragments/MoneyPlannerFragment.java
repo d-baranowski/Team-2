@@ -1,6 +1,8 @@
 package com.team.two.lloyds_app.screens.fragments;
 
 import com.team.two.lloyds_app.R;
+import com.team.two.lloyds_app.screens.activities.MainActivity;
+import android.util.Log;
 
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -12,43 +14,48 @@ import android.widget.TextView;
 
 import com.jjoe64.graphview.*;
 import com.jjoe64.graphview.series.*;
-import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Locale;
-import java.util.Map;
+import java.util.TreeMap;
 
 public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
 
-    public static final String TITLE = "Money Planner";
     private View root;
-    private final DateFormat df = new SimpleDateFormat("dd-M", Locale.ENGLISH);
-    //private final int BALANCE_DAYS_TO_PLOT = 9;
-    //private final int SPENDING_DAYS_TO_PLOT = 7;
+    public static final String TITLE = "Money Planner";
+
+    private final DateFormat df = new SimpleDateFormat("dd-MM", Locale.ENGLISH);
+    private final int KNOWN_BALANCE_DAYS_TO_PLOT = 16;
     private final int NUMBER_OF_DATE_LABELS = 5;
+    private Calendar DATE_CONSIDERED_NOW = Calendar.getInstance();
+    private double AVERAGE_SPENDING = 0;
+    private double LATEST_ESTIMATED_BALANCE = 0;
+    private double LATEST_KNOWN_BALANCE = 0;
+    private final double OVERDRAFT_SAFE_AMOUNT = 350;
+    private final double OVERDRAFT_DANGER_AMOUNT = 100;
 
     public MoneyPlannerFragment() {
         // Required empty public constructor
     }
 
-    @SuppressWarnings("EmptyMethod")
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getActivity().setTitle("Money Planner");
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_money_planner, container, false);
 
-        generateBalanceGraph();
+        //Set the date that is considered the present date
+        DATE_CONSIDERED_NOW.set(2015,Calendar.FEBRUARY, 15);
+
         generateSpendingGraph();
+        generateBalanceGraph();
         generateSummary();
 
         return root;
@@ -67,28 +74,84 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
         graph.getViewport().setMaxX(maxX);
         graph.getViewport().setXAxisBoundsManual(true);
 
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graph.getLegendRenderer().setPadding(0);
+        graph.getLegendRenderer().setTextColor(getResources().getColor(R.color.black));
+        graph.getLegendRenderer().setBackgroundColor(getResources().getColor(R.color.legend_background));
         graph.getLegendRenderer().setVisible(true);
-        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);/**/
 
     }
+
     private void generateBalanceGraph(){
         ArrayList<LineGraphSeries<DataPoint>> seriesList = new ArrayList();
 
-        DataPoint[] points = getBalancePoints();
-        LineGraphSeries<DataPoint> dataSeries = new LineGraphSeries<>(points);
-        dataSeries.setTitle(getString(R.string.balance_graph_title));
+        //Calculate initial date to start getting balance from
+        Calendar startDate = (Calendar) DATE_CONSIDERED_NOW.clone();
+        startDate.add(Calendar.DAY_OF_YEAR, -KNOWN_BALANCE_DAYS_TO_PLOT);
 
-        seriesList.add(dataSeries);
-        seriesList.add(getOverdraftSeries(points));
+        DataPoint[] knownBalancePoints = getKnownBalancePoints(startDate);
 
-        generateGraph(seriesList, R.id.balance_graph, points[0].getX(), points[points.length - 1].getX());
+        LineGraphSeries<DataPoint> knownBalanceSeries = new LineGraphSeries<>(knownBalancePoints);
+        knownBalanceSeries.setTitle(getString(R.string.actual_balance_title));
+        knownBalanceSeries.setColor(Color.BLUE);
+
+        LineGraphSeries<DataPoint> estimateBalanceSeries = new LineGraphSeries<>(getEstimateBalancePoints(knownBalancePoints));
+        estimateBalanceSeries.setTitle(getString(R.string.estimated_balance_title));
+        estimateBalanceSeries.setColor(getResources().getColor(R.color.money_planner_estimated));
+
+        seriesList.add(knownBalanceSeries);
+        seriesList.add(estimateBalanceSeries);
+        seriesList.add(getOverdraftSeries(startDate));
+
+        Calendar endDate = (Calendar) DATE_CONSIDERED_NOW.clone();
+        endDate.add(Calendar.DAY_OF_YEAR, KNOWN_BALANCE_DAYS_TO_PLOT);
+        generateGraph(seriesList, R.id.balance_graph, startDate.getTimeInMillis(), endDate.getTimeInMillis());
+    }
+
+    private DataPoint[] getKnownBalancePoints(Calendar startDate){
+
+        int customerID = ((MainActivity) getActivity()).getCustomer().getId();
+
+        //Get balance/date map
+        TreeMap<Calendar, Double> balanceByDate = ((MainActivity) getActivity()).getAdapter().getBalanceDateMap(customerID, startDate, KNOWN_BALANCE_DAYS_TO_PLOT);
+
+        DataPoint[] knownBalancePoints = new DataPoint[KNOWN_BALANCE_DAYS_TO_PLOT];
+
+        int i = 0;
+        for(Calendar c: balanceByDate.keySet()){
+            knownBalancePoints[i] = new DataPoint(c.getTime(), balanceByDate.get(c));
+            i++;
+        }
+
+        LATEST_KNOWN_BALANCE = knownBalancePoints[KNOWN_BALANCE_DAYS_TO_PLOT-1].getY();
+
+        return knownBalancePoints;
+    }
+
+    private DataPoint[] getEstimateBalancePoints(DataPoint[] knownPoints){
+        Calendar date = Calendar.getInstance();
+        date.setTimeInMillis((long) knownPoints[KNOWN_BALANCE_DAYS_TO_PLOT - 1].getX());
+        double balance = knownPoints[KNOWN_BALANCE_DAYS_TO_PLOT - 1].getY();
+
+        DataPoint[] estimateBalancePoints = new DataPoint[KNOWN_BALANCE_DAYS_TO_PLOT + 1];
+
+        for(int i = 0 ; i < KNOWN_BALANCE_DAYS_TO_PLOT + 1; i++){
+            balance = balance - AVERAGE_SPENDING;
+            estimateBalancePoints[i] = new DataPoint(date.getTime(), balance);
+            date = (Calendar) date.clone();
+            date.add(Calendar.DAY_OF_YEAR,1);
+        }
+
+        LATEST_ESTIMATED_BALANCE = estimateBalancePoints[KNOWN_BALANCE_DAYS_TO_PLOT].getY();
+
+        return estimateBalancePoints;
     }
 
     private void generateSpendingGraph(){
 
-        ArrayList<LineGraphSeries<DataPoint>> seriesList = new ArrayList();
+        ArrayList<LineGraphSeries<DataPoint>> seriesList = new ArrayList<>();
 
-        DataPoint[] points = getBalancePoints();
+        DataPoint[] points = getSpendingPoints();
         LineGraphSeries<DataPoint> dataSeries = new LineGraphSeries<>(points);
         dataSeries.setTitle(getString(R.string.spending_graph_title));
 
@@ -97,50 +160,65 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
         generateGraph(seriesList, R.id.spending_graph, points[0].getX(), points[points.length - 1].getX());
     }
 
-    private DataPoint[] getBalancePoints(){
+   private DataPoint[] getSpendingPoints(){
+       int customerID = ((MainActivity) getActivity()).getCustomer().getId();
 
-        ArrayList<DataPoint> dataPoints = new ArrayList<>();
-        int customerID = ((MainActivity) getActivity()).getCustomer().getId();
-        Map<Date, Double> transactions = ((MainActivity) getActivity()).getAdapter().getBalanceDateMap(customerID);
+       //Get balance/date map
+       TreeMap<Calendar, Double> spendingByDate = ((MainActivity) getActivity()).getAdapter().getSpendingDateMap(customerID, DATE_CONSIDERED_NOW, KNOWN_BALANCE_DAYS_TO_PLOT);
 
-        for(Date date: transactions.keySet()){
-            dataPoints.add(new DataPoint(date, transactions.get(date)));
+       DataPoint[] dataPoints = new DataPoint[KNOWN_BALANCE_DAYS_TO_PLOT];
+       int i = 0;
+       for(Calendar c: spendingByDate.keySet()){
+           dataPoints[i] = new DataPoint(c.getTime(),spendingByDate.get(c));
+           AVERAGE_SPENDING = AVERAGE_SPENDING + spendingByDate.get(c);
+           i++;
+       }
+       AVERAGE_SPENDING = AVERAGE_SPENDING / KNOWN_BALANCE_DAYS_TO_PLOT;
+       
+       return dataPoints;
+   }
+
+    private LineGraphSeries<DataPoint> getOverdraftSeries(Calendar startDate){
+        DataPoint[] overdraftPoints = new DataPoint[KNOWN_BALANCE_DAYS_TO_PLOT*2];
+        Calendar date = (Calendar) startDate.clone();
+
+        for(int i = 0; i < KNOWN_BALANCE_DAYS_TO_PLOT*2; i++){
+            overdraftPoints[i] = new DataPoint(date.getTime(), 0);
+            date.add(Calendar.DAY_OF_YEAR, 1);
         }
 
-        DataPoint[] arr = new DataPoint[dataPoints.size()];
-        return dataPoints.toArray(arr);
-    }
-
-    private DataPoint[] getSpendingPoints(){
-        return null;
-    }
-
-    private LineGraphSeries<DataPoint> getOverdraftSeries(DataPoint[] points){
-        DataPoint[] overdraftPoints = new DataPoint[points.length];
-        for(int i = 0; i < points.length; i++){
-            overdraftPoints[i] = new DataPoint(points[i].getX(), 0);
-        }
-        LineGraphSeries<DataPoint> overdraftSeries = new LineGraphSeries<>(overdraftPoints);
-        overdraftSeries.setTitle(getString(R.string.overdraft_desc));
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(5);
         paint.setPathEffect(new DashPathEffect(new float[]{10.0f, 5.0f}, 0));
         paint.setColor(Color.RED);
 
+        LineGraphSeries<DataPoint> overdraftSeries = new LineGraphSeries<>(overdraftPoints);
+        overdraftSeries.setTitle(getString(R.string.overdraft_desc));
         overdraftSeries.setCustomPaint(paint);
         overdraftSeries.setColor(Color.RED);
+
         return overdraftSeries;
     }
 
-    private String getAverageSpending(){
-        return "£" + 20;
-    }
-
     private void generateSummary(){
-        TextView average = (TextView) root.findViewById(R.id.summary);
-        average.setText(getString(R.string.summary_1) + getAverageSpending() + getString(R.string.summary_2));
-        average.append(getString(R.string.overdraft_safe));
+        TextView summary = (TextView) root.findViewById(R.id.summary);
+        String averageSpending = getString(R.string.pound_sign) + String.format("%.4g", AVERAGE_SPENDING);
+
+        if(LATEST_KNOWN_BALANCE < 0){
+            //In overdraft
+            summary.setText(getString(R.string.in_overdraft) + averageSpending + getString(R.string.on_average));
+            summary.setTextColor(Color.RED);
+        } else {
+            summary.setText(getString(R.string.summary_1) +  averageSpending + getString(R.string.summary_2));
+            if (LATEST_ESTIMATED_BALANCE > OVERDRAFT_SAFE_AMOUNT) {
+                summary.append(getString(R.string.overdraft_safe));
+            } else if (LATEST_ESTIMATED_BALANCE > OVERDRAFT_DANGER_AMOUNT) {
+                summary.append(getString(R.string.overdraft_caution));
+            } else {
+                summary.append(getString(R.string.overdraft_danger));
+            }
+        }
     }
 
     private void formatGridLabelRenderer(GridLabelRenderer gridLabelRenderer){
@@ -156,7 +234,7 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
         return new DefaultLabelFormatter() {
             public String formatLabel(double value, boolean isValueX) {
                 if (isValueX) {
-                    return df.format(new Date((long) value)) + "\n";
+                    return df.format(new java.util.Date((long) value)) + "\n";
                 } else {
                     return "£" + super.formatLabel(value, isValueX) + " ";
                 }

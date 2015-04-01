@@ -13,16 +13,19 @@ import com.team.two.lloyds_app.objects.Recipient;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TreeMap;
 
 /**
  * Created by Daniel on 01/02/2015.
  */
 public class DatabaseAdapter {
+
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    private final int MAX_TRACKBACK_DAYS = 50;
+    private final double FALLBACK_BALANCE = 0;
     private final DbHelp helper;
 
     public DatabaseAdapter(Context context){
@@ -31,10 +34,10 @@ public class DatabaseAdapter {
 
     /** Return true if password stored in database is same as the one passed as parameter
 
-        This method will access the dummy database table Customers that stores customer details.
-         It well then query the database to find a customer with given userID is in the database
-         If the query is successful cursor object won't be null and its size (count) will be larger than 1
-         Then the cursor will check if passed matches the password stored in database
+     This method will access the dummy database table Customers that stores customer details.
+     It well then query the database to find a customer with given userID is in the database
+     If the query is successful cursor object won't be null and its size (count) will be larger than 1
+     Then the cursor will check if passed matches the password stored in database
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public boolean login(String userID, String password){
@@ -264,6 +267,7 @@ public class DatabaseAdapter {
 
         db.close();
     }
+
     public ArrayList<Recipient> getRecipients(int ownerId){
         ArrayList<Recipient> temp = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -343,35 +347,83 @@ public class DatabaseAdapter {
         return -1;
     }
 
-    public TreeMap<Date, Double> getBalanceDateMap(int customerID){
+    public TreeMap<Calendar, Double> getBalanceDateMap(int customerID, Calendar startDate, int numDays){
         SQLiteDatabase db = helper.getReadableDatabase();
-        String[] columns = SqlCons.TRANSACTION_COLUMNS;
-        String query = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + customerID + "'";
-        Cursor cursor = db.query(SqlCons.TRANSACTIONS_TABLE_NAME,columns,query,null,null,null,null);
+        String query;
 
-        Map<Date, Double> map = new HashMap<>();
-        DateFormat format = new SimpleDateFormat("yyyy-M-d", Locale.ENGLISH);
+        TreeMap<Calendar, Double> balanceByDate = new TreeMap<>();
+        Calendar date = (Calendar) startDate.clone();
+        Double balance = getPreviousBalance(startDate, customerID);
 
-        if (cursor != null) {
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                for (int i = 0; i < cursor.getCount(); i++) {
-                    String date = cursor.getString(cursor.getColumnIndex(SqlCons.TRANSACTION_DATE));
-                    Double balance = cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_BALANCE));
-                    try {
-                        map.put(format.parse(date), balance);
-                    } catch(Exception e){
-                    }
-                    cursor.moveToNext();
-                }
+        for(int i = 0; i < numDays; i++){
+            query = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + customerID + "' AND " + SqlCons.TRANSACTION_DATE + " = '" + df.format(date.getTime()) + "'";
+            Cursor cursor = db.query(SqlCons.TRANSACTIONS_TABLE_NAME, SqlCons.TRANSACTION_COLUMNS, query, null, null, null, null);
 
-                db.close();
-                return new TreeMap<Date,Double>(map);
+            //If there was a transaction on this date, update the latest balance
+            if(cursor.getCount() > 0){
+                cursor.moveToLast();
+                balance = cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_BALANCE));
             }
+
+            //Use the latest balance and add to map
+            balanceByDate.put(date, balance);
+            date = (Calendar) date.clone();
+            date.add(Calendar.DAY_OF_YEAR, 1);
+            cursor.close();
         }
 
-        db.close();
-        return null;
+        return balanceByDate;
+    }
+
+    private double getPreviousBalance(Calendar beforeDate, int customerID){
+        Calendar date = (Calendar) beforeDate.clone();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String query;
+
+        for(int i = 0; i < MAX_TRACKBACK_DAYS;i++) {
+
+            query = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + customerID + "' AND " + SqlCons.TRANSACTION_DATE + " = '" + df.format(date.getTime()) + "'";
+            Cursor cursor = db.query(SqlCons.TRANSACTIONS_TABLE_NAME, SqlCons.TRANSACTION_COLUMNS, query, null, null, null, null);
+
+            if(cursor.getCount() > 0){
+                cursor.moveToLast();
+                return cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_BALANCE));
+            }
+            cursor.close();
+            date.add(Calendar.DAY_OF_YEAR, -1);
+        }
+        return FALLBACK_BALANCE;
+    }
+
+    public TreeMap<Calendar, Double> getSpendingDateMap(int customerID, Calendar startDate, int numDays){
+        TreeMap<Calendar, Double> spendingDateMap = new TreeMap<>();
+
+        Calendar date = (Calendar) startDate.clone();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String query;
+
+        for(int i = 0; i < numDays; i++) {
+
+            query = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + customerID + "' AND " + SqlCons.TRANSACTION_DATE + " = '" + df.format(date.getTime()) + "'";
+            Cursor cursor = db.query(SqlCons.TRANSACTIONS_TABLE_NAME, SqlCons.TRANSACTION_COLUMNS, query, null, null, null, null);
+            double amount = 0;
+
+            if(cursor.getCount() > 0){
+                cursor.moveToFirst();
+                boolean rowsRemain = true;
+                while(rowsRemain) {
+                    amount = amount + cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_OUT));
+                    rowsRemain = cursor.moveToNext();
+                }
+            }
+
+            cursor.close();
+            spendingDateMap.put(date, amount);
+            date = (Calendar) date.clone();
+            date.add(Calendar.DAY_OF_YEAR, -1);
+        }
+
+        return spendingDateMap;
     }
 
 

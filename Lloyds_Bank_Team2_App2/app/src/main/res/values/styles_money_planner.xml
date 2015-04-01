@@ -20,5 +20,11 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <color name="money_planner_actual">#115BC2</color>
+
+    <color name="money_planner_estimated">#1AC211</color>
+
+    <color name="legend_background">#00FFFFFF</color>
+
 
 </resources>
