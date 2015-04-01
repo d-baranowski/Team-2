@@ -26,16 +26,17 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
 
     private View root;
     public static final String TITLE = "Money Planner";
+    private int customerID;
 
     private final DateFormat df = new SimpleDateFormat("dd-MM", Locale.ENGLISH);
-    private final int KNOWN_BALANCE_DAYS_TO_PLOT = 16;
+    private final int KNOWN_BALANCE_DAYS_TO_PLOT = 14;
     private final int NUMBER_OF_DATE_LABELS = 5;
     private Calendar DATE_CONSIDERED_NOW = Calendar.getInstance();
     private double AVERAGE_SPENDING = 0;
     private double LATEST_ESTIMATED_BALANCE = 0;
     private double LATEST_KNOWN_BALANCE = 0;
-    private final double OVERDRAFT_SAFE_AMOUNT = 350;
-    private final double OVERDRAFT_DANGER_AMOUNT = 100;
+    private final double OVERDRAFT_SAFE_DAYS = 30;
+    private final double OVERDRAFT_DANGER_DAYS = 10;
 
     public MoneyPlannerFragment() {
         // Required empty public constructor
@@ -53,6 +54,7 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
 
         //Set the date that is considered the present date
         DATE_CONSIDERED_NOW.set(2015,Calendar.FEBRUARY, 15);
+        customerID  = ((MainActivity) getActivity()).getCustomer().getId();
 
         generateSpendingGraph();
         generateBalanceGraph();
@@ -110,8 +112,6 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
 
     private DataPoint[] getKnownBalancePoints(Calendar startDate){
 
-        int customerID = ((MainActivity) getActivity()).getCustomer().getId();
-
         //Get balance/date map
         TreeMap<Calendar, Double> balanceByDate = ((MainActivity) getActivity()).getAdapter().getBalanceDateMap(customerID, startDate, KNOWN_BALANCE_DAYS_TO_PLOT);
 
@@ -161,7 +161,6 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
     }
 
    private DataPoint[] getSpendingPoints(){
-       int customerID = ((MainActivity) getActivity()).getCustomer().getId();
 
        //Get balance/date map
        TreeMap<Calendar, Double> spendingByDate = ((MainActivity) getActivity()).getAdapter().getSpendingDateMap(customerID, DATE_CONSIDERED_NOW, KNOWN_BALANCE_DAYS_TO_PLOT);
@@ -201,19 +200,37 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
         return overdraftSeries;
     }
 
+    private double getSpendingAverage(TreeMap<Calendar, Double> map){
+        double average = 0;
+        for(Calendar c: map.keySet()){
+            average = average + map.get(c);
+        }
+        return average/map.size();
+    }
+
     private void generateSummary(){
         TextView summary = (TextView) root.findViewById(R.id.summary);
         String averageSpending = getString(R.string.pound_sign) + String.format("%.4g", AVERAGE_SPENDING);
+        double daysUntilZero = LATEST_KNOWN_BALANCE / AVERAGE_SPENDING;
+        Calendar dateTwoPeriodsAgo = (Calendar) DATE_CONSIDERED_NOW.clone();
+        dateTwoPeriodsAgo.add(Calendar.DATE, -KNOWN_BALANCE_DAYS_TO_PLOT);
+        double previousAvg = getSpendingAverage(((MainActivity) getActivity()).getAdapter().getSpendingDateMap(customerID, dateTwoPeriodsAgo, KNOWN_BALANCE_DAYS_TO_PLOT));
+        String averageChange = null;
+        if(previousAvg > AVERAGE_SPENDING){
+            averageChange = getString(R.string.average_decrease) + getString(R.string.summary_3) + String.format("%.2g",100*(previousAvg-AVERAGE_SPENDING)/previousAvg) + getString(R.string.summary_4) + KNOWN_BALANCE_DAYS_TO_PLOT + getString(R.string.days);
+        } else if(previousAvg < AVERAGE_SPENDING){
+            averageChange = getString(R.string.average_increase) + getString(R.string.summary_3) + String.format("%.2g",100*(AVERAGE_SPENDING-previousAvg)/previousAvg) + getString(R.string.summary_4) + KNOWN_BALANCE_DAYS_TO_PLOT + getString(R.string.days);        } else {
+        }
 
         if(LATEST_KNOWN_BALANCE < 0){
             //In overdraft
             summary.setText(getString(R.string.in_overdraft) + averageSpending + getString(R.string.on_average));
             summary.setTextColor(Color.RED);
         } else {
-            summary.setText(getString(R.string.summary_1) +  averageSpending + getString(R.string.summary_2));
-            if (LATEST_ESTIMATED_BALANCE > OVERDRAFT_SAFE_AMOUNT) {
+            summary.setText(getString(R.string.summary_1) + averageSpending + getString(R.string.summary_2) + averageChange + getString(R.string.summary_5) + String.format("%.2g",daysUntilZero) + getString(R.string.days));
+            if (daysUntilZero > OVERDRAFT_SAFE_DAYS) {
                 summary.append(getString(R.string.overdraft_safe));
-            } else if (LATEST_ESTIMATED_BALANCE > OVERDRAFT_DANGER_AMOUNT) {
+            } else if (daysUntilZero > OVERDRAFT_DANGER_DAYS) {
                 summary.append(getString(R.string.overdraft_caution));
             } else {
                 summary.append(getString(R.string.overdraft_danger));
@@ -222,7 +239,7 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
     }
 
     private void formatGridLabelRenderer(GridLabelRenderer gridLabelRenderer){
-       gridLabelRenderer.setLabelFormatter(getLabelFormatter());
+        gridLabelRenderer.setLabelFormatter(getLabelFormatter());
         gridLabelRenderer.setGridColor(getResources().getColor(R.color.lloyds_green));
         gridLabelRenderer.setHorizontalLabelsColor(Color.BLACK);
         gridLabelRenderer.setVerticalLabelsColor(Color.BLACK);
