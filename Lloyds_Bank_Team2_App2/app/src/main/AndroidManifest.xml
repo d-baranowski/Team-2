@@ -27,16 +27,10 @@
         </activity>
 
         <activity
-            android:name=".screens.activities.AddRecipient"
-            android:label="@string/title_activity_add_recipment">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.team.two.lloyds_app.screens.MainScreen"/></activity>
-
-        <activity
             android:name=".screens.activities.MainActivity"
             android:label="@string/title_activity_main">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.team.two.lloyds_app.screens.MainScreen"/></activity>
+                android:value="com.team.two.lloyds_app.screens.activities.MainActivity"/></activity>
 
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 

@@ -1,17 +1,3 @@
 <resources>
 
-    <!-- Strings related to login -->
-    <string name="prompt_email">User ID</string>
-    <string name="id_label">User ID</string>
-    <string name="prompt_password">Password</string>
-    <string name="password_label">Password</string>
-    <string name="action_sign_in">Login</string>
-    <string name="action_sign_in_short">Sign in</string>
-
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_TRANSACTION_required">This field is required</string>
-    <string name="welcome_label">Welcome</string>
-    <string name="forgotten_password">Forgotten your User Id or Password?</string>
 </resources>

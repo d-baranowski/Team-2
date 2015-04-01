@@ -2,7 +2,7 @@ package com.team.two.lloyds_app.screens.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.team.two.lloyds_app.Exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
-import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 
@@ -45,7 +44,6 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
     private Button paymentButton;
     private Button addRecipmentButton;
 
-    private Customer customer;
     private ArrayList<Account> accounts;
     private List<String> accountNames;
     private HashMap<String,Account> mapAccounts;
@@ -65,13 +63,13 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getActivity().setTitle("Transactions");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        customer =((MainActivity)getActivity()).getCustomer();
         accounts = ((MainActivity)getActivity()).getAccounts();
 
         root = inflater.inflate(R.layout.fragment_transfer, container, false);
@@ -144,7 +142,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
             ((MainActivity)getActivity()).checkEmptyField(transferAmountText, "Balance");
             balance = Double.parseDouble(transferAmountText.getText().toString());
 
-            CharSequence result = "Hello toast!";
+            CharSequence result;
 
             if (balance > 0){
                 if (balance <= source.getAvailableBalance()){
@@ -196,7 +194,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
             balance = Double.parseDouble(paymentAmountText.getText().toString());
             ((MainActivity)getActivity()).checkEmptyField(descriptionText, "Description");
             String description = descriptionText.getText().toString();
-            CharSequence result = "Hello toast!";
+            CharSequence result;
 
             if (balance > 0) {
                 if (balance <= source.getAvailableBalance()) {
@@ -247,7 +245,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         final EditText name;
         final EditText accountNumber;
         final EditText sortCode;
-        Button addRecipient;
+        final Button addRecipient;
 
         name = (EditText)dialog.findViewById(R.id.description_text);
         accountNumber = (EditText)dialog.findViewById(R.id.account_number_text);
@@ -280,26 +278,6 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                     Toast toast = Toast.makeText(getActivity(), "Please make sure you entered all mandatory data", duration);
                     toast.show();
                 }
-
-            }
-        });
-
-        addRecipient.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        v.getBackground().setColorFilter(0xe0add8e6, PorterDuff.Mode.SRC_ATOP);
-                        v.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        v.getBackground().clearColorFilter();
-                        v.invalidate();
-                        break;
-                    }
-                }
-                return false;
             }
         });
 

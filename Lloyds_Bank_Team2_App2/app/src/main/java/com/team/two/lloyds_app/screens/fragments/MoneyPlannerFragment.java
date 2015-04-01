@@ -4,6 +4,7 @@ import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 import android.util.Log;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
@@ -35,9 +36,12 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
         // Required empty public constructor
     }
 
+    @SuppressWarnings("EmptyMethod")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getActivity().setTitle("Money Planner");
     }
 
     @Override

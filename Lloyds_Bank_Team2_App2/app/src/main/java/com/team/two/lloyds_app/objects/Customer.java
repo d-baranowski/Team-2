@@ -4,13 +4,13 @@ package com.team.two.lloyds_app.objects;
  * Created by danielbaranowski on 06/02/15.
  */
 public class Customer {
-    private int id;
-    private String firstName;
-    private String surname;
+    private final int id;
+    private final String firstName;
+    private final String surname;
     private String addressOne;
     private String addressTwo;
     private String postCode;
-    private String userId;
+    private final String userId;
 
     public Customer(int id, String firstName, String surname, String addressOne, String addressTwo, String postCode, String userId){
         this.id = id;

@@ -19,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.team.two.lloyds_app.Constants;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 
@@ -27,11 +28,8 @@ import java.util.ArrayList;
 public class NavigationDrawerFragment extends Fragment {
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
-    private View containerView;
     private boolean userLearnedDrawer;
     private boolean fromSavedInstanceState;
-    private RecyclerView drawerList;
-    private CustomDrawerAdapter adapter;
     private Toolbar toolbar;
 
     public NavigationDrawerFragment() {
@@ -52,8 +50,8 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        drawerList = (RecyclerView) layout.findViewById(R.id.drawer_recycler);
-        adapter = new CustomDrawerAdapter(getActivity(),getDrawerData());
+        RecyclerView drawerList = (RecyclerView) layout.findViewById(R.id.drawer_recycler);
+        CustomDrawerAdapter adapter = new CustomDrawerAdapter(getActivity(), getDrawerData());
         drawerList.setAdapter(adapter);
         drawerList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -76,20 +74,20 @@ public class NavigationDrawerFragment extends Fragment {
                 thereAnimation.reverse();
                 toolbar.setTitle(Constants.SCREEN_NAMES[position]);
 
-                switch (position){
+                switch (position) {
                     case 0:
-                        ((MainActivity)getActivity()).openHome();
+                        ((MainActivity) getActivity()).openHome();
                         break;
                     case 1:
-                        ((MainActivity)getActivity()).openStatement();
+                        ((MainActivity) getActivity()).openStatement();
                         break;
                     case 2:
-                        ((MainActivity)getActivity()).openTransfers();
+                        ((MainActivity) getActivity()).openTransfers();
                         break;
                 }
 
                 drawerLayout.closeDrawers();
-                
+
             }
 
             @Override
@@ -108,7 +106,7 @@ public class NavigationDrawerFragment extends Fragment {
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
         this.drawerLayout = drawerLayout;
         this.toolbar = toolbar;
-        containerView = getActivity().findViewById(fragmentId);
+        View containerView = getActivity().findViewById(fragmentId);
 
         //using brackets to Override methods of ActionBarDrawerToggle
         drawerToggle = new ActionBarDrawerToggle(getActivity(),drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close){

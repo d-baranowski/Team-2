@@ -1,5 +1,6 @@
 package com.team.two.lloyds_app.screens.fragments;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -69,8 +70,10 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         createMapView();
         addMarker();
+        getActivity().setTitle("Branch Finder");
     }
 
     @Override

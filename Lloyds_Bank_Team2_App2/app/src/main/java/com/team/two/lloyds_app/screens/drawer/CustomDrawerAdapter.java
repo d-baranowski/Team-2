@@ -15,9 +15,9 @@ import java.util.List;
  * Created by Daniel on 18/03/2015.
  */
 public class CustomDrawerAdapter extends RecyclerView.Adapter<CustomDrawerAdapter.MyViewHolder> {
-    private LayoutInflater inflater;
+    private final LayoutInflater inflater;
     private List<DrawerItem> data = Collections.emptyList();
-    private Context context;
+    protected final Context context;
 
     public CustomDrawerAdapter(Context context, List<DrawerItem> data){
         inflater = LayoutInflater.from(context);

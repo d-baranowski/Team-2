@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 */
 public class DbHelp extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "lloyds";
-    private static final int DATABASE_VERSION = 21;
+    private static final int DATABASE_VERSION = 24;
 
 
     public DbHelp(Context context){

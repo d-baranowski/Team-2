@@ -2,27 +2,43 @@
 <resources>
 
     <string name="app_name">Lloyds_Bank_Team2_App</string>
-    <string name="title_activity_main_screen">MainScreen</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_main_screen">Home</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_statement">Statement</string>
     <string name="title_activity_transfer">Transfer</string>
     <string name="title_activity_payments">Payments</string>
-    <string name="title_activity_add_recipment">AddRecipment</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="drawer_close">Closed</string>
-    <string name="drawer_open">Open</string>
+    <string name="title_activity_add_recipient">Add Recipient</string>
+    <string name="title_activity_main">Home</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_example">Example action</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="login_remember_Id">Remember my User ID</string>
+    <string name="new_recipient">Create a new recipient</string>
+    <string name="recipient_name">Name of recipient:</string>
+    <string name="sort_code">Sort Code:</string>
+    <string name="account_number">Account Number:</string>
+    <string name="add">Add</string>
+    <string name="balance">Balance:</string>
+    <string name="available">Available:</string>
+    <string name="statement">Statement</string>
+    <string name="transfers">Transfers</string>
+    <string name="achievements">Achievements</string>
+    <string name="branch_finder">Branch Finder</string>
+    <string name="planner">Planner</string>
+    <string name="offers">Offers and Deals</string>
+    <string name="personal_account">Personal account</string>
+    <string name="transfer_from">Transfer from:</string>
+    <string name="transfer_to">Transfer to:</string>
+    <string name="amount">Amount:</string>
+    <string name="transfer">Transfer</string>
+    <string name="other_account">Other account</string>
+    <string name="description">Description:</string>
+    <string name="add_recipient">Add recipient</string>
+    <string name="logo">logo</string>
+    <string name="logo_description">horse logo</string>
+    <string name="big_logo_description">Big logo</string>
+    <string name="welcome_label">Welcome</string>
+    <string name="id_label">User Id</string>
+    <string name="password_label">Password</string>
+    <string name="action_sign_in">Log In</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
 </resources>

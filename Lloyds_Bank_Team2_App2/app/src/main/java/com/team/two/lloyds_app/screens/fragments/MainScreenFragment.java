@@ -1,5 +1,6 @@
 package com.team.two.lloyds_app.screens.fragments;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 public class MainScreenFragment extends android.support.v4.app.Fragment {
     public static final String TITLE = "Home";
-    private View root;
+    protected View root;
 
     //UI references
     private TextView accountType;
@@ -33,24 +34,29 @@ public class MainScreenFragment extends android.support.v4.app.Fragment {
     private Button openPlanner;
     private Button openOffers;
 
+    Customer customer;
+    Account account;
+
     public static MainScreenFragment newInstance() {
-        MainScreenFragment fragment = new MainScreenFragment();
-        return fragment;
+        return new MainScreenFragment();
     }
 
     public MainScreenFragment() {
         // Required empty public constructor
     }
 
+    @SuppressWarnings("EmptyMethod")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getActivity().setTitle("Home");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Customer customer = ((MainActivity)getActivity()).getCustomer();
-        Account account = ((MainActivity)getActivity()).getAccounts().get(0);
+        customer = ((MainActivity)getActivity()).getCustomer();
+        account = ((MainActivity)getActivity()).getAccounts().get(0);
 
         root = inflater.inflate(R.layout.fragment_main_screen, container, false);
         accountType = (TextView) root.findViewById(R.id.account_type);
@@ -183,8 +189,8 @@ public class MainScreenFragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onResume() {
-        Customer customer = ((MainActivity)getActivity()).getCustomer();
-        Account account = ((MainActivity)getActivity()).getAccounts().get(0);
+        customer = ((MainActivity)getActivity()).getCustomer();
+        account = ((MainActivity)getActivity()).getAccounts().get(0);
 
         accountName.setText(account.getAccountName());
         accountBalance.setText("£"+String.valueOf(account.getAccountBalance()));

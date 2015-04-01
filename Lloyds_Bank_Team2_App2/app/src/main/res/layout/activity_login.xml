@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
@@ -6,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    tools:ignore="Overdraw">
 
     <LinearLayout
         android:id="@+id/login_form"
@@ -17,11 +19,10 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="3dip"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
             android:background="@color/lloyds_green" />
 
         <ImageView
+            android:contentDescription="@string/big_logo_description"
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="250dp"
@@ -30,8 +31,6 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="3dip"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
             android:background="@color/lloyds_green" />
 
         <TextView
@@ -41,7 +40,7 @@
             android:layout_marginTop="10dp"
             android:text="@string/welcome_label"
             android:textColor="@color/lloyds_green"
-            android:textSize="18dp" />
+            android:textSize="@dimen/text_size_eighteen" />
 
         <TextView
             android:id="@+id/loginLabel"
@@ -59,7 +58,8 @@
             android:textColor="#000"
             android:layout_marginTop="3dp"
             android:background="@drawable/back"
-            android:paddingLeft="3dp"
+            android:paddingLeft="@dimen/text_box_padding"
+            android:paddingRight="@dimen/text_box_padding"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true" />
@@ -80,26 +80,22 @@
             android:layout_height="30dp"
             android:layout_marginTop="3dp"
             android:background="@drawable/back"
-            android:paddingLeft="3dp"
+            android:paddingLeft="@dimen/text_box_padding"
+            android:paddingRight="@dimen/text_box_padding"
             android:imeActionId="@+id/login"
             android:textColor="#000"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:singleLine="true" />
-
-        <TextView
-            android:id="@+id/forgotten_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/forgotten_password" />
+            android:singleLine="true"
+            tools:ignore="RtlHardcoded" />
 
         <CheckBox
             android:id="@+id/remember_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Remember my User ID" />
+            android:textColor="#000"
+            android:text="@string/login_remember_Id" />
 
         <Button
             android:id="@+id/email_sign_in_button"
@@ -117,8 +113,6 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="3dip"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:background="@color/lloyds_green" />
 

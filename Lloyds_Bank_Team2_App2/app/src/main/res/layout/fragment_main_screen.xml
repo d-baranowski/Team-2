@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/lloyds_green"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_size_twenty" />
 
         <TextView
             android:id="@+id/account_number"
@@ -55,9 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/account_balance"
-            android:text="Balance:"
+            android:text="@string/balance"
             android:textColor="@color/lloyds_green"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_size_twenty" />
 
         <TextView
             android:id="@+id/account_balance"
@@ -66,16 +66,16 @@
             android:layout_below="@+id/account_sort_code"
             android:layout_centerHorizontal="true"
             android:textColor="@color/lloyds_green"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_size_twenty" />
 
         <TextView
             android:id="@+id/account_available_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/account_available"
-            android:text="Avaliable:"
+            android:text="@string/available"
             android:textColor="@color/lloyds_green"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_size_twenty" />
 
 
         <TextView
@@ -85,16 +85,18 @@
             android:layout_alignLeft="@+id/account_balance"
             android:layout_below="@+id/account_balance"
             android:textColor="@color/lloyds_green"
+            android:textSize="@dimen/text_size_twenty"
+            tools:ignore="RtlHardcoded" />
             android:textSize="20sp" />
 
         <GridLayout
             android:id="@+id/grid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/account_available"
+            android:layout_below="@id/account_available"
             android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:layout_marginTop="20dp">
+            android:layout_margin="20dp"
+            android:textAlignment="center">
 
             <Button
                 android:id="@+id/statement_button"
@@ -112,7 +114,7 @@
                 android:layout_column="0"
                 android:layout_gravity="center_horizontal"
                 android:layout_row="13"
-                android:text="Statement"></TextView>
+                android:text="@string/statement"/>
 
             <Button
                 android:id="@+id/transfers_button"
@@ -130,7 +132,7 @@
                 android:layout_column="1"
                 android:layout_gravity="center_horizontal"
                 android:layout_row="13"
-                android:text="Transfers"></TextView>
+                android:text="@string/transfers"/>
 
             <Button
                 android:id="@+id/achievements_button"
@@ -148,7 +150,7 @@
                 android:layout_column="0"
                 android:layout_gravity="center_horizontal"
                 android:layout_row="15"
-                android:text="Achievements"></TextView>
+                android:text="@string/achievements"/>
 
             <Button
                 android:id="@+id/finder_button"
@@ -166,7 +168,7 @@
                 android:layout_column="1"
                 android:layout_gravity="center_horizontal"
                 android:layout_row="15"
-                android:text="Branch Finder"></TextView>
+                android:text="@string/branch_finder"/>
 
             <Button
                 android:id="@+id/planner_button"
@@ -184,7 +186,7 @@
                 android:layout_column="0"
                 android:layout_gravity="center_horizontal"
                 android:layout_row="17"
-                android:text="Planner"></TextView>
+                android:text="@string/planner"/>
 
             <Button
                 android:id="@+id/deals_button"
@@ -202,7 +204,7 @@
                 android:layout_column="1"
                 android:layout_gravity="center_horizontal"
                 android:layout_row="17"
-                android:text="Offers and Deals"></TextView>
+                android:text="@string/offers"/>
         </GridLayout>
     </RelativeLayout>
 
