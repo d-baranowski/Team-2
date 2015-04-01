@@ -268,8 +268,9 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(getActivity(), "Recipient Added", duration);
                     toast.show();
-                    getParentFragment().onResume();
                     dialog.dismiss();
+                    ((MainActivity) getActivity()).openTransfers();
+
                 } catch (NumberFormatException e){
                     accountNumberText = 0;
                     int duration = Toast.LENGTH_SHORT;
