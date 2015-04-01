@@ -1,5 +1,6 @@
 package com.team.two.lloyds_app.screens.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -118,6 +119,12 @@ public class MainActivity extends ActionBarActivity  {
         title = BranchFinderFragment.TITLE;
         toolbar.setTitle(title);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
+    }
+
+    public void logOut(){
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 
     public Customer getCustomer(){

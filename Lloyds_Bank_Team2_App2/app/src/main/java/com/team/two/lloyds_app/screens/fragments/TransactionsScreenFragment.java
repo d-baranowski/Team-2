@@ -198,10 +198,9 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
             if (balance > 0) {
                 if (balance <= source.getAvailableBalance()) {
                     result = "Successful Payment";
-                    paymentAmountText.setText("");
-                    descriptionText.setText("");
                     ((MainActivity) getActivity()).getAdapter().payment(source, destination, balance, description);
-                    accounts = ((MainActivity)getActivity()).getAccounts();
+                    ((MainActivity) getActivity()).openHome();
+
                 } else {
                     result = "Not enough available balance";
                 }

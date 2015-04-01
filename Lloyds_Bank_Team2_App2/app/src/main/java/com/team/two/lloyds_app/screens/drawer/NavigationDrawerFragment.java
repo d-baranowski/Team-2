@@ -84,6 +84,13 @@ public class NavigationDrawerFragment extends Fragment {
                     case 2:
                         ((MainActivity) getActivity()).openTransfers();
                         break;
+                    case 3:
+                        ((MainActivity) getActivity()).openFinder();
+                    case 4:
+                        ((MainActivity) getActivity()).openPlanner();
+                    case 9:
+                        ((MainActivity) getActivity()).logOut();
+
                 }
 
                 drawerLayout.closeDrawers();
@@ -214,6 +221,7 @@ public class NavigationDrawerFragment extends Fragment {
         data.add(new DrawerItem(Constants.SCREEN_NAMES[6],R.drawable.ic_achievements_icon));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[7],R.drawable.lloydsbanklogo));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[8],R.drawable.lloydsbanklogo));
+        data.add(new DrawerItem(Constants.SCREEN_NAMES[9],R.drawable.lloydsbanklogo));
         return data;
     }
 

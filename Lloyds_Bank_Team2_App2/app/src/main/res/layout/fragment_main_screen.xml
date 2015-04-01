@@ -87,125 +87,130 @@
             android:textColor="@color/lloyds_green"
             android:textSize="@dimen/text_size_twenty"
             tools:ignore="RtlHardcoded" />
-            android:textSize="20sp" />
 
-        <GridLayout
-            android:id="@+id/grid"
+        <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/account_available"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="20dp"
-            android:textAlignment="center">
+            android:layout_below="@id/account_available">
 
-            <Button
-                android:id="@+id/statement_button"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_column="0"
-                android:layout_row="12"
-                android:background="@drawable/ic_statement_icon"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="2dp"/>
+            <GridLayout
+                android:id="@+id/grid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-            <TextView
-                android:layout_column="0"
-                android:layout_gravity="center_horizontal"
-                android:layout_row="13"
-                android:text="@string/statement"/>
+                android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
+                android:textAlignment="center">
 
-            <Button
-                android:id="@+id/transfers_button"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_column="1"
-                android:layout_row="12"
-                android:background="@drawable/ic_transfers_icon"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="2dp"/>
+                <Button
+                    android:id="@+id/statement_button"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_column="0"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_row="12"
+                    android:background="@drawable/ic_statement_icon" />
 
-            <TextView
-                android:layout_column="1"
-                android:layout_gravity="center_horizontal"
-                android:layout_row="13"
-                android:text="@string/transfers"/>
+                <TextView
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_row="13"
+                    android:text="@string/statement" />
 
-            <Button
-                android:id="@+id/achievements_button"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_column="0"
-                android:layout_row="14"
-                android:background="@drawable/ic_achievements_icon"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="2dp"/>
+                <Button
+                    android:id="@+id/transfers_button"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_column="1"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_row="12"
+                    android:background="@drawable/ic_transfers_icon" />
 
-            <TextView
-                android:layout_column="0"
-                android:layout_gravity="center_horizontal"
-                android:layout_row="15"
-                android:text="@string/achievements"/>
+                <TextView
+                    android:layout_column="1"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_row="13"
+                    android:text="@string/transfers" />
 
-            <Button
-                android:id="@+id/finder_button"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_column="1"
-                android:layout_row="14"
-                android:background="@drawable/ic_branch_finder_icon"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="2dp"/>
+                <Button
+                    android:id="@+id/achievements_button"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_column="0"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_row="14"
+                    android:background="@drawable/ic_achievements_icon" />
 
-            <TextView
-                android:layout_column="1"
-                android:layout_gravity="center_horizontal"
-                android:layout_row="15"
-                android:text="@string/branch_finder"/>
+                <TextView
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_row="15"
+                    android:text="@string/achievements" />
 
-            <Button
-                android:id="@+id/planner_button"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_column="0"
-                android:layout_row="16"
-                android:background="@drawable/ic_money_planner_icon"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="2dp"/>
+                <Button
+                    android:id="@+id/finder_button"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_column="1"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_row="14"
+                    android:background="@drawable/ic_branch_finder_icon" />
 
-            <TextView
-                android:layout_column="0"
-                android:layout_gravity="center_horizontal"
-                android:layout_row="17"
-                android:text="@string/planner"/>
+                <TextView
+                    android:layout_column="1"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_row="15"
+                    android:text="@string/branch_finder" />
 
-            <Button
-                android:id="@+id/deals_button"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_column="1"
-                android:layout_row="16"
-                android:background="@drawable/ic_offers_icon"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="2dp"/>
+                <Button
+                    android:id="@+id/planner_button"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_column="0"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_row="16"
+                    android:background="@drawable/ic_money_planner_icon" />
 
-            <TextView
-                android:layout_column="1"
-                android:layout_gravity="center_horizontal"
-                android:layout_row="17"
-                android:text="@string/offers"/>
-        </GridLayout>
+                <TextView
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_row="17"
+                    android:text="@string/planner" />
+
+                <Button
+                    android:id="@+id/deals_button"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_column="1"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_row="16"
+                    android:background="@drawable/ic_offers_icon" />
+
+                <TextView
+                    android:layout_column="1"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_row="17"
+                    android:text="@string/offers" />
+            </GridLayout>
+        </ScrollView>
     </RelativeLayout>
 
     <View
