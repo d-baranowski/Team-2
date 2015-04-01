@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.format.Time;
-import android.util.Log;
 
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Customer;
@@ -15,7 +14,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.TreeMap;
@@ -24,10 +22,11 @@ import java.util.TreeMap;
  * Created by Daniel on 01/02/2015.
  */
 public class DatabaseAdapter {
-    DbHelp helper;
+
     private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
     private final int MAX_TRACKBACK_DAYS = 50;
     private final double FALLBACK_BALANCE = 0;
+    private final DbHelp helper;
 
     public DatabaseAdapter(Context context){
         helper = new DbHelp(context);
@@ -35,11 +34,12 @@ public class DatabaseAdapter {
 
     /** Return true if password stored in database is same as the one passed as parameter
 
-        This method will access the dummy database table Customers that stores customer details.
-         It well then query the database to find a customer with given userID is in the database
-         If the query is successful cursor object won't be null and its size (count) will be larger than 1
-         Then the cursor will check if passed matches the password stored in database
+     This method will access the dummy database table Customers that stores customer details.
+     It well then query the database to find a customer with given userID is in the database
+     If the query is successful cursor object won't be null and its size (count) will be larger than 1
+     Then the cursor will check if passed matches the password stored in database
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public boolean login(String userID, String password){
         //Apostrophe is part of SQLite syntax. These lines prevent app from crashing if user entered values contain apostrophes
         userID.replace("'","\'");
@@ -103,20 +103,20 @@ public class DatabaseAdapter {
     }
 
     public ArrayList<HashMap<String,String>> getTransactions(int id){
-        ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+        ArrayList<HashMap<String,String>> list = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columnsT = SqlCons.TRANSACTION_COLUMNS;
         String queryT = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + id + "'";
         String order =  SqlCons.TRANSACTION_DATE +" DESC";
 
-        Cursor t = db.query(SqlCons.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,null);
+        Cursor t = db.query(SqlCons.TRANSACTIONS_TABLE_NAME,columnsT,queryT,null,null,null,order);
 
         if (t != null) {
             if (t.getCount() > 0) {
                 t.moveToFirst();
 
                 for (int j = 0; j < t.getCount(); j++) {
-                    HashMap<String, String> temp = new HashMap<String, String>();
+                    HashMap<String, String> temp = new HashMap<>();
                     temp.put(SqlCons.TRANSACTION_DATE, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_DATE)));
                     temp.put(SqlCons.TRANSACTION_DESCRIPTION, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_DESCRIPTION)));
                     temp.put(SqlCons.TRANSACTION_TYPE, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_TYPE)));
@@ -324,6 +324,7 @@ public class DatabaseAdapter {
         return null;
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public int getId(String userID){
         userID.replace("'","\'");
         String[] columns = {SqlCons.CUSTOMER_ID};
@@ -365,6 +366,7 @@ public class DatabaseAdapter {
             balanceByDate.put(date, balance);
             date = (Calendar) date.clone();
             date.add(Calendar.DAY_OF_YEAR, 1);
+            cursor.close();
         }
 
         return balanceByDate;
@@ -384,47 +386,41 @@ public class DatabaseAdapter {
                 cursor.moveToLast();
                 return cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_BALANCE));
             }
-
+            cursor.close();
             date.add(Calendar.DAY_OF_YEAR, -1);
         }
         return FALLBACK_BALANCE;
     }
 
-    public TreeMap<Date, Double> getSpendingDateMap(int customerID){
+    public TreeMap<Calendar, Double> getSpendingDateMap(int customerID, Calendar startDate, int numDays){
+        TreeMap<Calendar, Double> spendingDateMap = new TreeMap<>();
+
+        Calendar date = (Calendar) startDate.clone();
         SQLiteDatabase db = helper.getReadableDatabase();
-        String[] columns = SqlCons.TRANSACTION_COLUMNS;
-        String query = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + customerID + "'";
-        Cursor cursor = db.query(SqlCons.TRANSACTIONS_TABLE_NAME,columns,query,null,null,null,null);
+        String query;
 
-        TreeMap<Date, Double> map = new TreeMap<>();
-        DateFormat format = new SimpleDateFormat("yyyy-M-d", Locale.ENGLISH);
+        for(int i = 0; i < numDays; i++) {
 
-        if (cursor != null) {
-            if (cursor.getCount() > 0) {
+            query = SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN + " = '" + customerID + "' AND " + SqlCons.TRANSACTION_DATE + " = '" + df.format(date.getTime()) + "'";
+            Cursor cursor = db.query(SqlCons.TRANSACTIONS_TABLE_NAME, SqlCons.TRANSACTION_COLUMNS, query, null, null, null, null);
+            double amount = 0;
+
+            if(cursor.getCount() > 0){
                 cursor.moveToFirst();
-                for (int i = 0; i < cursor.getCount(); i++) {
-                    String dateStr = cursor.getString(cursor.getColumnIndex(SqlCons.TRANSACTION_DATE));
-                    Double spend = cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_OUT));
-                    try {
-                        Date date = format.parse(dateStr);
-                        if(map.containsKey(date)){
-                            map.put(date, map.get(date)+spend);
-                        } else {
-                            map.put(date, spend);
-                        }
-                    } catch(Exception e){
-
-                    }
-                    cursor.moveToNext();
+                boolean rowsRemain = true;
+                while(rowsRemain) {
+                    amount = amount + cursor.getDouble(cursor.getColumnIndex(SqlCons.TRANSACTION_OUT));
+                    rowsRemain = cursor.moveToNext();
                 }
-
-                db.close();
-                return map;
             }
+
+            cursor.close();
+            spendingDateMap.put(date, amount);
+            date = (Calendar) date.clone();
+            date.add(Calendar.DAY_OF_YEAR, -1);
         }
 
-        db.close();
-        return null;
+        return spendingDateMap;
     }
 
 
