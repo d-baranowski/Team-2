@@ -73,7 +73,7 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
             googleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(54.976479, -1.618589))
                             .title("TEST Marker NEWCASTLE")
-                            .draggable(true));
+                            .draggable(false));
         }
     }
 
