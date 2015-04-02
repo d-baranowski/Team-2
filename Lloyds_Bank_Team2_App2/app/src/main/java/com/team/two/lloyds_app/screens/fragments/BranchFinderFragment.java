@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -53,6 +54,18 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
     /**
      * Adds a marker to the map
      */
+
+   private void setZoom(){
+       CameraPosition CP = new CameraPosition.Builder()
+               .target(new LatLng(54.976479, -1.618589))
+               .zoom(9)
+               .build();
+
+       googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(CP));
+
+
+   }
+
     private void addMarker(){
 
         /** Make sure that the map has been initialised **/
@@ -74,6 +87,7 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         Root = inflater.inflate(R.layout.fragment_branch_finder, container, false);
         createMapView();
+        setZoom();
         addMarker();
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return Root;
