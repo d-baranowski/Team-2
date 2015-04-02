@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -73,7 +74,8 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
             googleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(54.976479, -1.618589))
                             .title("TEST Marker NEWCASTLE")
-                            .draggable(false));
+                             .icon(BitmapDescriptorFactory.defaultMarker(150))
+                                     .draggable(false));
         }
     }
 
