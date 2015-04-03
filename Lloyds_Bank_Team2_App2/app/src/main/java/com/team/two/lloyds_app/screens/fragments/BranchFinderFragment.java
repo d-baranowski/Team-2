@@ -21,15 +21,13 @@ import com.team.two.lloyds_app.R;
 
 
 public class BranchFinderFragment extends android.support.v4.app.Fragment {
-
-
     public static final String TITLE = "Branch Finder";
     View Root;
     GoogleMap googleMap;
     Marker Markertest;
 
     /**
-     * Initialises the mapview
+     * CreateMapView()
      */
     private void createMapView(){
         /**
@@ -56,7 +54,7 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
     }
 
     /**
-     * Adds a marker to the map
+     * setZoom()
      */
 
    private void setZoom(){
@@ -69,7 +67,9 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
 
 
    }
-
+/*
+    addMarker()
+ */
     private void addMarker(){
 
 
@@ -93,7 +93,9 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
             }});
         }
     }
-
+ /*
+    openDetails()
+  */
     private void openDetails(){
         Toast.makeText(getActivity(),
                 "Testing Click Method", Toast.LENGTH_SHORT).show();
@@ -105,6 +107,9 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
         // Required empty public constructor
     }
 
+    /*
+    onCreateView()
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -115,6 +120,4 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return Root;
     }
-
-
 }
