@@ -1,5 +1,6 @@
 package com.team.two.lloyds_app.screens.fragments;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.team.two.lloyds_app.R;
@@ -24,6 +26,7 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
     public static final String TITLE = "Branch Finder";
     View Root;
     GoogleMap googleMap;
+    Marker Markertest;
 
     /**
      * Initialises the mapview
@@ -72,13 +75,30 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
 
         /** Make sure that the map has been initialised **/
         if(null != googleMap){
-            googleMap.addMarker(new MarkerOptions()
+           Markertest = googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(54.976479, -1.618589))
-                    .title("TEST Marker NEWCASTLE")
+                    .title("LLOYDS BANKING GROUP")
+                    .snippet("Newcastle University Branch")
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.mapmarker2))
                     .draggable(false));
+
+            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    if (marker.equals(Markertest))
+                    {
+                        openDetails();
+                    }
+                    return false;
+            }});
         }
     }
+
+    private void openDetails(){
+        Toast.makeText(getActivity(),
+                "Testing Click Method", Toast.LENGTH_SHORT).show();
+    }
+
 
 
     public BranchFinderFragment() {
