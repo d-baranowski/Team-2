@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -24,7 +25,7 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
     public static final String TITLE = "Branch Finder";
     View Root;
     GoogleMap googleMap;
-    Marker Markertest;
+    Marker Markertest, Markertest2, Markertest3;
 
     /**
      * CreateMapView()
@@ -78,16 +79,35 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
            Markertest = googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(54.976479, -1.618589))
                     .title("LLOYDS BANKING GROUP")
-                    .snippet("Newcastle University Branch")
+                    .snippet("Newcastle City Centre Branch")
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.mapmarker2))
                     .draggable(false));
+
+           Markertest2 = googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(54.912538, -1.384838))
+                    .title("LLOYDS BANKING GROUP")
+                    .snippet("Sunderland City Centre Branch")
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.mapmarker2))
+                    .draggable(false));
+
+            Markertest3 = googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(54.903310, -1.531391))
+                    .title("LLOYDS BANKING GROUP")
+                    .snippet("Washington Shopping Centre Branch")
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.mapmarker2))
+                    .draggable(false));
+
 
             googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     if (marker.equals(Markertest))
                     {
-                        openDetails();
+                        Toast.makeText(getActivity(), "TEST CLICK Marker 1",Toast.LENGTH_SHORT).show();
+                    } else if (marker.equals(Markertest2)){
+                        Toast.makeText(getActivity(), "TEST CLICK MARKER 2",Toast.LENGTH_SHORT).show();
+                    } else if (marker.equals(Markertest3)){
+                        Toast.makeText(getActivity(), "TEST CLICK MARKER 3",Toast.LENGTH_SHORT).show();
                     }
                     return false;
             }});
