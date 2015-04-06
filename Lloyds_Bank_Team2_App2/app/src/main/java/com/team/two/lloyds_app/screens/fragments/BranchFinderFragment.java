@@ -80,21 +80,21 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
                     .position(new LatLng(54.976479, -1.618589))
                     .title("LLOYDS BANKING GROUP")
                     .snippet("Newcastle City Centre Branch")
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.mapmarker2))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.finalmarker))
                     .draggable(false));
 
            Markertest2 = googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(54.912538, -1.384838))
                     .title("LLOYDS BANKING GROUP")
                     .snippet("Sunderland City Centre Branch")
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.mapmarker2))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.finalmarker))
                     .draggable(false));
 
             Markertest3 = googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(54.903310, -1.531391))
                     .title("LLOYDS BANKING GROUP")
                     .snippet("Washington Shopping Centre Branch")
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.mapmarker2))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.finalmarker))
                     .draggable(false));
 
 
