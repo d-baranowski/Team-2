@@ -23,6 +23,7 @@ import com.team.two.lloyds_app.objects.Recipient;
 import com.team.two.lloyds_app.screens.drawer.NavigationDrawerFragment;
 import com.team.two.lloyds_app.screens.fragments.BranchFinderFragment;
 import com.team.two.lloyds_app.screens.fragments.MainScreenFragment;
+import com.team.two.lloyds_app.screens.fragments.OptionsFragment;
 import com.team.two.lloyds_app.screens.fragments.StatementScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.TransactionsScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
@@ -117,6 +118,13 @@ public class MainActivity extends ActionBarActivity  {
     public void openFinder(){
         Fragment bf = new BranchFinderFragment();
         title = BranchFinderFragment.TITLE;
+        toolbar.setTitle(title);
+        fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
+    }
+
+    public void openOptions(){
+        Fragment bf = new OptionsFragment();
+        title = OptionsFragment.TITLE;
         toolbar.setTitle(title);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
