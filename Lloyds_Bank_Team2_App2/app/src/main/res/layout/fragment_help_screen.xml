@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;"
+        android:text="How do I access features? \n You can select the many various features of the app through the large icons on the home screen or through the navigation bar \n\n How do I access the Navigation Bar? \n The Navigation bar is accessed by clicking the three-hyphen icon in the top left corner of any view."
         android:id="@+id/helpBox"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/helpTitle"
