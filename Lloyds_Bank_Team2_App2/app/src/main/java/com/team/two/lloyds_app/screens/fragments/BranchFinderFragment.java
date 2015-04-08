@@ -6,13 +6,15 @@ Date :
 Purpose : Branch Finder
  */
 
-import android.content.Intent;
+/*Modified by Michael Edwards on 7/4/2015*/
+
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.maps.*;
@@ -23,26 +25,58 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import com.team.two.lloyds_app.R;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Scanner;
 
+import com.team.two.lloyds_app.R;
+import com.team.two.lloyds_app.objects.Branch;
 
 
 public class BranchFinderFragment extends android.support.v4.app.Fragment {
     public static final String TITLE = "Branch Finder";
-    View Root;
-    GoogleMap googleMap;
-    Marker Markertest, Markertest2, Markertest3;
+    private View root;
+    private GoogleMap googleMap;
+    private HashMap<String, Branch> branchMap;
 
-    /**
-     * CreateMapView()
-     */
+    public BranchFinderFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.fragment_branch_finder, container, false);
+
+        initialiseBranches();
+        createMapView();
+        addMarkers();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        return root;
+    }
+
+    //Read branch information from the text file to create Branch objects
+    private void initialiseBranches(){
+        branchMap = new HashMap<>();
+        try {
+            Scanner scanner = new Scanner(getResources().getAssets().open("branches.txt"));
+            while(scanner.hasNextLine()) {
+                Branch branch = new Branch(scanner.nextLine(),Double.parseDouble(scanner.nextLine()), Double.parseDouble(scanner.nextLine()));
+                branchMap.put(branch.getName(), branch);
+             }
+        } catch(IOException ioe){
+            Log.e("branchFinder", ioe.toString());
+        }
+    }
+
     private void createMapView(){
         /**
          * Catch the null pointer exception that
          * may be thrown when initialising the map
          */
         try {
-            if(null == googleMap){
+            if(googleMap == null){
                 googleMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(
                         R.id.mapView)).getMap();
 
@@ -50,100 +84,71 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
                  * If the map is still null after attempted initialisation,
                  * show an error to the user
                  */
-                if(null == googleMap) {
-                    Toast.makeText(getActivity(),
-                            "Error creating map", Toast.LENGTH_SHORT).show();
+                if(googleMap == null) {
+                    Toast.makeText(getActivity(), "Error creating map", Toast.LENGTH_SHORT).show();
                 }
+
+                final RelativeLayout popup = (RelativeLayout) root.findViewById(R.id.branch_popup);
+
+                //Set up initial zoom to Newcastle area
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
+                        .target(new LatLng(54.976479, -1.618589))
+                        .zoom(9)
+                        .build()));
+
+                //Set up the marker listener
+                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        Branch branch = branchMap.get(marker.getTitle());
+                        /*googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
+                                .target(new LatLng(branch.getLongitude(), branch.getLongitude()))
+                                .zoom(20)
+                                .build()));*/
+
+                        TextView branchTitle = (TextView) root.findViewById(R.id.branch_title);
+                        TextView addressTitle = (TextView) root.findViewById(R.id.branch_address_title);
+                        TextView address = (TextView) root.findViewById(R.id.branch_address);
+                        TextView timesTitle = (TextView) root.findViewById(R.id.branch_opening_times_title);
+                        TextView times = (TextView) root.findViewById(R.id.branch_opening_times);
+
+                        branchTitle.setText(branch.getName());
+                        addressTitle.setText(getResources().getString(R.string.branch_address_title));
+                        address.setText("tempAddr");
+                        timesTitle.setText(getResources().getString(R.string.branch_opening_times_title));
+                        times.setText("tempTimes");
+
+                        popup.setVisibility(View.VISIBLE);
+                        return false;
+                    }});
+
+                //Set up map listener so the popup will be removed
+                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(LatLng ll) {
+                        popup.setVisibility(View.INVISIBLE);
+                    }});
             }
         } catch (NullPointerException exception){
-            Log.e("mapApp", exception.toString());
+            Log.e("branchFinder", exception.toString());
         }
     }
 
-    /**
-     * setZoom()
-     */
-
-   private void setZoom(){
-       CameraPosition CP = new CameraPosition.Builder()
-               .target(new LatLng(54.976479, -1.618589))
-               .zoom(9)
-               .build();
-
-       googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(CP));
-
-
-   }
-/*
-    addMarker()
- */
-    private void addMarker(){
-
+    private void addMarkers(){
 
         /** Make sure that the map has been initialised **/
-        if(null != googleMap){
-           Markertest = googleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(54.976479, -1.618589))
-                    .title("LLOYDS BANKING GROUP")
-                    .snippet("Newcastle City Centre Branch")
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.finalmarker))
-                    .draggable(false));
+        if(googleMap != null){
 
-           Markertest2 = googleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(54.912538, -1.384838))
-                    .title("LLOYDS BANKING GROUP")
-                    .snippet("Sunderland City Centre Branch")
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.finalmarker))
-                    .draggable(false));
-
-            Markertest3 = googleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(54.903310, -1.531391))
-                    .title("LLOYDS BANKING GROUP")
-                    .snippet("Washington Shopping Centre Branch")
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.finalmarker))
-                    .draggable(false));
+           for(Branch b: branchMap.values()){
+                              googleMap.addMarker(new MarkerOptions()
+                                      .position(new LatLng(b.getLatitude(), b.getLongitude()))
+                                      .title(b.getName())
+                                      .icon(BitmapDescriptorFactory.fromResource(R.drawable.finalmarker))
+                                      .draggable(false));
+           }
 
 
-            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    if (marker.equals(Markertest))
-                    {
-                        Toast.makeText(getActivity(), "TEST CLICK Marker 1",Toast.LENGTH_SHORT).show();
-                    } else if (marker.equals(Markertest2)){
-                        Toast.makeText(getActivity(), "TEST CLICK MARKER 2",Toast.LENGTH_SHORT).show();
-                    } else if (marker.equals(Markertest3)){
-                        Toast.makeText(getActivity(), "TEST CLICK MARKER 3",Toast.LENGTH_SHORT).show();
-                    }
-                    return false;
-            }});
         }
     }
- /*
-    openDetails()
-  */
-    private void openDetails(){
-        Toast.makeText(getActivity(),
-                "Testing Click Method", Toast.LENGTH_SHORT).show();
-    }
 
-
-
-    public BranchFinderFragment() {
-        // Required empty public constructor
-    }
-
-    /*
-    onCreateView()
-     */
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        Root = inflater.inflate(R.layout.fragment_branch_finder, container, false);
-        createMapView();
-        setZoom();
-        addMarker();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        return Root;
-    }
 }
