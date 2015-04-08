@@ -43,6 +43,10 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
         // Required empty public constructor
     }
 
+    /*
+    onCreateView() - Creates the screen by inflating layout.
+     */
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,7 +60,9 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
         return root;
     }
 
-    //Read branch information from the text file to create Branch objects
+        /*
+    initialiseBranches()-Read branch information from the text file to create Branch objects
+     */
     private void initialiseBranches(){
         branchMap = new HashMap<>();
         try {
@@ -69,6 +75,10 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
             Log.e("branchFinder", ioe.toString());
         }
     }
+
+         /*
+    createMapView()- Initialises the Map
+     */
 
     private void createMapView(){
         /**
@@ -133,7 +143,9 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
             Log.e("branchFinder", exception.toString());
         }
     }
-
+/*
+addMarkers() - add's the branch markers to the Mapview.
+ */
     private void addMarkers(){
 
         /** Make sure that the map has been initialised **/
