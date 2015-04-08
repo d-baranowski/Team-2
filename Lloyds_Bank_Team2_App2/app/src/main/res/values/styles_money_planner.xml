@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="money_planner_divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@android:color/darker_gray</item>
-    </style>
-
     <style name="money_planner_title">
         <item name="android:paddingTop">10dp</item>
         <item name="android:layout_width">wrap_content</item>

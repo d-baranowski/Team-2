@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="branch_title">
-        <item name="android:textSize">25sp</item>
-        <item name="android:background">@color/WHITE</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:background">@drawable/branch_title_border</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="branch_times_and_address">
+        <item name="android:background">@color/white</item>
     </style>
 
     <style name="branch_opening_times_title">
         <item name="android:textSize">20sp</item>
-        <item name="android:background">@color/WHITE</item>
     </style>
 
     <style name="branch_address_title">
         <item name="android:textSize">20sp</item>
-        <item name="android:background">@color/WHITE</item>
-
     </style>
 
     <style name="branch_opening_times">
-        <item name="android:textSize">15sp</item>
-        <item name="android:background">@color/WHITE</item>
 
     </style>
 
     <style name="branch_address">
-        <item name="android:textSize">15sp</item>
-        <item name="android:background">@color/WHITE</item>
 
     </style>
 

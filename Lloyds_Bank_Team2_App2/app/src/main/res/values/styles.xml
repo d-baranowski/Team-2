@@ -1,5 +1,5 @@
 <resources>
-    <color name="WHITE">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
     <color name="red">#FF00</color>
     <color name="black">#000000</color>
     <color name="lloyds_green">#06664c</color>
@@ -13,6 +13,11 @@
 
     </style>
 
+    <style name="divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@android:color/darker_gray</item>
+    </style>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">

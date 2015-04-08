@@ -84,7 +84,7 @@
         android:layout_below="@+id/account_number_text"
         android:text="@string/add"
         android:background="@drawable/mybutton"
-        android:textColor="@color/WHITE"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_size_button" />
 
 

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/WHITE"
+    android:background="@color/white"
     tools:context="com.team.two.lloyds_app.screens.Transfer"
     tools:ignore="Overdraw">
 
@@ -109,7 +109,7 @@
             android:background="@drawable/mybutton"
             android:text="@string/transfer"
             android:textAlignment="center"
-            android:textColor="@color/WHITE"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_button" />
 
         <View
@@ -238,7 +238,7 @@
             android:background="@drawable/mybutton"
             android:text="@string/transfer"
             android:textAlignment="center"
-            android:textColor="@color/WHITE"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_button" />
 
         <Button
@@ -252,7 +252,7 @@
             android:background="@drawable/mybutton"
             android:text="@string/add_recipient"
             android:textAlignment="center"
-            android:textColor="@color/WHITE"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_button" />
 
     </RelativeLayout>

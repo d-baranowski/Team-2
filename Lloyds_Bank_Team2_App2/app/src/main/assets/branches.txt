@@ -1,9 +1,60 @@
-Newcastle City Centre Branch
-54.976479
--1.618589
-Sunderland City Centre Branch
-54.912538
--1.384838
-Washington Shopping Centre Branch
+Benton Newcastle-upon-tyne
+55.008091
+-1.578785
+331 Benton Road
+Newcastle Upon Tyne
+Tyne And Wear
+NE7 7EE
+0845 3000 000
+09:30	-	16:30
+09:30	-	16:30
+10:00	-	16:30
+09:30	-	16:30
+09:30	-	16:30
+Closed
+Closed
+Haymarket Newcastle-upon-tyne
+54.977004
+-1.613654
+Haymarket Lane
+Newcastle Upon Tyne
+Tyne And Wear
+NE1 7QD
+0845 3000 000
+09:00	-	17:00
+09:00	-	17:00
+09:30	-	17:00
+09:00	-	17:00
+09:00	-	17:00
+09:00	-	16:00
+Closed
+Fawcett St Sunderland
+54.906515
+-1.381908
+54 Fawcett Street
+Sunderland
+Tyne And Wear
+SR1 1SF
+0845 3000 000
+09:00	-	17:00
+09:00	-	17:00
+09:30	-	17:00
+09:00	-	17:00
+09:00	-	17:00
+09:00	-	16:00
+Closed
+Galleries Washington
 54.903310
 -1.531391
+Unit I The Galleries
+Washington
+Tyne And Wear
+NE38 7SA
+0845 3000 000
+09:00	-	17:00
+09:00	-	17:00
+09:30	-	17:00
+09:00	-	19:00
+09:00	-	17:00
+09:00	-	16:00
+Closed
