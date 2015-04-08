@@ -1,0 +1,9 @@
+Newcastle City Centre Branch
+54.976479
+-1.618589
+Sunderland City Centre Branch
+54.912538
+-1.384838
+Washington Shopping Centre Branch
+54.903310
+-1.531391
