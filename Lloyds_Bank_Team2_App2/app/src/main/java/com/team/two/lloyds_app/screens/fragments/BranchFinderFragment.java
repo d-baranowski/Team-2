@@ -62,7 +62,15 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
         try {
             Scanner scanner = new Scanner(getResources().getAssets().open("branches.txt"));
             while(scanner.hasNextLine()) {
-                Branch branch = new Branch(scanner.nextLine(),Double.parseDouble(scanner.nextLine()), Double.parseDouble(scanner.nextLine()));
+                Branch branch = new Branch();
+
+                branch.setName(scanner.nextLine());
+                branch.setLatitude(Double.parseDouble(scanner.nextLine()));
+                branch.setLongitude(Double.parseDouble(scanner.nextLine()));
+                branch.setAddress(scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine());
+                branch.setPhoneNumber(scanner.nextLine());
+                branch.setOpeningTimes(scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine());
+
                 branchMap.put(branch.getName(), branch);
              }
         } catch(IOException ioe){
@@ -88,44 +96,57 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
                     Toast.makeText(getActivity(), "Error creating map", Toast.LENGTH_SHORT).show();
                 }
 
-                final RelativeLayout popup = (RelativeLayout) root.findViewById(R.id.branch_popup);
-
                 //Set up initial zoom to Newcastle area
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
                         .target(new LatLng(54.976479, -1.618589))
                         .zoom(9)
                         .build()));
 
+                final RelativeLayout popup = (RelativeLayout) root.findViewById(R.id.branch_popup);
+                final TextView branchTitle = (TextView) root.findViewById(R.id.branch_title);
+                final TextView addressTitle = (TextView) root.findViewById(R.id.branch_address_title);
+                final TextView addressView = (TextView) root.findViewById(R.id.branch_address);
+                final TextView timesTitle = (TextView) root.findViewById(R.id.branch_opening_times_title);
+                final TextView timesView = (TextView) root.findViewById(R.id.branch_opening_times);
+
                 //Set up the marker listener
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
+                        //Clear any previous popup
+                        timesView.setText("");
+                        addressView.setText("");
+
+                        //Get the respective branch object and get the address and opening times
                         Branch branch = branchMap.get(marker.getTitle());
-                        /*googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                                .target(new LatLng(branch.getLongitude(), branch.getLongitude()))
-                                .zoom(20)
-                                .build()));*/
+                        String[] address = branch.getAddress();
+                        String[] times = branch.getOpeningTimes();
 
-                        TextView branchTitle = (TextView) root.findViewById(R.id.branch_title);
-                        TextView addressTitle = (TextView) root.findViewById(R.id.branch_address_title);
-                        TextView address = (TextView) root.findViewById(R.id.branch_address);
-                        TextView timesTitle = (TextView) root.findViewById(R.id.branch_opening_times_title);
-                        TextView times = (TextView) root.findViewById(R.id.branch_opening_times);
-
+                        //Add the appropriate text to the popup
                         branchTitle.setText(branch.getName());
-                        addressTitle.setText(getResources().getString(R.string.branch_address_title));
-                        address.setText("tempAddr");
-                        timesTitle.setText(getResources().getString(R.string.branch_opening_times_title));
-                        times.setText("tempTimes");
 
+                        addressTitle.setText(getResources().getString(R.string.branch_address_title));
+                        for(String s:address){
+                            addressView.append(s + "\n");
+                        }
+                        addressView.append("\n" + branch.getPhoneNumber());
+
+                        timesTitle.setText(getResources().getString(R.string.branch_opening_times_title));
+                        for(String s:times){
+                            timesView.append(s + "\n");
+                        }
+
+                        //Show the popup
                         popup.setVisibility(View.VISIBLE);
+
                         return false;
                     }});
 
-                //Set up map listener so the popup will be removed
+                //Set up map listener so the popup will be removed once clicked off
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(LatLng ll) {
+                        //Hide the popup
                         popup.setVisibility(View.INVISIBLE);
                     }});
             }
