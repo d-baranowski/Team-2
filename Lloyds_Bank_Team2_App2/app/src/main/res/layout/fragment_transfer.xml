@@ -71,7 +71,7 @@
             android:layout_below="@+id/transfer_to_label"
             android:layout_marginTop="5dp"
             android:popupBackground="#D2D2D2"
-            android:background="@drawable/spintest" />
+            android:background="@drawable/spinnerbackground" />
 
         <TextView
             android:id="@+id/transfer_amount_label"
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/payment_from_label"
             android:popupBackground="#D2D2D2"
-            android:background="@drawable/spintest" />
+            android:background="@drawable/spinnerbackground" />
 
         <TextView
             android:id="@+id/payment_to_label"
@@ -172,7 +172,7 @@
             android:layout_toLeftOf="@+id/button_payment"
             android:layout_toStartOf="@+id/button_payment"
             android:popupBackground="#D2D2D2"
-            android:background="@drawable/spintest" />
+            android:background="@drawable/spinnerbackground" />
 
         <TextView
             android:id="@+id/description_label"
