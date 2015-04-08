@@ -51,11 +51,10 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_branch_finder, container, false);
-
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initialiseBranches();
         createMapView();
         addMarkers();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         return root;
     }
@@ -165,7 +164,7 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
         }
     }
 /*
-addMarkers() - add's the branch markers to the Mapview.
+addMarkers() - Adds the branch markers to the map.
  */
     private void addMarkers(){
 
