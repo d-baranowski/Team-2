@@ -1,5 +1,8 @@
 package com.team.two.lloyds_app.screens.fragments;
 
+/*Created by Michael Edwards on 25/03/2015*/
+/*Purpose: Programs the money planner screen*/
+
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 import android.util.Log;
