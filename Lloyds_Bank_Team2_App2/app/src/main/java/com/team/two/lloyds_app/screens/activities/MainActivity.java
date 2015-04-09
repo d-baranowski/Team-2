@@ -1,5 +1,6 @@
 package com.team.two.lloyds_app.screens.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,8 @@ import com.team.two.lloyds_app.screens.fragments.TransactionsScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
 
 import java.util.ArrayList;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends ActionBarActivity  {
     private static DatabaseAdapter dbadapter;
@@ -167,6 +170,11 @@ public class MainActivity extends ActionBarActivity  {
         if (field.getText().toString().isEmpty()){
             throw new EmptyMandatoryFieldException(errorMsg);
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 

@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.github.traex.rippleeffect:library:1.2.4'
     compile 'com.jjoe64:graphview:4.0.0'
+    compile 'uk.co.chrisjenx:calligraphy:2.0.2'
 }
