@@ -16,6 +16,7 @@ public class AchievementsFragment extends android.support.v4.app.Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // test comment added - to be removed
     public static final String TITLE = "Achievements";
 
     // TODO: Rename and change types of parameters
