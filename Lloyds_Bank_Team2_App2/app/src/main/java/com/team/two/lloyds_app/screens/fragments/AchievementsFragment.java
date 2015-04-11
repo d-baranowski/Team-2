@@ -8,6 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.Player;
+import com.google.android.gms.plus.Plus;
+import com.google.example.games.basegameutils.BaseGameUtils;
+
 import com.team.two.lloyds_app.R;
 
 public class AchievementsFragment extends android.support.v4.app.Fragment {
@@ -16,6 +23,7 @@ public class AchievementsFragment extends android.support.v4.app.Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // Title
     public static final String TITLE = "Achievements";
 
     // TODO: Rename and change types of parameters
