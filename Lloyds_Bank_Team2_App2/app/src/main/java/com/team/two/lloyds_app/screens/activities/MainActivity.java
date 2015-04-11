@@ -14,8 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-
-import com.team.two.lloyds_app.Exceptions.EmptyMandatoryFieldException;
+import com.team.two.lloyds_app.exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.database.DatabaseAdapter;
 import com.team.two.lloyds_app.objects.Account;
