@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Team-2.iml" filepath="$PROJECT_DIR$/Team-2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lloyds_Bank_Team2_App2/app/src/androidTest/androidTest.iml" filepath="$PROJECT_DIR$/Lloyds_Bank_Team2_App2/app/src/androidTest/androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lloyds_Bank_Team2_App2/app/src/main/main.iml" filepath="$PROJECT_DIR$/Lloyds_Bank_Team2_App2/app/src/main/main.iml" />
     </modules>
   </component>
 </project>
