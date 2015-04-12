@@ -11,60 +11,46 @@ public class Branch {
     private String name;
     private double latitude;
     private double longitude;
-    private String[] address;
+    private Address address;
     private String phoneNumber;
     private String[] openingTimes;
 
-	public Branch()
+	public Branch(String name, double latitude, double longitude, Address address, String phoneNumber, String[] openingTimes)
 	{
-
+		this.name = name;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.openingTimes = openingTimes;
 	}
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+   /*	public void setName(String name) {
         this.name = name;
-    }
+    }*/
 
     public double getLatitude() {
         return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
     }
 
     public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
 
-    public String[] getAddress() {
+    public Address getAddress() {
         return address;
-    }
-
-    public void setAddress(String streetAddress, String city, String county, String postcode) {
-        this.address = new String[]{streetAddress, city, county, postcode};
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String[] getOpeningTimes() {
         return openingTimes;
-    }
-
-    public void setOpeningTimes(String monday, String tuesday, String wednesday, String thursday, String friday, String saturday, String sunday) {
-        this.openingTimes = new String[]{monday, tuesday, wednesday, thursday, friday, saturday, sunday};
     }
 }

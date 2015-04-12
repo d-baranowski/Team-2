@@ -9,10 +9,10 @@ public class SqlCons {
     //Customer Table SQL
     static final String CUSTOMER_TABLE_NAME = "Customers";
     static final String CUSTOMER_ID = "_id";
-    static final String CUSTOMER_NAME = "FirstNAme";
+    static final String CUSTOMER_NAME = "FirstName";
     static final String CUSTOMER_SURNAME = "Surname";
-    static final String CUSTOMER_ADDRESSONE = "AddressLine1";
-    static final String CUSTOMER_ADDRESSTWO = "AddressLine2";
+    static final String CUSTOMER_STREET_ADDRESS = "AddressLine1";
+    static final String CUSTOMER_CITY = "AddressLine2";
     static final String CUSTOMER_POSTCODE = "Postcode";
     static final String CUSTOMER_USERID = "UserID";
     static final String CUSTOMER_PASSWORD = "Password";
@@ -23,13 +23,13 @@ public class SqlCons {
                     CUSTOMER_ID + "	INTEGER PRIMARY KEY AUTOINCREMENT," +
                     CUSTOMER_NAME + "   TEXT NOT NULL," +
                     CUSTOMER_SURNAME + "	TEXT NOT NULL," +
-                    CUSTOMER_ADDRESSONE + "	TEXT NOT NULL," +
-                    CUSTOMER_ADDRESSTWO + "	TEXT NOT NULL," +
+					CUSTOMER_STREET_ADDRESS + "	TEXT NOT NULL," +
+					CUSTOMER_CITY + "	TEXT NOT NULL," +
                     CUSTOMER_POSTCODE + "	TEXT NOT NULL," +
                     CUSTOMER_USERID + "	INTEGER NOT NULL UNIQUE ," +
                     CUSTOMER_PASSWORD + "	TEXT NOT NULL);";
 
-    static final String[] CUSTOMER_COLUMNS = {CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_SURNAME, CUSTOMER_ADDRESSONE, CUSTOMER_ADDRESSTWO, CUSTOMER_POSTCODE, CUSTOMER_USERID, CUSTOMER_PASSWORD};
+    static final String[] CUSTOMER_COLUMNS = {CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_SURNAME, CUSTOMER_STREET_ADDRESS, CUSTOMER_CITY, CUSTOMER_POSTCODE, CUSTOMER_USERID, CUSTOMER_PASSWORD};
 
     //Accounts table SQL
     static final String ACCOUNTS_TABLE_NAME = "Accounts";

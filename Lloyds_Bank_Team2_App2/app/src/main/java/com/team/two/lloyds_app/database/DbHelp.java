@@ -50,8 +50,8 @@ public class DbHelp extends SQLiteOpenHelper {
         ContentValues contentValCustomers = new ContentValues();
         contentValCustomers.put(SqlCons.CUSTOMER_NAME, "Daniel");
         contentValCustomers.put(SqlCons.CUSTOMER_SURNAME, "Baranowski");
-        contentValCustomers.put(SqlCons.CUSTOMER_ADDRESSONE, "123 Street Name");
-        contentValCustomers.put(SqlCons.CUSTOMER_ADDRESSTWO, "Newcastle Upon Tyne");
+        contentValCustomers.put(SqlCons.CUSTOMER_STREET_ADDRESS, "123 Street Name");
+        contentValCustomers.put(SqlCons.CUSTOMER_CITY, "Newcastle Upon Tyne");
         contentValCustomers.put(SqlCons.CUSTOMER_POSTCODE, "NE9 9HA");
         contentValCustomers.put(SqlCons.CUSTOMER_USERID, 123456789);
         contentValCustomers.put(SqlCons.CUSTOMER_PASSWORD, "password");
@@ -60,8 +60,8 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValCustomers = new ContentValues();
         contentValCustomers.put(SqlCons.CUSTOMER_NAME, "Matthew");
         contentValCustomers.put(SqlCons.CUSTOMER_SURNAME, "Selby");
-        contentValCustomers.put(SqlCons.CUSTOMER_ADDRESSONE, "123 Street Name");
-        contentValCustomers.put(SqlCons.CUSTOMER_ADDRESSTWO, "Newcastle Upon Tyne");
+        contentValCustomers.put(SqlCons.CUSTOMER_STREET_ADDRESS, "123 Street Name");
+        contentValCustomers.put(SqlCons.CUSTOMER_CITY, "Newcastle Upon Tyne");
         contentValCustomers.put(SqlCons.CUSTOMER_POSTCODE, "NE7 4HA");
         contentValCustomers.put(SqlCons.CUSTOMER_USERID, 987654321);
         contentValCustomers.put(SqlCons.CUSTOMER_PASSWORD, "password");

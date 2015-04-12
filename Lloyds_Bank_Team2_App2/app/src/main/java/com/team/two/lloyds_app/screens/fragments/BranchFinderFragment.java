@@ -2,11 +2,12 @@ package com.team.two.lloyds_app.screens.fragments;
 
 /*
 Author : Matthew Selby
-Date :
+Date : 03/04/2015
 Purpose : Branch Finder
- */
+*/
 
 /*Modified by Michael Edwards on 7/4/2015*/
+/*Modified by Daniel Smith on 12/4/2015*/
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import java.util.Scanner;
 
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Branch;
+import com.team.two.lloyds_app.objects.Address;
 
 
 public class BranchFinderFragment extends android.support.v4.app.Fragment {
@@ -67,16 +69,14 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
         try {
             Scanner scanner = new Scanner(getResources().getAssets().open("branches.txt"));
             while(scanner.hasNextLine()) {
-                Branch branch = new Branch();
-
-                branch.setName(scanner.nextLine());
-                branch.setLatitude(Double.parseDouble(scanner.nextLine()));
-                branch.setLongitude(Double.parseDouble(scanner.nextLine()));
-                branch.setAddress(scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine());
-                branch.setPhoneNumber(scanner.nextLine());
-                branch.setOpeningTimes(scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine());
-
-                branchMap.put(branch.getName(), branch);
+                Branch branch = new Branch(
+						scanner.nextLine(),
+						Double.parseDouble(scanner.nextLine()),
+						Double.parseDouble(scanner.nextLine()),
+						new Address(scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine()),
+						scanner.nextLine(),
+						new String[] {scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine()});
+				branchMap.put(branch.getName(), branch);
              }
         } catch(IOException ioe){
             Log.e("branchFinder", ioe.toString());
@@ -128,7 +128,7 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
 
                         //Get the respective branch object and get the address and opening times
                         Branch branch = branchMap.get(marker.getTitle());
-                        String[] address = branch.getAddress();
+                        String[] address = branch.getAddress().toStringArray();
                         String[] times = branch.getOpeningTimes();
 
                         //Add the appropriate text to the popup
