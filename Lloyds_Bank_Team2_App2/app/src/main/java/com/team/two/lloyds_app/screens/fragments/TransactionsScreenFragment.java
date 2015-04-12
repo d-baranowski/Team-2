@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.team.two.lloyds_app.Constants;
-import com.team.two.lloyds_app.Exceptions.EmptyMandatoryFieldException;
+import com.team.two.lloyds_app.exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Recipient;
