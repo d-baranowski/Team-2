@@ -10,11 +10,14 @@ import android.view.ViewGroup;
 
 import com.team.two.lloyds_app.R;
 
-public class AchievementsFragment extends android.support.v4.app.Fragment {
+public class AchievementsFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    String mGreeting = "You are not signed in.";
+    Listener mListener = null;
 
     // test comment added - to be removed
     public static final String TITLE = "Achievements";
@@ -36,6 +39,27 @@ public class AchievementsFragment extends android.support.v4.app.Fragment {
 
     public AchievementsFragment() {
         // Required empty public constructor
+    }
+
+    public interface Listener {
+        public void onShowAchievementsRequested();
+    }
+
+    public void setListener(Listener l) {
+        mListener = l;
+    }
+
+    public void setGreeting(String greeting) {
+        mGreeting = greeting;
+        //updateUi();
+    }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.show_achievements:
+                mListener.onShowAchievementsRequested();
+                break;
+        }
     }
 
     @Override

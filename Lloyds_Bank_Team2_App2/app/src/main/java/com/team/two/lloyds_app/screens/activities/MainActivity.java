@@ -5,15 +5,22 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.Player;
+import com.google.android.gms.plus.Plus;
+import com.google.example.games.basegameutils.BaseGameUtils;
 import com.google.android.gms.maps.*;
 import android.os.Bundle;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import com.team.two.lloyds_app.exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
@@ -31,11 +38,15 @@ import com.team.two.lloyds_app.screens.fragments.TransactionsScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
 import com.team.two.lloyds_app.screens.fragments.AchievementsFragment;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.ArrayList;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MainActivity extends ActionBarActivity  {
+public class MainActivity extends ActionBarActivity {
+    // Mikey, the class needs to implement the following (copy and paste it):
+    //implements AchievementsFragment.Listener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
     private static DatabaseAdapter dbadapter;
     private String title;
     private Account account;
@@ -44,9 +55,51 @@ public class MainActivity extends ActionBarActivity  {
     private int customerId;
     private FragmentManager fm;
 
+    //-------------- achievements variables START
+
+    // Fragments
+    AchievementsFragment mAchievementsFragment;
+
+    // Client used to interact with Google APIs
+    private GoogleApiClient mGoogleApiClient;
+
+    // Are we currently resolving a connection failure?
+    private boolean mResolvingConnectionFailure = false;
+
+    // Has the user clicked the sign-in button?
+    private boolean mSignInClicked = false;
+
+    // Automatically start the sign-in flow when the Activity starts
+    private boolean mAutoStartSignInFlow = true;
+
+    // request codes we use when invoking an external activity
+    private static final int RC_RESOLVE = 5000;
+    private static final int RC_UNUSED = 5001;
+    private static final int RC_SIGN_IN = 9001;
+
+    // achievements and scores we're pending to push to the cloud
+    //AccomplishmentsOutbox mOutbox = new AccomplishmentsOutbox();
+
+    //-------------- END
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // ---------- achievements connection code START
+        // Create the Google API Client with access to Plus and Games
+        /*
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Plus.API).addScope(Plus.SCOPE_PLUS_LOGIN)
+                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .build();
+
+        // load outbox from file
+        mOutbox.loadLocal(this);
+        */
+        //-------------------- END
 
         dbadapter = new DatabaseAdapter(this);
         customerId = getIntent().getExtras().getInt("customerId");
@@ -68,7 +121,6 @@ public class MainActivity extends ActionBarActivity  {
         drawerFragment.setUp(R.id.fragment_navigation_drawer,(android.support.v4.widget.DrawerLayout) findViewById(R.id.drawer_layout),toolbar);
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,6 +169,10 @@ public class MainActivity extends ActionBarActivity  {
         Fragment bf = new AchievementsFragment();
         title = AchievementsFragment.TITLE;
         toolbar.setTitle(title);
+
+        // listen to fragment events
+        //mAchievementsFragment = (AchievementsFragment) bf;
+        //mAchievementsFragment.setListener(this);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
@@ -185,6 +241,154 @@ public class MainActivity extends ActionBarActivity  {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    // ------------------- achievement sign in/out helper methods
+    /*
+    private boolean isSignedIn() {
+        return (mGoogleApiClient != null && mGoogleApiClient.isConnected());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onShowAchievementsRequested() {
+        if (isSignedIn()) {
+            startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+                    RC_UNUSED);
+        } else {
+            BaseGameUtils.makeSimpleDialog(this, getString(R.string.achievements_not_available)).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == RC_SIGN_IN) {
+            mSignInClicked = false;
+            mResolvingConnectionFailure = false;
+            if (resultCode == RESULT_OK) {
+                mGoogleApiClient.connect();
+            } else {
+                BaseGameUtils.showActivityResultError(this, requestCode, resultCode, R.string.signin_other_error);
+            }
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Player p = Games.Players.getCurrentPlayer(mGoogleApiClient);
+        String displayName;
+        if (p == null) {
+            displayName = "???";
+        } else {
+            displayName = p.getDisplayName();
+        }
+        mAchievementsFragment.setGreeting("Hello, " + displayName);
+
+        // if we have accomplishments to push, push them
+        if (!mOutbox.isEmpty()) {
+            pushAccomplishments();
+            Toast.makeText(this, getString(R.string.your_progress_will_be_uploaded),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        if (mResolvingConnectionFailure) {
+            return;
+        }
+
+        if (mSignInClicked || mAutoStartSignInFlow) {
+            mAutoStartSignInFlow = false;
+            mSignInClicked = false;
+            mResolvingConnectionFailure = true;
+            if (!BaseGameUtils.resolveConnectionFailure(this, mGoogleApiClient, connectionResult,
+                    RC_SIGN_IN, getString(R.string.signin_other_error))) {
+                mResolvingConnectionFailure = false;
+            }
+        }
+
+        // Sign-in failed, so show sign-in button on main menu
+        mAchievementsFragment.setGreeting(getString(R.string.signed_out_greeting));
+    }
+
+    void pushAccomplishments() {
+        if (!isSignedIn()) {
+            // can't push to the cloud, so save locally
+            mOutbox.saveLocal(this);
+            return;
+        }
+        if (mOutbox.mPrimeAchievement) {
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_prime));
+            mOutbox.mPrimeAchievement = false;
+        }
+        if (mOutbox.mArrogantAchievement) {
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_arrogant));
+            mOutbox.mArrogantAchievement = false;
+        }
+        if (mOutbox.mHumbleAchievement) {
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_humble));
+            mOutbox.mHumbleAchievement = false;
+        }
+        if (mOutbox.mLeetAchievement) {
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_leet));
+            mOutbox.mLeetAchievement = false;
+        }
+        if (mOutbox.mBoredSteps > 0) {
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.achievement_really_bored),
+                    mOutbox.mBoredSteps);
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.achievement_bored),
+                    mOutbox.mBoredSteps);
+        }
+        if (mOutbox.mBoredSteps > 0) {
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.achievement_really_bored),
+                    mOutbox.mBoredSteps);
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.achievement_bored),
+                    mOutbox.mBoredSteps);
+        }
+        mOutbox.saveLocal(this);
+    }
+
+
+    class AccomplishmentsOutbox {
+        boolean mPrimeAchievement = false;
+        boolean mHumbleAchievement = false;
+        boolean mLeetAchievement = false;
+        boolean mArrogantAchievement = false;
+        int mBoredSteps = 0;
+        int mEasyModeScore = -1;
+        int mHardModeScore = -1;
+
+        boolean isEmpty() {
+            return !mPrimeAchievement && !mHumbleAchievement && !mLeetAchievement &&
+                    !mArrogantAchievement && mBoredSteps == 0 && mEasyModeScore < 0 &&
+                    mHardModeScore < 0;
+        }
+
+        public void saveLocal(Context ctx) {
+        }
+
+        public void loadLocal(Context ctx) {
+        }
+    }
+    */
 
 
 }
