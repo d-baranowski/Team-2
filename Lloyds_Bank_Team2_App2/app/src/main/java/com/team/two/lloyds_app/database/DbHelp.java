@@ -6,8 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
-* Created by danielbaranowski on 24/02/15.
-*/
+ * Author: Daniel Baranowski
+ * Date: 24/02/2015
+ * Purpose: To store dummy customer data
+ */
 public class DbHelp extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "lloyds";
     private static final int DATABASE_VERSION = 30;
@@ -35,16 +37,16 @@ public class DbHelp extends SQLiteOpenHelper {
         final String DROP_CUSTOMER_TABLE = "DROP TABLE IF EXISTS " + SqlCons.CUSTOMER_TABLE_NAME;
         final String DROP_ACCOUNTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACCOUNTS_TABLE_NAME;
         final String DROP_TRANSACTIONS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.TRANSACTIONS_TABLE_NAME;
-        final String DROP_RECIPMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.RECIPIENTS_TABLE_NAME;
+        final String DROP_RECIPIENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.RECIPIENTS_TABLE_NAME;
         db.execSQL(DROP_CUSTOMER_TABLE);
         db.execSQL(DROP_ACCOUNTS_TABLE);
         db.execSQL(DROP_TRANSACTIONS_TABLE);
-        db.execSQL(DROP_RECIPMENTS_TABLE);
+        db.execSQL(DROP_RECIPIENTS_TABLE);
         onCreate(db);
     }
 
     private static void populate(SQLiteDatabase db){
-        //Create sample dummy data and instert into database
+        //Create sample dummy data and insert into database
         ContentValues contentValCustomers = new ContentValues();
         contentValCustomers.put(SqlCons.CUSTOMER_NAME, "Daniel");
         contentValCustomers.put(SqlCons.CUSTOMER_SURNAME, "Baranowski");

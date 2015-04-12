@@ -1,7 +1,10 @@
 package com.team.two.lloyds_app.objects;
 
 /**
- * Created by Michael on 07/04/2015.
+ * Author: Michael Edwards
+ * Date: 07/04/2015
+ * Purpose:
+ * Modified By Daniel Smith on 12/04/2015
  */
 
 public class Branch {
@@ -11,6 +14,11 @@ public class Branch {
     private String[] address;
     private String phoneNumber;
     private String[] openingTimes;
+
+	public Branch()
+	{
+
+	}
 
     public String getName() {
         return name;

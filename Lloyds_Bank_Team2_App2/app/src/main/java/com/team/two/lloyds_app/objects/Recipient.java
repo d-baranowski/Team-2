@@ -1,7 +1,9 @@
 package com.team.two.lloyds_app.objects;
 
 /**
- * Created by danielbaranowski on 25/02/15.
+ * Author: Daniel Baranowski
+ * Date: 25/02/2015
+ * Purpose: Transaction recipient data
  */
 public class Recipient {
     private final int id;

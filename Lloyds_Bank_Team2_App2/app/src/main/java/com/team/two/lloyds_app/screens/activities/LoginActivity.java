@@ -18,7 +18,9 @@ import com.team.two.lloyds_app.Constants;
 
 
 /**
- * A login screen that offers login via email/password.
+ * Author: Matthew Selby
+ * Date: 05/04/2015
+ * Purpose: A login screen that offers login via email/password.
  */
 public class LoginActivity extends Activity {
 

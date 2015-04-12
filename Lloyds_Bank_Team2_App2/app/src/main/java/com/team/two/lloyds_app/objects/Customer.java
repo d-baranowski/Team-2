@@ -1,7 +1,9 @@
 package com.team.two.lloyds_app.objects;
 
 /**
- * Created by danielbaranowski on 06/02/15.
+ * Author: Daniel Baranowski
+ * Date: 06/02/2015
+ * Purpose: To store data about a particular customer
  */
 public class Customer {
     private final int id;

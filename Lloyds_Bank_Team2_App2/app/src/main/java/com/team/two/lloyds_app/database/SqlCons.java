@@ -1,7 +1,9 @@
 package com.team.two.lloyds_app.database;
 
 /**
- * Created by danielbaranowski on 24/02/15.
+ * Author: Daniel Baranowski
+ * Date: 24/02/2015
+ * Purpose: SQL for various data
  */
 public class SqlCons {
     //Customer Table SQL
