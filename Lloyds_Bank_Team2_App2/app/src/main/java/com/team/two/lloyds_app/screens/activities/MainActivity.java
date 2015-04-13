@@ -6,23 +6,16 @@ import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.games.Games;
-import com.google.android.gms.games.Player;
-import com.google.android.gms.plus.Plus;
-import com.google.example.games.basegameutils.BaseGameUtils;
 import com.google.android.gms.maps.*;
 import android.os.Bundle;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.team.two.lloyds_app.exceptions.EmptyMandatoryFieldException;
+import com.team.two.lloyds_app.Exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.database.DatabaseAdapter;
 import com.team.two.lloyds_app.objects.Account;
@@ -37,8 +30,6 @@ import com.team.two.lloyds_app.screens.fragments.StatementScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.TransactionsScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
 import com.team.two.lloyds_app.screens.fragments.AchievementsFragment;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 

@@ -56,6 +56,7 @@ public class BranchFinderFragment extends android.support.v4.app.Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initialiseBranches();
         createMapView();
+        setLocation();
         addMarkers();
 
         return root;
@@ -181,6 +182,10 @@ addMarkers() - Adds the branch markers to the map.
 
 
         }
+    }
+
+    private void setLocation(){
+        googleMap.setMyLocationEnabled(true);
     }
 
 }
