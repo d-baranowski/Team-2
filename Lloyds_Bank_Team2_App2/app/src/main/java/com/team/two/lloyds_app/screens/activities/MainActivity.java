@@ -44,9 +44,9 @@ import java.util.ArrayList;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MainActivity extends ActionBarActivity implements AchievementsFragment.Listener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener  {
+public class MainActivity extends ActionBarActivity {
     // Mikey, the class needs to implement the following (copy and paste it):
-
+    //implements AchievementsFragment.Listener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
     private static DatabaseAdapter dbadapter;
     private String title;
     private Account account;
@@ -78,7 +78,7 @@ public class MainActivity extends ActionBarActivity implements AchievementsFragm
     private static final int RC_SIGN_IN = 9001;
 
     // achievements and scores we're pending to push to the cloud
-    AccomplishmentsOutbox mOutbox = new AccomplishmentsOutbox();
+    //AccomplishmentsOutbox mOutbox = new AccomplishmentsOutbox();
 
     //-------------- END
 
@@ -88,8 +88,7 @@ public class MainActivity extends ActionBarActivity implements AchievementsFragm
 
         // ---------- achievements connection code START
         // Create the Google API Client with access to Plus and Games
-
-
+        /*
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -99,7 +98,7 @@ public class MainActivity extends ActionBarActivity implements AchievementsFragm
 
         // load outbox from file
         mOutbox.loadLocal(this);
-
+        */
         //-------------------- END
 
         dbadapter = new DatabaseAdapter(this);
@@ -172,8 +171,8 @@ public class MainActivity extends ActionBarActivity implements AchievementsFragm
         toolbar.setTitle(title);
 
         // listen to fragment events
-        mAchievementsFragment = (AchievementsFragment) bf;
-        mAchievementsFragment.setListener(this);
+        //mAchievementsFragment = (AchievementsFragment) bf;
+        //mAchievementsFragment.setListener(this);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
@@ -243,7 +242,7 @@ public class MainActivity extends ActionBarActivity implements AchievementsFragm
     }
 
     // ------------------- achievement sign in/out helper methods
-
+    /*
     private boolean isSignedIn() {
         return (mGoogleApiClient != null && mGoogleApiClient.isConnected());
     }
@@ -288,9 +287,6 @@ public class MainActivity extends ActionBarActivity implements AchievementsFragm
 
     @Override
     public void onConnected(Bundle bundle) {
-        if(mAchievementsFragment==null){
-            return;
-        }
         Player p = Games.Players.getCurrentPlayer(mGoogleApiClient);
         String displayName;
         if (p == null) {
@@ -315,7 +311,7 @@ public class MainActivity extends ActionBarActivity implements AchievementsFragm
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        if (mResolvingConnectionFailure || mAchievementsFragment == null) {
+        if (mResolvingConnectionFailure) {
             return;
         }
 
@@ -330,7 +326,7 @@ public class MainActivity extends ActionBarActivity implements AchievementsFragm
         }
 
         // Sign-in failed, so show sign-in button on main menu
-        mAchievementsFragment.setGreeting(getResources().getString(R.string.signed_out_greeting));
+        mAchievementsFragment.setGreeting(getString(R.string.signed_out_greeting));
     }
 
     void pushAccomplishments() {
@@ -340,19 +336,19 @@ public class MainActivity extends ActionBarActivity implements AchievementsFragm
             return;
         }
         if (mOutbox.mPrimeAchievement) {
-            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_prime_toast_text));
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_prime));
             mOutbox.mPrimeAchievement = false;
         }
         if (mOutbox.mArrogantAchievement) {
-            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_arrogant_toast_text));
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_arrogant));
             mOutbox.mArrogantAchievement = false;
         }
         if (mOutbox.mHumbleAchievement) {
-            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_humble_toast_text));
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_humble));
             mOutbox.mHumbleAchievement = false;
         }
         if (mOutbox.mLeetAchievement) {
-            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_leet_toast_text));
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_leet));
             mOutbox.mLeetAchievement = false;
         }
         if (mOutbox.mBoredSteps > 0) {
@@ -392,7 +388,7 @@ public class MainActivity extends ActionBarActivity implements AchievementsFragm
         public void loadLocal(Context ctx) {
         }
     }
-
+    */
 
 
 }
