@@ -9,6 +9,7 @@ import android.text.format.Time;
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
+import com.team.two.lloyds_app.objects.Address;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -311,15 +312,16 @@ public class DatabaseAdapter {
                 cursor.moveToFirst();
                 String firstName = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_NAME));
                 String surname = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_SURNAME));
-                String addressOne = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_ADDRESSONE));
-                String addressTwo = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_ADDRESSTWO));
-                String postcode = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_POSTCODE));
+				Address address = new Address(
+						cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_STREET_ADDRESS)),
+						cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_CITY)),
+						cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_POSTCODE)));
                 String userId = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_USERID));
 
-                Customer cust = new Customer(id,firstName,surname,addressOne,addressTwo,postcode,userId);
+                Customer customer = new Customer(id,firstName,surname,address,userId);
 
                 db.close();
-                return cust;
+                return customer;
             }
         }
 
