@@ -1,3 +1,4 @@
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -5,12 +6,63 @@
     tools:context="com.team.two.lloyds_app.screens.fragments.OptionsFragment"
     android:background="#ffffffff">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+
+    <include
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="&lt;Insert Options>"
-        android:id="@+id/textView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        layout="@layout/app_bar"
+        android:layout_alignParentTop="true"
+        android:id="@+id/include"
+        />
+
+    <TextView style="@style/options_title"
+        android:text="Options"
+        android:id="@+id/options"
+        />
+
+    <TextView style="@style/options_screen_text"
+        android:text="Push Notifications"
+        android:id="@+id/notifications_text"
+        android:layout_below="@+id/include"
+        />
+    <TextView style="@style/options_screen_text"
+        android:text="Link to Facebook"
+        android:id="@+id/link_facebook_text"
+        android:layout_below="@+id/notifications_text"
+        />
+
+    <Switch style="@style/Options_switch"
+        android:text="Notifications Switch"
+        android:id="@+id/notifications_switch"
+        android:onClick="onNotificationsSwitchClicked"
+        android:layout_alignTop="@+id/notifications_text"
+        android:layout_toRightOf="@+id/notifications_text"
+        android:switchTextAppearance="@style/SwitchTextAppearance"
+        />
+
+    <Button style="@style/Options_button"
+        android:text="Share"
+        android:id="@+id/FB_share_button"
+        android:layout_toRightOf="@+id/link_facebook_text"
+        android:layout_alignTop="@+id/link_facebook_text"
+        android:layout_below="@+id/notifications_switch"
+        android:layout_marginLeft="50dp"
+        />
+
+    <TextView style="@style/options_screen_text"
+        android:text="Font Size:"
+        android:id="@+id/font_size_text"
+        android:layout_below="@+id/link_facebook_text"
+        />
+
+    <Spinner style="@style/options_spinner"
+        android:id="@+id/font_size_spinner"
+        android:layout_below="@+id/font_size_text"
+        android:layout_alignLeft="@+id/font_size_text"
+        android:layout_alignStart="@+id/font_size_text"
+        android:popupBackground="#D2D2D2"
+        />
+
+
 </RelativeLayout>
