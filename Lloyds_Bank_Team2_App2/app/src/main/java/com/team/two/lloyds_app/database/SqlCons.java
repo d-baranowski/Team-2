@@ -104,4 +104,37 @@ public class SqlCons {
                     RECIPIENT_OWNER_ID + " INTEGER REFERENCES " + CUSTOMER_TABLE_NAME + "("+ CUSTOMER_ID  +"));";
 
     static final String[] RECIPIENT_COLUMNS = {RECIPIENT_ID,RECIPIENT_NAME,RECIPIENT_SORTCODE,RECIPIENT_ACCOUNTNUMBER,RECIPIENT_OWNER_ID};
+
+    // Achievements table SQL
+    static final String ACHIEVEMENTS_TABLE_NAME = "Achievements";
+    static final String ACHIEVEMENT_ID = "achievement_id";
+    static final String ACHIEVEMENT_TITLE = "achievement_title";
+    static final String ACHIEVEMENT_DESCRIPTION = "achievement_description";
+    static final String ACHIEVEMENT_POINTS = "achievement_points";
+
+    static final String CREATE_ACHIEVEMENTS_TABLE =
+            "CREATE TABLE " +
+                    ACHIEVEMENTS_TABLE_NAME + " (" +
+                    ACHIEVEMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    ACHIEVEMENT_TITLE + " STRING," +
+                    ACHIEVEMENT_DESCRIPTION + " STRING," +
+                    ACHIEVEMENT_POINTS + " INTEGER" + ");";
+
+    static final String[] ACHIEVEMENTS_COLUMNS = {ACHIEVEMENT_ID, ACHIEVEMENT_TITLE, ACHIEVEMENT_DESCRIPTION, ACHIEVEMENT_POINTS};
+
+    // Customer achievements table SQL
+    static final String CUSTOMER_ACHIEVEMENTS_TABLE_NAME = "CustomerAchievements";
+    static final String CUSTOMER_ACHIEVEMENT_ID = "achievement_id";
+    static final String CUSTOMER_ACHIEVEMENT_CUSTOMER_ID = "customer_id";
+
+    static final String CREATE_CUSTOMER_ACHIEVEMENTS_TABLE =
+            "CREATE TABLE " +
+                    CUSTOMER_ACHIEVEMENTS_TABLE_NAME + " (" +
+                    CUSTOMER_ACHIEVEMENT_ID + " INTEGER REFERENCES " + ACHIEVEMENTS_TABLE_NAME + "("+ ACHIEVEMENT_ID  +"), " +
+                    CUSTOMER_ACHIEVEMENT_CUSTOMER_ID + "INTEGER REFERENCES " + CUSTOMER_TABLE_NAME + "("+ CUSTOMER_ID  +"));";
+
+    static final String[] CUST_ACHIEVEMENTS_COLUMNS = {CUSTOMER_ACHIEVEMENT_ID, CUSTOMER_ACHIEVEMENT_CUSTOMER_ID};
+
+
+
 }

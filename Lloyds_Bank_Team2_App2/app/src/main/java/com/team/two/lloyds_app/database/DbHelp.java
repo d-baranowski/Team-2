@@ -27,6 +27,8 @@ public class DbHelp extends SQLiteOpenHelper {
         db.execSQL(SqlCons.CREATE_ACCOUNT_TABLE);
         db.execSQL(SqlCons.CREATE_TRANSACTIONS_TABLE);
         db.execSQL(SqlCons.CREATE_RECIPIENTS_TABLE);
+        db.execSQL(SqlCons.CREATE_ACHIEVEMENTS_TABLE);
+        db.execSQL(SqlCons.CREATE_CUSTOMER_ACHIEVEMENTS_TABLE);
         populate(db);
     }
 
@@ -38,10 +40,14 @@ public class DbHelp extends SQLiteOpenHelper {
         final String DROP_ACCOUNTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACCOUNTS_TABLE_NAME;
         final String DROP_TRANSACTIONS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.TRANSACTIONS_TABLE_NAME;
         final String DROP_RECIPIENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.RECIPIENTS_TABLE_NAME;
+        final String DROP_ACHIEVEMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACHIEVEMENTS_TABLE_NAME;
+        final String DROP_CUSTOMER_ACHIEVEMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME;
         db.execSQL(DROP_CUSTOMER_TABLE);
         db.execSQL(DROP_ACCOUNTS_TABLE);
         db.execSQL(DROP_TRANSACTIONS_TABLE);
         db.execSQL(DROP_RECIPIENTS_TABLE);
+        db.execSQL(DROP_ACHIEVEMENTS_TABLE);
+        db.execSQL(DROP_CUSTOMER_ACHIEVEMENTS_TABLE);
         onCreate(db);
     }
 
@@ -223,5 +229,35 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValuesTransactions.put(SqlCons.TRANSACTION_BALANCE,2228.94);
         contentValuesTransactions.put(SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN,1);
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+        // Add sample achievements
+        contentValuesTransactions = new ContentValues();
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_TITLE, "Login 10 times");
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "Use your banking app 10 times to gain this achievement.");
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_POINTS, 50);
+        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValuesTransactions);
+
+        contentValuesTransactions = new ContentValues();
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_TITLE, "Save £1000");
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "Have a balance of at least £1000 to gain this achievement.");
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_POINTS, 200);
+        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValuesTransactions);
+
+        contentValuesTransactions = new ContentValues();
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_TITLE, "Incoming transaction £200");
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "Have an incoming transaction of at least £200 gain this achievement.");
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_POINTS, 200);
+        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValuesTransactions);
+
+        contentValuesTransactions = new ContentValues();
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_TITLE, "Outgoing transaction £200");
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "Spend more than £200 to gain this achievement.");
+        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_POINTS, 200);
+        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValuesTransactions);
+
+        // Add achievements achieved by a customer
+        contentValuesTransactions = new ContentValues();
+        contentValuesTransactions.put(SqlCons.CUSTOMER_ACHIEVEMENT_ID, 1);
+        contentValuesTransactions.put(SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID, 1);
     }
 }
