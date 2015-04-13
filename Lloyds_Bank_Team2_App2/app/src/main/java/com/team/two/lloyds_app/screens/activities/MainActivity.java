@@ -46,7 +46,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends ActionBarActivity {
     // Mikey, the class needs to implement the following (copy and paste it):
-    //implements AchievementsFragment.Listener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
+    // implements AchievementsFragment.Listener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
     private static DatabaseAdapter dbadapter;
     private String title;
     private Account account;
@@ -57,6 +57,7 @@ public class MainActivity extends ActionBarActivity {
 
     //-------------- achievements variables START
 
+    /*
     // Fragments
     AchievementsFragment mAchievementsFragment;
 
@@ -78,8 +79,8 @@ public class MainActivity extends ActionBarActivity {
     private static final int RC_SIGN_IN = 9001;
 
     // achievements and scores we're pending to push to the cloud
-    //AccomplishmentsOutbox mOutbox = new AccomplishmentsOutbox();
-
+    AccomplishmentsOutbox mOutbox = new AccomplishmentsOutbox();
+    */
     //-------------- END
 
     @Override
@@ -99,6 +100,7 @@ public class MainActivity extends ActionBarActivity {
         // load outbox from file
         mOutbox.loadLocal(this);
         */
+
         //-------------------- END
 
         dbadapter = new DatabaseAdapter(this);
@@ -389,6 +391,5 @@ public class MainActivity extends ActionBarActivity {
         }
     }
     */
-
 
 }

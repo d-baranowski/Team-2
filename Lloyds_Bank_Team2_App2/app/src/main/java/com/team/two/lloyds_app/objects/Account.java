@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by danielbaranowski on 06/02/15.
+ * Author: Daniel Baranowski
+ * Date: 06/02/2015
+ * Purpose: To store data about a particular account
  */
 public class Account {
     private final int accountID;
