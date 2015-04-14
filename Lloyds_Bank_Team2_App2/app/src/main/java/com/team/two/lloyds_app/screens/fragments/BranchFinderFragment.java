@@ -9,8 +9,13 @@ Purpose : Branch Finder
 /*Modified by Michael Edwards on 7/4/2015*/
 /*Modified by Daniel Smith on 12/4/2015*/
 
+import java.net.ConnectException;
+
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,10 +25,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -49,10 +50,7 @@ public class BranchFinderFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /*
-    onCreateView() - Creates the screen by inflating layout.
-     */
-
+    //Create the screen by inflating layout
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,15 +58,23 @@ public class BranchFinderFragment extends Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         initialiseBranches();
-        createMapView();
+
+        //If a network error has been thrown,
+        try {
+            createMapView();
+        } catch (ConnectException ce) {
+            Toast.makeText(getActivity(), ce.getMessage(), Toast.LENGTH_LONG).show();
+            return root;
+        } catch (NullPointerException npe){
+            Toast.makeText(getActivity(), npe.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
         addMarkers();
 
         return root;
     }
 
-    /*
-initialiseBranches()-Read branch information from the text file to create Branch objects
- */
+    //Read branch information from the text file to create Branch objects
     private void initialiseBranches() {
         branchMap = new HashMap<>();
         try {
@@ -88,101 +94,91 @@ initialiseBranches()-Read branch information from the text file to create Branch
         }
     }
 
-         /*
-    createMapView()- Initialises the Map
-     */
+    //Attempt to generate the map
+    private void createMapView() throws ConnectException {
 
-    private void createMapView() {
-        /**
-         * Catch the null pointer exception that
-         * may be thrown when initialising the map
-         */
-        try {
-
-            googleMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(
-                    R.id.mapView)).getMap();
-
-            /**
-             * If the map is still null after attempted initialisation,
-             * show an error to the user
-             */
-            if (googleMap == null) {
-                Toast.makeText(getActivity(), "Error creating map", Toast.LENGTH_SHORT).show();
-            }
-
-            //Enable the My Location layer
-            googleMap.setMyLocationEnabled(true);
-
-            //Get the latest location
-            Location lastLocation = ((MainActivity) getActivity()).mLastLocation;
-
-            //Set up initial zoom to user's current location
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                    .target(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()))
-                    .zoom(10)
-                    .build()));
-
-            //Create objects for the popup details
-            final RelativeLayout popup = (RelativeLayout) root.findViewById(R.id.branch_popup);
-            final TextView branchTitle = (TextView) root.findViewById(R.id.branch_title);
-            final TextView addressTitle = (TextView) root.findViewById(R.id.branch_address_title);
-            final TextView addressView = (TextView) root.findViewById(R.id.branch_address);
-            final TextView timesTitle = (TextView) root.findViewById(R.id.branch_opening_times_title);
-            final TextView timesView = (TextView) root.findViewById(R.id.branch_opening_times);
-
-            //Set up the marker listener to manage marker clicks
-            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-
-                    //Get the respective branch object and get the address and opening times
-                    Branch branch = branchMap.get(marker.getTitle());
-                    String[] address = branch.getAddress().toStringArray();
-                    String[] times = branch.getOpeningTimes();
-
-                    //Zoom on the marker
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 15));
-
-
-                    //Clear any previous popup
-                    timesView.setText("");
-                    addressView.setText("");
-
-
-                    //Populate the popup with branch details
-                    branchTitle.setText(branch.getName());
-
-                    addressTitle.setText(getResources().getString(R.string.branch_address_title));
-                    for (String s : address) {
-                        addressView.append(s + "\n");
-                    }
-                    addressView.append("\n" + branch.getPhoneNumber());
-
-                    timesTitle.setText(getResources().getString(R.string.branch_opening_times_title));
-                    for (String s : times) {
-                        timesView.append(s + "\n");
-                    }
-
-                    //Display the popup
-                    popup.setVisibility(View.VISIBLE);
-
-                    return false;
-                }
-            });
-
-            //Set up map listener so the popup will be removed once clicked off
-            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(LatLng ll) {
-                    //Hide the popup
-                    popup.setVisibility(View.INVISIBLE);
-                }
-            });
-
-        } catch (NullPointerException exception) {
-            Log.e("branchFinder", exception.toString());
+        if (!isNetworkAvailable()) {
+            throw new ConnectException("Connection problem: please check your internet settings");
         }
+        googleMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView)).getMap();
+
+        if (googleMap == null) {
+            throw new NullPointerException("There was a problem loading the map");
+        }
+
+        //Enable the My Location layer
+        googleMap.setMyLocationEnabled(true);
+
+        //Get the latest location
+        Location lastLocation = ((MainActivity) getActivity()).mLastLocation;
+        if (lastLocation == null) {
+            Toast.makeText(getActivity(), "Error getting location: check your GPS settings", Toast.LENGTH_SHORT).show();
+        }
+
+        //Set up initial zoom to user's current location
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
+                .target(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()))
+                .zoom(10)
+                .build()));
+
+        //Create objects for the popup details
+        final RelativeLayout popup = (RelativeLayout) root.findViewById(R.id.branch_popup);
+        final TextView branchTitle = (TextView) root.findViewById(R.id.branch_title);
+        final TextView addressTitle = (TextView) root.findViewById(R.id.branch_address_title);
+        final TextView addressView = (TextView) root.findViewById(R.id.branch_address);
+        final TextView timesTitle = (TextView) root.findViewById(R.id.branch_opening_times_title);
+        final TextView timesView = (TextView) root.findViewById(R.id.branch_opening_times);
+
+        //Set up the marker listener to manage marker clicks
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                //Get the respective branch object and get the address and opening times
+                Branch branch = branchMap.get(marker.getTitle());
+                String[] address = branch.getAddress().toStringArray();
+                String[] times = branch.getOpeningTimes();
+
+                //Focus map on the marker
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 11));
+
+                //Clear any previous popup
+                timesView.setText("");
+                addressView.setText("");
+
+
+                //Populate the popup with branch details
+                branchTitle.setText(branch.getName());
+
+                addressTitle.setText(getResources().getString(R.string.branch_address_title));
+                for (String s : address) {
+                    addressView.append(s + "\n");
+                }
+                addressView.append("\n" + branch.getPhoneNumber());
+
+                timesTitle.setText(getResources().getString(R.string.branch_opening_times_title));
+                for (String s : times) {
+                    timesView.append(s + "\n");
+                }
+
+                //Display the popup
+                popup.setVisibility(View.VISIBLE);
+
+                return false;
+            }
+        });
+
+        //Set up map listener so the popup will be removed once clicked off
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng ll) {
+                //Hide the popup
+                popup.setVisibility(View.INVISIBLE);
+            }
+        });
+
     }
+
 
     /*
     addMarkers() - Adds the branch markers to the map.
@@ -202,6 +198,15 @@ initialiseBranches()-Read branch information from the text file to create Branch
             }
 
         }
+    }
+
+    //Check whether the user is connected to the internet
+    //Credit: stackoverflow (http://stackoverflow.com/questions/4238921/detect-whether-there-is-an-internet-connection-available-on-android)
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) (getActivity().getSystemService(Context.CONNECTIVITY_SERVICE));
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
 
