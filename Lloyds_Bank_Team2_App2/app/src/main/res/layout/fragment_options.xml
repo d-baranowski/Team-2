@@ -11,11 +11,6 @@
         android:text="Push Notifications"
         android:id="@+id/notifications_text"
         />
-    <TextView style="@style/options_screen_text"
-        android:text="Link to Facebook"
-        android:id="@+id/link_facebook_text"
-        android:layout_below="@+id/notifications_text"
-        />
 
     <Switch style="@style/Options_switch"
         android:text="Notifications Switch"
@@ -26,19 +21,10 @@
         android:switchTextAppearance="@style/SwitchTextAppearance"
         />
 
-    <Button style="@style/Options_button"
-        android:text="Share"
-        android:id="@+id/FB_share_button"
-        android:layout_toRightOf="@+id/link_facebook_text"
-        android:layout_alignTop="@+id/link_facebook_text"
-        android:layout_below="@+id/notifications_switch"
-        android:layout_marginLeft="50dp"
-        />
-
     <TextView style="@style/options_screen_text"
         android:text="Font Size:"
         android:id="@+id/font_size_text"
-        android:layout_below="@+id/link_facebook_text"
+        android:layout_below="@+id/login_button"
         />
 
     <Spinner style="@style/options_spinner"
@@ -49,6 +35,14 @@
         android:popupBackground="#D2D2D2"
         />
 
-
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dp"
+        android:layout_alignTop="@+id/notifications_switch"
+        android:layout_marginLeft="10dp"
+        />
 
 </RelativeLayout>

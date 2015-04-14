@@ -2,7 +2,7 @@
         package com.team.two.lloyds_app.screens.fragments;
 
 /*
-Author : Matthew Selby
+Author : Matthew Selby, Oliver McPheely
 Date : 06/04/2015
 Purpose : Options
  */
@@ -20,7 +20,7 @@ Purpose : Options
         import android.widget.TextView;
 
         import com.team.two.lloyds_app.R;
-
+        import com.facebook.FacebookSdk;
 
 
 public class OptionsFragment extends android.support.v4.app.Fragment {
@@ -41,8 +41,12 @@ public class OptionsFragment extends android.support.v4.app.Fragment {
         // Required empty public constructor
     }
 
+
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         Root = inflater.inflate(R.layout.fragment_options, container, false);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Spinner FontSpinner = (Spinner) Root.findViewById(R.id.font_size_spinner);
@@ -60,6 +64,7 @@ public class OptionsFragment extends android.support.v4.app.Fragment {
         } else {
             //disable notifications
         }
+
 
     }
 
