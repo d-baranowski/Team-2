@@ -141,7 +141,7 @@ initialiseBranches()-Read branch information from the text file to create Branch
                     String[] times = branch.getOpeningTimes();
 
                     //Zoom on the marker
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(branch.getLatitude(), branch.getLongitude()), 11f));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 15));
 
 
                     //Clear any previous popup
