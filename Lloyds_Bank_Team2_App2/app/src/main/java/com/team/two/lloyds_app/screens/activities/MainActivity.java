@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.*;
+
 import android.os.Bundle;
 
 import android.support.v7.app.ActionBarActivity;
@@ -19,7 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.team.two.lloyds_app.exceptions.EmptyMandatoryFieldException;
+import com.team.two.lloyds_app.Exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.database.DatabaseAdapter;
 import com.team.two.lloyds_app.objects.Account;
