@@ -19,6 +19,9 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+}
 
 
 dependencies {
@@ -30,5 +33,6 @@ dependencies {
     compile 'com.jjoe64:graphview:4.0.0'
     compile 'uk.co.chrisjenx:calligraphy:2.0.2'
     compile project(':BaseGameUtils')
+    compile 'com.facebook.android:facebook-android-sdk:4.0.0'
 
 }

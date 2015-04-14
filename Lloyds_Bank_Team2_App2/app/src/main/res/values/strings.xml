@@ -42,6 +42,8 @@
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
 
+    <string name="facebook_app_id">1639455966286939</string>
+
     <!-- Achievements -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="achievements_not_available">Please sign in to view achievements.</string>
