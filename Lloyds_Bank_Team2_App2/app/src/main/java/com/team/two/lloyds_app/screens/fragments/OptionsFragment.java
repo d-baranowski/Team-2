@@ -22,6 +22,7 @@ Purpose : Options
         import com.team.two.lloyds_app.R;
 
 
+
 public class OptionsFragment extends android.support.v4.app.Fragment {
     View Root;
     public static final String TITLE = "Options";
@@ -43,7 +44,6 @@ public class OptionsFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Root = inflater.inflate(R.layout.fragment_options, container, false);
-
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Spinner FontSpinner = (Spinner) Root.findViewById(R.id.font_size_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, Font_size);
