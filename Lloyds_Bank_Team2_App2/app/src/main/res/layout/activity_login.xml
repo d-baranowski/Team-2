@@ -7,14 +7,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#FFFFFF"
-    tools:ignore="Overdraw">
+    tools:ignore="Overdraw"
+    android:background="@drawable/gradient_green">
 
     <LinearLayout
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/gradient_green">
 
         <View
             android:layout_width="fill_parent"
@@ -37,19 +38,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:text="@string/welcome_label"
-            android:textColor="@color/lloyds_green"
-            android:textSize="@dimen/text_size_eighteen" />
+            android:textColor="#FFF"
+            android:textSize="@dimen/text_size_eighteen"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/loginLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/id_label"
+            android:layout_marginTop="20dp"
+            android:text="@string/login_id_label"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/lloyds_green" />
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <AutoCompleteTextView
             android:id="@+id/email"
@@ -57,21 +61,24 @@
             android:layout_height="30dp"
             android:textColor="#000"
             android:layout_marginTop="3dp"
-            android:background="@drawable/back"
+            android:background="@drawable/rounded_rectangle_white"
             android:paddingLeft="@dimen/text_box_padding"
             android:paddingRight="@dimen/text_box_padding"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:singleLine="true" />
+            android:singleLine="true"
+           />
 
         <TextView
             android:id="@+id/passwordLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:text="@string/password_label"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/lloyds_green"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
             />
 
         <EditText
@@ -79,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="3dp"
-            android:background="@drawable/back"
+            android:background="@drawable/rounded_rectangle_white"
             android:paddingLeft="@dimen/text_box_padding"
             android:paddingRight="@dimen/text_box_padding"
             android:imeActionId="@+id/login"
@@ -94,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textColor="#000"
+            android:textColor="#FFF"
             android:text="@string/login_remember_Id" />
 
         <Button
@@ -104,11 +111,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:background="@drawable/mybutton"
+            android:background="@drawable/rounded_rectangle_shape"
+
             android:onClick="login"
-            android:text="@string/action_sign_in"
-            android:textColor="#ffffff"
-            android:textStyle="bold" />
+            android:text="@string/login_label"
+            android:textColor="@color/lloyds_green"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
 
         <View
             android:layout_width="fill_parent"
