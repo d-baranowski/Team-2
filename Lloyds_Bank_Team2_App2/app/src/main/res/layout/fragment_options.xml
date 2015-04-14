@@ -7,24 +7,9 @@
     android:background="#ffffffff">
 
 
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/app_bar"
-        android:layout_alignParentTop="true"
-        android:id="@+id/include"
-        />
-
-    <TextView style="@style/options_title"
-        android:text="Options"
-        android:id="@+id/options"
-        />
-
     <TextView style="@style/options_screen_text"
         android:text="Push Notifications"
         android:id="@+id/notifications_text"
-        android:layout_below="@+id/include"
         />
     <TextView style="@style/options_screen_text"
         android:text="Link to Facebook"
