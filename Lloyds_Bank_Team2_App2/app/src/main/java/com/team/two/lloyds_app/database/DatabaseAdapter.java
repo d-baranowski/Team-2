@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.format.Time;
 
+import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Offer;
 import com.team.two.lloyds_app.objects.Customer;
@@ -314,8 +315,6 @@ public class DatabaseAdapter {
         if (cursor != null) {
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                int test = cursor.getColumnIndex(SqlCons.CUSTOMER_NAME);
-                String test2 = cursor.getString(0);
 
                 String firstName = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_NAME));
                 String surname = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_SURNAME));
@@ -343,7 +342,7 @@ public class DatabaseAdapter {
         String[] columns = SqlCons.AVAILABLE_OFFERS_COLUMNS;
         String query = SqlCons.AVAIL_OFFER_ACTIVE + " = '" + 0 + "'";
 
-        Cursor t = db.query(SqlCons.AVAIL_OFFERS_TABLE_NAME, columns, null,null, null, null, null);
+        Cursor t = db.query(SqlCons.AVAIL_OFFERS_TABLE_NAME, columns, query,null, null, null, null);
 
         if (t != null) {
             if (t.getCount() > 0) {
@@ -356,8 +355,36 @@ public class DatabaseAdapter {
                     String desc = t.getString(t.getColumnIndex(SqlCons.AVAIL_OFFER_DESCRIPTION));
                     int price = t.getInt(t.getColumnIndex(SqlCons.AVAIL_OFFER_PRICE));
 
-                    list.add(new Offer(id,icon,name,desc,price,false));
+                    list.add(new Offer(id,icon, icon, name,desc,price,false));
 
+                    t.moveToNext();
+                }
+                db.close();
+            }
+        }
+
+        return list;
+    }
+
+    public ArrayList<Offer> getActiveOffers(int ownerId){
+        ArrayList<Offer> list = new ArrayList<>();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String[] columns = SqlCons.ACTIVE_OFFERS_COLUMN_NAMES;
+
+        Cursor t = db.query(SqlCons.ACTIVE_OFFERS_TABLE_NAME, columns, null,null, null, null, null);
+
+        if (t != null) {
+            if (t.getCount() > 0) {
+                t.moveToFirst();
+
+                for (int i = 0; i < t.getCount(); i++) {
+                    int id = t.getInt(t.getColumnIndex(SqlCons.ACTIVE_OFFER_ID));
+                    int icon = t.getInt(t.getColumnIndex(SqlCons.ACTIVE_OFFER_ICON));
+                    int barcode = R.drawable.barcode;
+                    String name = t.getString(t.getColumnIndex(SqlCons.ACTIVE_OFFER_NAME));
+                    String desc = t.getString(t.getColumnIndex(SqlCons.ACTIVE_OFFER_DESCRIPTION));
+
+                    list.add(new Offer(id,icon,barcode,name,desc,0,true));
                     t.moveToNext();
                 }
                 db.close();
@@ -392,6 +419,51 @@ public class DatabaseAdapter {
         }
         db.close();
     }
+
+    public void spendOfferPoints(int customerId, int points) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = SqlCons.CUSTOMER_COLUMNS;
+        String query = SqlCons.CUSTOMER_ID + " = '" + customerId + "'";
+
+        Cursor t = db.query(SqlCons.CUSTOMER_TABLE_NAME, columns, query,null, null, null, null);
+
+        if (t != null) {
+            if (t.getCount() > 0) {
+                t.moveToFirst();
+
+                int balance = t.getInt(t.getColumnIndex(SqlCons.CUSTOMER_OFFERS_POINTS));
+
+                ContentValues customerValues = new ContentValues();
+                customerValues.put(SqlCons.CUSTOMER_OFFERS_POINTS,balance - points);
+                db.update(SqlCons.CUSTOMER_TABLE_NAME,customerValues,query,null);
+            }
+        }
+
+        db.close();
+    }
+
+    public void gainOfferPoints(int customerId, int points) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = SqlCons.CUSTOMER_COLUMNS;
+        String query = SqlCons.CUSTOMER_ID + " = '" + customerId + "'";
+
+        Cursor t = db.query(SqlCons.CUSTOMER_TABLE_NAME, columns, query,null, null, null, null);
+
+        if (t != null) {
+            if (t.getCount() > 0) {
+                t.moveToFirst();
+
+                int balance = t.getInt(t.getColumnIndex(SqlCons.CUSTOMER_OFFERS_POINTS));
+
+                ContentValues customerValues = new ContentValues();
+                customerValues.put(SqlCons.CUSTOMER_OFFERS_POINTS,balance + points);
+                db.update(SqlCons.CUSTOMER_TABLE_NAME,customerValues,query,null);
+            }
+        }
+
+        db.close();
+    }
+
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public int getId(String userID){
@@ -491,7 +563,4 @@ public class DatabaseAdapter {
 
         return spendingDateMap;
     }
-
-
-
 }

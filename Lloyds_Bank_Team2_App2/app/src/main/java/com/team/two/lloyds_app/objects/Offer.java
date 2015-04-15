@@ -12,10 +12,10 @@ public class Offer {
     int price;
     boolean active;
 
-    public Offer(int id, int icon, String name, String description, int price, boolean active) {
+    public Offer(int id, int icon, int barcode, String name, String description, int price, boolean active) {
         this.id = id;
         this.icon = icon;
-        this.barcode = icon;
+        this.barcode = barcode;
         this.name = name;
         this.description = description;
         this.price = price;

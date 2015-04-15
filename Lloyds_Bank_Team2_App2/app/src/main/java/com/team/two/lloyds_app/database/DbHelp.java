@@ -14,7 +14,7 @@ import com.team.two.lloyds_app.R;
  */
 public class DbHelp extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "lloyds";
-    private static final int DATABASE_VERSION = 43;
+    private static final int DATABASE_VERSION = 49;
     private Context context;
 
     public DbHelp(Context context){

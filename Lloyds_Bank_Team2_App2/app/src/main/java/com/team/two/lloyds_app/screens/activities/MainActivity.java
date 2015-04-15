@@ -195,7 +195,17 @@ public class MainActivity extends ActionBarActivity implements
         return dbadapter.getAvailableOffers();
     }
 
+    public ArrayList<Offer> getActiveOffers() { return dbadapter.getActiveOffers(customerId); }
+
     public void activateOffer(Offer offer){ dbadapter.activateOffer(offer, customerId);}
+
+    public void spendOffersPoints(int price) {
+        dbadapter.spendOfferPoints(customerId,price);
+    }
+
+    public void gainOffersPoints(int ammount){
+        dbadapter.gainOfferPoints(customerId,ammount);
+    }
 
     public DatabaseAdapter getAdapter(){
         return dbadapter;
@@ -242,7 +252,6 @@ public class MainActivity extends ActionBarActivity implements
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
-
 
 
 }
