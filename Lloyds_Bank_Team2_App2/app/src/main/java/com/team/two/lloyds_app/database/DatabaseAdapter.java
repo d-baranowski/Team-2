@@ -10,6 +10,7 @@ import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Offer;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
+import com.team.two.lloyds_app.objects.Address;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -281,7 +282,7 @@ public class DatabaseAdapter {
             if (t.getCount() > 0) {
                 t.moveToFirst();
 
-                for (int i = 0; i < t.getCount(); i++) {
+                for (int j = 0; j < t.getCount(); j++) {
                     int id = t.getInt(t.getColumnIndex(SqlCons.RECIPIENT_ID));
                     String name = t.getString(t.getColumnIndex(SqlCons.RECIPIENT_NAME));
                     String sortCode = t.getString(t.getColumnIndex(SqlCons.RECIPIENT_SORTCODE));
@@ -305,23 +306,23 @@ public class DatabaseAdapter {
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columns = SqlCons.CUSTOMER_COLUMNS;
         String query = SqlCons.CUSTOMER_ID + " = '" + id + "'";
-        Cursor t = db.query(SqlCons.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
+        Cursor cursor = db.query(SqlCons.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
 
-        if (t != null) {
-            if (t.getCount() > 0) {
-                t.moveToFirst();
-                String firstName = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_NAME));
-                String surname = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_SURNAME));
-                String addressOne = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_ADDRESSONE));
-                String addressTwo = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_ADDRESSTWO));
-                String postcode = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_POSTCODE));
-                String userId = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_USERID));
-                int points = t.getInt(t.getColumnIndex(SqlCons.CUSTOMER_OFFERS_POINTS));
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                String firstName = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_NAME));
+                String surname = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_SURNAME));
+				Address address = new Address(
+						cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_STREET_ADDRESS)),
+						cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_CITY)),
+						cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_POSTCODE)));
+                String userId = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_USERID));
 
-                Customer cust = new Customer(id,firstName,surname,addressOne,addressTwo,postcode,userId,points);
+                Customer customer = new Customer(id,firstName,surname,address,userId);
 
                 db.close();
-                return cust;
+                return customer;
             }
         }
 

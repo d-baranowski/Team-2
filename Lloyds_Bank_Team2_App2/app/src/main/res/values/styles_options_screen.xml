@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name ="options_screen_text">
+        <item name="android:textSize">25sp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textColor">@color/lloyds_green</item>
+        <item name="fontPath">fonts/TitilliumWeb-Bold.ttf</item>
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name ="options_font">
+        <item name="fontPath">fonts/TitilliumWeb-Bold.ttf</item>
+    </style>
+
+    <style name="Options_switch">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textColor">@color/lloyds_green</item>
+        <item name="android:layout_marginLeft">50dp</item>
+    </style>
+
+    <style name="SwitchTextAppearance" parent="@android:style/TextAppearance.Holo.Small">
+        <item name="android:textColor">@color/lloyds_green</item>
+    </style>
+
+    <style name="options_spinner">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/lloyds_green</item>
+        <item name="android:background">@drawable/spinnerbackground</item>
+    </style>
+
+</resources>
+

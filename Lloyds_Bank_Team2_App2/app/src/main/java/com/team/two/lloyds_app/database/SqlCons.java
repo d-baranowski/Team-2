@@ -1,16 +1,18 @@
 package com.team.two.lloyds_app.database;
 
 /**
- * Created by danielbaranowski on 24/02/15.
+ * Author: Daniel Baranowski
+ * Date: 24/02/2015
+ * Purpose: SQL for various data
  */
 public class SqlCons {
     //Customer Table SQL
     static final String CUSTOMER_TABLE_NAME = "Customers";
     static final String CUSTOMER_ID = "_id";
-    static final String CUSTOMER_NAME = "FirstNAme";
+    static final String CUSTOMER_NAME = "FirstName";
     static final String CUSTOMER_SURNAME = "Surname";
-    static final String CUSTOMER_ADDRESSONE = "AddressLine1";
-    static final String CUSTOMER_ADDRESSTWO = "AddressLine2";
+    static final String CUSTOMER_STREET_ADDRESS = "AddressLine1";
+    static final String CUSTOMER_CITY = "AddressLine2";
     static final String CUSTOMER_POSTCODE = "Postcode";
     static final String CUSTOMER_USERID = "UserID";
     static final String CUSTOMER_PASSWORD = "Password";
@@ -20,16 +22,16 @@ public class SqlCons {
             "CREATE TABLE "+
                     CUSTOMER_TABLE_NAME + " (" +
                     CUSTOMER_ID + "	INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    CUSTOMER_NAME + "   STRING NOT NULL," +
-                    CUSTOMER_SURNAME + "	STRING NOT NULL," +
-                    CUSTOMER_ADDRESSONE + "	STRING NOT NULL," +
-                    CUSTOMER_ADDRESSTWO + "	STRING NOT NULL," +
-                    CUSTOMER_POSTCODE + "	STRING NOT NULL," +
+                    CUSTOMER_NAME + "   TEXT NOT NULL," +
+                    CUSTOMER_SURNAME + "	TEXT NOT NULL," +
+					CUSTOMER_STREET_ADDRESS + "	TEXT NOT NULL," +
+					CUSTOMER_CITY + "	TEXT NOT NULL," +
+                    CUSTOMER_POSTCODE + "	TEXT NOT NULL," +
                     CUSTOMER_USERID + "	INTEGER NOT NULL UNIQUE ," +
                     CUSTOMER_PASSWORD + "	STRING NOT NULL," +
                     CUSTOMER_OFFERS_POINTS +"  INTEGER NOT NULL DEFAULT 0);";
 
-    static final String[] CUSTOMER_COLUMNS = {CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_SURNAME, CUSTOMER_ADDRESSONE, CUSTOMER_ADDRESSTWO, CUSTOMER_POSTCODE, CUSTOMER_USERID, CUSTOMER_PASSWORD,CUSTOMER_OFFERS_POINTS};
+    static final String[] CUSTOMER_COLUMNS = {CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_SURNAME, CUSTOMER_STREET_ADDRESS, CUSTOMER_CITY, CUSTOMER_POSTCODE, CUSTOMER_USERID, CUSTOMER_PASSWORD};
 
     //Accounts table SQL
     static final String ACCOUNTS_TABLE_NAME = "Accounts";
@@ -146,4 +148,37 @@ public class SqlCons {
                     ACTIVE_OFFER_OWNER_ID + " INTEGER REFERENCES " + CUSTOMER_TABLE_NAME + "("+ CUSTOMER_ID  +"));";
 
     static final String[] ACTIVE_OFFERS_COLUMN_NAMES = {ACTIVE_OFFER_ID,ACTIVE_OFFER_ICON,ACTIVE_OFFER_BARCODE,ACTIVE_OFFER_NAME,ACTIVE_OFFER_DESCRIPTION,ACTIVE_OFFER_OWNER_ID};
+
+    // Achievements table SQL
+    static final String ACHIEVEMENTS_TABLE_NAME = "Achievements";
+    static final String ACHIEVEMENT_ID = "achievement_id";
+    static final String ACHIEVEMENT_TITLE = "achievement_title";
+    static final String ACHIEVEMENT_DESCRIPTION = "achievement_description";
+    static final String ACHIEVEMENT_POINTS = "achievement_points";
+
+    static final String CREATE_ACHIEVEMENTS_TABLE =
+            "CREATE TABLE " +
+                    ACHIEVEMENTS_TABLE_NAME + " (" +
+                    ACHIEVEMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    ACHIEVEMENT_TITLE + " STRING," +
+                    ACHIEVEMENT_DESCRIPTION + " STRING," +
+                    ACHIEVEMENT_POINTS + " INTEGER" + ");";
+
+    static final String[] ACHIEVEMENTS_COLUMNS = {ACHIEVEMENT_ID, ACHIEVEMENT_TITLE, ACHIEVEMENT_DESCRIPTION, ACHIEVEMENT_POINTS};
+
+    // Customer achievements table SQL
+    static final String CUSTOMER_ACHIEVEMENTS_TABLE_NAME = "CustomerAchievements";
+    static final String CUSTOMER_ACHIEVEMENT_ID = "achievement_id";
+    static final String CUSTOMER_ACHIEVEMENT_CUSTOMER_ID = "customer_id";
+
+    static final String CREATE_CUSTOMER_ACHIEVEMENTS_TABLE =
+            "CREATE TABLE " +
+                    CUSTOMER_ACHIEVEMENTS_TABLE_NAME + " (" +
+                    CUSTOMER_ACHIEVEMENT_ID + " INTEGER REFERENCES " + ACHIEVEMENTS_TABLE_NAME + "("+ ACHIEVEMENT_ID  +"), " +
+                    CUSTOMER_ACHIEVEMENT_CUSTOMER_ID + "INTEGER REFERENCES " + CUSTOMER_TABLE_NAME + "("+ CUSTOMER_ID  +"));";
+
+    static final String[] CUST_ACHIEVEMENTS_COLUMNS = {CUSTOMER_ACHIEVEMENT_ID, CUSTOMER_ACHIEVEMENT_CUSTOMER_ID};
+
+
+
 }

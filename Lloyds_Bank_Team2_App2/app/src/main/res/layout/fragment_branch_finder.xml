@@ -1,15 +1,142 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     tools:context="com.team.two.lloyds_app.screens.fragments.BranchFinderFragment">
+
+    <LinearLayout
+        android:id="@+id/branch_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:orientation="horizontal"
+        android:weightSum="20">
+
+        <EditText
+            android:id="@+id/branch_search_bar_input"
+            style="@style/branch_search_bar_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15"
+            android:hint="@string/branch_hint"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/branch_search_button"
+            style="@style/branch_search_button"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
+            android:text="@string/branch_hint" />
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/div1"
+        style="@style/divider_medium"
+        android:layout_below="@id/branch_search_bar" />
 
     <fragment
         android:id="@+id/mapView"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/div1" />
 
+
+    <RelativeLayout
+        android:id="@+id/branch_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/branch_title"
+            style="@style/branch_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/div2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false" />
+
+        <View
+            android:id="@+id/div2"
+            style="@style/divider_medium"
+            android:layout_above="@+id/branch_times_and_address" />
+
+        <LinearLayout
+            android:id="@+id/branch_times_and_address"
+            style="@style/branch_times_and_address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                style="@style/branch_opening_times"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/branch_opening_times_title"
+                    style="@style/branch_subtitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/branch_times_days"
+                        style="@style/branch_opening_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/branch_days"/>
+
+                    <TextView
+                        android:id="@+id/branch_opening_times"
+                        style="@style/branch_opening_times"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/branch_address"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/branch_address_title"
+                    style="@style/branch_subtitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/branch_address"
+                    style="@style/branch_address"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

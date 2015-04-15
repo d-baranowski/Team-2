@@ -1,27 +1,23 @@
 package com.team.two.lloyds_app.objects;
 
 /**
- * Created by danielbaranowski on 06/02/15.
+ * Author: Daniel Baranowski
+ * Date: 06/02/2015
+ * Purpose: To store data about a particular customer
  */
 public class Customer {
     private final int id;
     private final String firstName;
     private final String surname;
-    private String addressOne;
-    private String addressTwo;
-    private String postCode;
-    private int offerPoints;
+	private	final Address address;
     private final String userId;
 
-    public Customer(int id, String firstName, String surname, String addressOne, String addressTwo, String postCode, String userId, int offerPoints){
+    public Customer(int id, String firstName, String surname, Address address, String userId){
         this.id = id;
         this.firstName = firstName;
         this.surname = surname;
-        this.addressOne = addressOne;
-        this.addressTwo = addressTwo;
-        this.postCode = postCode;
+		this.address = address;
         this.userId = userId;
-        this.offerPoints = offerPoints;
     }
 
     public int getId() {
@@ -36,21 +32,11 @@ public class Customer {
         return surname;
     }
 
-    public String getAddressOne() {
-        return addressOne;
-    }
-
-    public String getAddressTwo() {
-        return addressTwo;
-    }
-
-    public String getPostCode() {
-        return postCode;
+    public Address getAddress() {
+        return address;
     }
 
     public String getUserId() {
         return userId;
     }
-
-    public int getOfferPoints() { return offerPoints; }
 }

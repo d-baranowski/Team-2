@@ -93,6 +93,15 @@ public class NavigationDrawerFragment extends Fragment {
                     case 5:
                         ((MainActivity) getActivity()).openOffers();
                         break;
+                    case 6:
+                        ((MainActivity) getActivity()).openAchievements();
+                        break;
+                    case 7:
+                        ((MainActivity) getActivity()).openOptions();
+                        break;
+                    case 8:
+                        ((MainActivity) getActivity()).openHelp();
+                        break;
                     case 9:
                         ((MainActivity) getActivity()).logOut();
                         break;

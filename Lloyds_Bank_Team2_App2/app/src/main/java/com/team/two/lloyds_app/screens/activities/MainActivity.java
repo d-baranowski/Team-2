@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import com.google.android.gms.maps.*;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
 import android.os.Bundle;
 
 import android.support.v7.app.ActionBarActivity;
@@ -12,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 
 import com.team.two.lloyds_app.exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
@@ -23,26 +26,42 @@ import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
 import com.team.two.lloyds_app.screens.drawer.NavigationDrawerFragment;
 import com.team.two.lloyds_app.screens.fragments.BranchFinderFragment;
+import com.team.two.lloyds_app.screens.fragments.HelpScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.MainScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.OffersFragment;
+import com.team.two.lloyds_app.screens.fragments.OptionsFragment;
 import com.team.two.lloyds_app.screens.fragments.StatementScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.TransactionsScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
+import com.team.two.lloyds_app.screens.fragments.AchievementsFragment;
 
 import java.util.ArrayList;
 
-public class MainActivity extends ActionBarActivity  {
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class MainActivity extends ActionBarActivity implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+
     private static DatabaseAdapter dbadapter;
     private String title;
     private Account account;
-    GoogleMap googleMap;
     private Toolbar toolbar;
     private int customerId;
     private FragmentManager fm;
 
+    //Client used to interact with Google APIs
+    public GoogleApiClient mGoogleApiClient;
+
+    //Variable to store latest location
+    public Location mLastLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Build Google API client and connect
+        buildGoogleAPIClient();
+        mGoogleApiClient.connect();
 
         dbadapter = new DatabaseAdapter(this);
         customerId = getIntent().getExtras().getInt("customerId");
@@ -109,6 +128,14 @@ public class MainActivity extends ActionBarActivity  {
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
+    public void openAchievements(){
+        Fragment bf = new AchievementsFragment();
+        title = AchievementsFragment.TITLE;
+        toolbar.setTitle(title);
+
+        fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
+    }
+
     public void openPlanner(){
         Fragment bf = new MoneyPlannerFragment();
         title = MoneyPlannerFragment.TITLE;
@@ -119,6 +146,20 @@ public class MainActivity extends ActionBarActivity  {
     public void openFinder(){
         Fragment bf = new BranchFinderFragment();
         title = BranchFinderFragment.TITLE;
+        toolbar.setTitle(title);
+        fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
+    }
+
+    public void openOptions(){
+        Fragment bf = new OptionsFragment();
+        title = OptionsFragment.TITLE;
+        toolbar.setTitle(title);
+        fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
+    }
+
+    public void openHelp(){
+        Fragment bf = new HelpScreenFragment();
+        title = HelpScreenFragment.TITLE;
         toolbar.setTitle(title);
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
@@ -166,6 +207,38 @@ public class MainActivity extends ActionBarActivity  {
         if (field.getText().toString().isEmpty()){
             throw new EmptyMandatoryFieldException(errorMsg);
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    // Create the Google API Client with access to location services
+    protected synchronized void buildGoogleAPIClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    // Handle Google API Client connection
+    @Override
+    public void onConnected(Bundle bundle) {
+       mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+    }
+
+    // Handle Google API Client connection suspension
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+    }
+
+    // Handle Google API Client connection failure
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 
 
