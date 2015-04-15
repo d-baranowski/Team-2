@@ -99,6 +99,8 @@ Purpose : Options screen
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, Font);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         FontSpinner.setAdapter(adapter);
+
+
         AdapterView.OnItemSelectedListener onSpinner = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

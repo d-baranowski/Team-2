@@ -25,6 +25,7 @@
         android:id="@+id/notifications_text"
         />
 
+
     <TextView style="@style/options_screen_text"
         android:text="Change Font:"
         android:id="@+id/font_size_text"
