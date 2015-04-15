@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="branch_address_title">"Address"</string>
     <string name="branch_opening_times_title">"Opening times"</string>
     <string name="branch_days">"Mon: \nTue: \nWed: \nThu: \nFri: \nSat: \nSun: \n"</string>
@@ -9,4 +10,6 @@
     <string name="branch_network_search_error">"Connection problem: please check your internet settings"</string>
     <string name="branch_gps_search_error">"Error getting location: check your GPS settings"</string>
     <string name="branch_general_map_error">"There was a problem loading the map"</string>
+    <string name="branch_data_error">"There was a problem retrieving branch data"</string>
+
 </resources>
