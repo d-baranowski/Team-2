@@ -1,7 +1,9 @@
 package com.team.two.lloyds_app.screens.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 

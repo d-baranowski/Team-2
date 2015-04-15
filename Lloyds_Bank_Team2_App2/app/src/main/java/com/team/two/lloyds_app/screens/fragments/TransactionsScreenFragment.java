@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TransactionsScreenFragment extends android.support.v4.app.Fragment {
-    public static final String TITLE = "Transactions";
+    public static final String TITLE = "Transfers";
     private View root;
 
     //UI references transfers
@@ -58,7 +58,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        getActivity().setTitle("Transactions");
+        getActivity().setTitle(TITLE);
     }
 
     @Override

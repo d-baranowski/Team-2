@@ -14,7 +14,7 @@ import com.team.two.lloyds_app.R;
  */
 public class DbHelp extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "lloyds";
-    private static final int DATABASE_VERSION = 36;
+    private static final int DATABASE_VERSION = 43;
     private Context context;
 
     public DbHelp(Context context){
@@ -46,17 +46,15 @@ public class DbHelp extends SQLiteOpenHelper {
         final String DROP_RECIPIENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.RECIPIENTS_TABLE_NAME;
         final String DROP_AVAILABLE_OFFERS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.AVAIL_OFFERS_TABLE_NAME;
         final String DROP_ACTIVE_OFFERS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACTIVE_OFFERS_TABLE_NAME;
-
-        final String DROP_RECIPIENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.RECIPIENTS_TABLE_NAME;
         final String DROP_ACHIEVEMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACHIEVEMENTS_TABLE_NAME;
         final String DROP_CUSTOMER_ACHIEVEMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME;
+
         db.execSQL(DROP_CUSTOMER_TABLE);
         db.execSQL(DROP_ACCOUNTS_TABLE);
         db.execSQL(DROP_TRANSACTIONS_TABLE);
         db.execSQL(DROP_RECIPIENTS_TABLE);
         db.execSQL(DROP_AVAILABLE_OFFERS_TABLE);
         db.execSQL(DROP_ACTIVE_OFFERS_TABLE);
-
         db.execSQL(DROP_RECIPIENTS_TABLE);
         db.execSQL(DROP_ACHIEVEMENTS_TABLE);
         db.execSQL(DROP_CUSTOMER_ACHIEVEMENTS_TABLE);
@@ -123,7 +121,7 @@ public class DbHelp extends SQLiteOpenHelper {
         db.insert(SqlCons.ACCOUNTS_TABLE_NAME,null,contentValAccounts);
 
         ContentValues contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-2-6");
+        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-02-06");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TIME,System.currentTimeMillis() / 1000L);
         contentValuesTransactions.put(SqlCons.TRANSACTION_DESCRIPTION,"W M MORRISON PLC CD 7835");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TYPE,"Debit Card");
@@ -134,7 +132,7 @@ public class DbHelp extends SQLiteOpenHelper {
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
 
         contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-2-5");
+        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-02-05");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TIME,System.currentTimeMillis() / 1000L);
         contentValuesTransactions.put(SqlCons.TRANSACTION_DESCRIPTION,"W M MORRISON PLC CD 7835");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TYPE,"Debit Card");
@@ -145,7 +143,7 @@ public class DbHelp extends SQLiteOpenHelper {
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
 
         contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-2-5");
+        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-02-05");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TIME,System.currentTimeMillis() / 1000L);
         contentValuesTransactions.put(SqlCons.TRANSACTION_DESCRIPTION,"Amazon UK Retail CD 7835");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TYPE,"Debit Card");
@@ -156,7 +154,7 @@ public class DbHelp extends SQLiteOpenHelper {
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
 
         contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-2-5");
+        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-02-05");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TIME,System.currentTimeMillis() / 1000L);
         contentValuesTransactions.put(SqlCons.TRANSACTION_DESCRIPTION,"BOOTS/0680 CD 7835");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TYPE,"Debit Card");
@@ -167,7 +165,7 @@ public class DbHelp extends SQLiteOpenHelper {
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
 
         contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-2-3");
+        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-02-03");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TIME,System.currentTimeMillis() / 1000L);
         contentValuesTransactions.put(SqlCons.TRANSACTION_DESCRIPTION,"Amazon UK Retail CD 7835");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TYPE,"Debit Card");
@@ -178,7 +176,7 @@ public class DbHelp extends SQLiteOpenHelper {
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
 
         contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-2-2");
+        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-02-02");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TIME,System.currentTimeMillis() / 1000L);
         contentValuesTransactions.put(SqlCons.TRANSACTION_DESCRIPTION,"W M MORRISON PLC CD 7835");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TYPE,"Debit Card");
@@ -189,7 +187,7 @@ public class DbHelp extends SQLiteOpenHelper {
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
 
         contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-2-2");
+        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-02-02");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TIME,System.currentTimeMillis() / 1000L);
         contentValuesTransactions.put(SqlCons.TRANSACTION_DESCRIPTION,"NPOWER 00000000000000");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TYPE,"Direct Debit");
@@ -200,7 +198,7 @@ public class DbHelp extends SQLiteOpenHelper {
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
 
         contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-1-27");
+        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-01-27");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TIME,System.currentTimeMillis() / 1000L);
         contentValuesTransactions.put(SqlCons.TRANSACTION_DESCRIPTION,"LNK NCASTLE BARAS CD");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TYPE,"Cashpoint");
@@ -211,7 +209,7 @@ public class DbHelp extends SQLiteOpenHelper {
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
 
         contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-1-27");
+        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-01-27");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TIME,System.currentTimeMillis() / 1000L);
         contentValuesTransactions.put(SqlCons.TRANSACTION_DESCRIPTION,"UNIVERSITY OF NEWC CD 7835");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TYPE,"Debit Card");
@@ -222,7 +220,7 @@ public class DbHelp extends SQLiteOpenHelper {
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
 
         contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-1-26");
+        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-01-26");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TIME,System.currentTimeMillis() / 1000L);
         contentValuesTransactions.put(SqlCons.TRANSACTION_DESCRIPTION,"VIRGIN MEDIA PYMTS CD 7835");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TYPE,"Debit Card");
@@ -233,7 +231,7 @@ public class DbHelp extends SQLiteOpenHelper {
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
 
         contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-1-20");
+        contentValuesTransactions.put(SqlCons.TRANSACTION_DATE,"2015-01-20");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TIME,System.currentTimeMillis() / 1000L);
         contentValuesTransactions.put(SqlCons.TRANSACTION_DESCRIPTION,"MUCH LUV MUM");
         contentValuesTransactions.put(SqlCons.TRANSACTION_TYPE,"Debit Card");

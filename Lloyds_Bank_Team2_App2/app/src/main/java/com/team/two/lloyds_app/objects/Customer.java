@@ -11,13 +11,15 @@ public class Customer {
     private final String surname;
 	private	final Address address;
     private final String userId;
+    private final int points;
 
-    public Customer(int id, String firstName, String surname, Address address, String userId){
+    public Customer(int id, String firstName, String surname, Address address, String userId, int points){
         this.id = id;
         this.firstName = firstName;
         this.surname = surname;
 		this.address = address;
         this.userId = userId;
+        this.points = points;
     }
 
     public int getId() {
@@ -39,4 +41,6 @@ public class Customer {
     public String getUserId() {
         return userId;
     }
+
+    public int getOfferPoints() { return points; }
 }

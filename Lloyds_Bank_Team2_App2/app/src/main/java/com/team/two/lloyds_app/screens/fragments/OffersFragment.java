@@ -56,12 +56,12 @@ public class OffersFragment extends android.support.v4.app.Fragment {
         availablePoints.setText("Available Points: " + ((MainActivity) getActivity()).getCustomer().getOfferPoints());
         availableOfferData = ((MainActivity) getActivity()).getAvailableOffers();
         availableOffersListView.setAdapter(new AvailableOffersAdapter(getActivity(),availableOfferData));
-        availableOffersListView.setClickable(true);
+
         availableOffersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((MainActivity) getActivity()).activateOffer((Offer)parent.getAdapter().getItem(position));
-                ((MainActivity) getActivity()).openOffers();
+                //((MainActivity) getActivity()).activateOffer((Offer)parent.getAdapter().getItem(position));
+                ((MainActivity) getActivity()).openPlanner();
             }
         });
 

@@ -44,7 +44,7 @@
     <string name="active_deals">Active Deals:</string>
     <string name="deals_available">Available Deals:</string>
     <string name="confirm">Confirm</string>
-</resources>
+
 
     <string name="facebook_app_id">1639455966286939</string>
     <string name="fb_not_logged_in_message">Log in with Facebook to share your achievements!</string>

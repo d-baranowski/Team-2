@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.TreeMap;
@@ -25,7 +26,7 @@ import java.util.TreeMap;
  */
 public class DatabaseAdapter {
 
-    private final DateFormat df = new SimpleDateFormat("yyyy-M-d", Locale.ENGLISH);
+    private final DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
     private final int MAX_TRACKBACK_DAYS = 50;
     private final double FALLBACK_BALANCE = 0;
     private final DbHelp helper;
@@ -138,10 +139,11 @@ public class DatabaseAdapter {
     public void transfer(Account source, Account destination, Double balance) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
-        Time now = new Time();
-        now.setToNow();
         long time = System.currentTimeMillis() / 1000L;
-        String date = now.year + "-" + now.month + "-" + now.monthDay;
+        Calendar cal = Calendar.getInstance();
+        Date date1 = cal.getTime();
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        String date = format1.format(date1);
 
         String descSource = "To " + destination.getAccountName();
         String descDesctination = "From " + source.getAccountName();
@@ -187,9 +189,10 @@ public class DatabaseAdapter {
 
     public void payment(Account source, Recipient destination, Double balance, String description) {
         SQLiteDatabase dba = helper.getWritableDatabase();
-        Time now = new Time();
-        now.setToNow();
-        String date = now.year + "-" + now.month + "-" + now.monthDay;
+        Calendar cal = Calendar.getInstance();
+        Date date1 = cal.getTime();
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        String date = format1.format(date1);
 
         //Source transaction
         ContentValues sourceTransaction = new ContentValues();
@@ -311,6 +314,9 @@ public class DatabaseAdapter {
         if (cursor != null) {
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
+                int test = cursor.getColumnIndex(SqlCons.CUSTOMER_NAME);
+                String test2 = cursor.getString(0);
+
                 String firstName = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_NAME));
                 String surname = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_SURNAME));
 				Address address = new Address(
@@ -318,8 +324,9 @@ public class DatabaseAdapter {
 						cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_CITY)),
 						cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_POSTCODE)));
                 String userId = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_USERID));
+                int points = cursor.getInt(cursor.getColumnIndex(SqlCons.CUSTOMER_OFFERS_POINTS));
 
-                Customer customer = new Customer(id,firstName,surname,address,userId);
+                Customer customer = new Customer(id,firstName,surname,address,userId,points);
 
                 db.close();
                 return customer;
