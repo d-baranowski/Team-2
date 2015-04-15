@@ -12,7 +12,9 @@ import android.content.pm.Signature;
 
 
 /**
- * Created by olivermcpheely on 14/04/15.
+ * Created by oliver mcpheely on 14/04/15.
+ * purpose: to return the applications key hash string value,
+ *          which is required by the facebook developers page.
  */
 public class getHashKey extends Application {
 

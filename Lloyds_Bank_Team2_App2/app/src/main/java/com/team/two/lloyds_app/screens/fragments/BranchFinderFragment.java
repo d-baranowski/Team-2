@@ -235,7 +235,6 @@ public class BranchFinderFragment extends Fragment {
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng ll) {
-                googleMap.mark
                 //Hide the popup
                 popup.setVisibility(View.INVISIBLE);
             }

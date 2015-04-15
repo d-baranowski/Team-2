@@ -43,6 +43,8 @@
     <string name="drawer_close">close</string>
 
     <string name="facebook_app_id">1639455966286939</string>
+    <string name="fb_not_logged_in_message">Log in with Facebook to share your achievements!</string>
+
 
     <!-- Achievements -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
