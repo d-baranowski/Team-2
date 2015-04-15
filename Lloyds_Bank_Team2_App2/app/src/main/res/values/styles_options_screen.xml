@@ -11,6 +11,10 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name ="options_font">
+        <item name="fontPath">fonts/TitilliumWeb-Bold.ttf</item>
+    </style>
+
     <style name="Options_switch">
         <item name="android:layout_width">45dp</item>
         <item name="android:layout_height">30dp</item>

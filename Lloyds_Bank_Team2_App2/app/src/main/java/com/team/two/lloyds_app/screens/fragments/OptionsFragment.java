@@ -1,10 +1,10 @@
 
-        package com.team.two.lloyds_app.screens.fragments;
+  package com.team.two.lloyds_app.screens.fragments;
 
 /*
 Author : Matthew Selby, Oliver McPheely
 Date : 06/04/2015
-Purpose : Options
+Purpose : Options screen
  */
 
         import android.content.Intent;
@@ -37,50 +37,53 @@ public class OptionsFragment extends android.support.v4.app.Fragment {
 
     //UI References
     private Switch notifications_switch;
-    private Button FB_share_button;
-    private TextView options_title;
     private TextView notifications_text;
-    private TextView link_facebook_text;
     private Spinner FontSpinner;
+    private String[] Font_size = {"1", "2", "3"};
 
     //facebook SDK References
-    private TextView fbWelcomeMessage;
     private CallbackManager mCallbackManager;
-    private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
-        @Override
-        public void onSuccess(LoginResult loginResult) {
-            AccessToken accessToken = loginResult.getAccessToken();
-            Profile profile = Profile.getCurrentProfile();
-            if (profile != null){
-                fbWelcomeMessage.setText("Welcome " + profile.getName());
-            }
 
-        }
-
-        @Override
-        public void onCancel() {
-
-        }
-
-        @Override
-        public void onError(FacebookException e) {
-
-        }
-
-    };
-
-    private String[] Font_size = {"1", "2", "3"};
-    public OptionsFragment() {
-        // Required empty public constructor
-    }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
-        mCallbackManager=CallbackManager.Factory.create();
+        mCallbackManager = CallbackManager.Factory.create();
+
+    }
+
+
+    private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            AccessToken accessToken = loginResult.getAccessToken();
+            Profile profile = Profile.getCurrentProfile();
+            if (profile != null) {
+                TextView fbMessage = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
+                fbMessage.setText("Welcome " + profile.getName() + "!");
+
+            }
         }
+
+        @Override
+        public void onCancel() {
+            TextView fbMessage = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
+            fbMessage.setText(R.string.fb_not_logged_in_message);
+        }
+
+        @Override
+        public void onError(FacebookException e) {
+            TextView fbMessage = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
+            fbMessage.setText(R.string.fb_not_logged_in_message);
+        }
+
+    };
+
+
+
+
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,13 +107,24 @@ public class OptionsFragment extends android.support.v4.app.Fragment {
         loginButton.registerCallback(mCallbackManager, mCallBack);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Profile profile=Profile.getCurrentProfile();
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        TextView fbMessage = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
+        fbMessage.setText(R.string.fb_not_logged_in_message);
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
 
 
     public void onNotificationsSwitchClicked(View view) {

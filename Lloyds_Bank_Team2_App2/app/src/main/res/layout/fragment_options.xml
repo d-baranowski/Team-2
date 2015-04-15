@@ -6,11 +6,31 @@
     tools:context="com.team.two.lloyds_app.screens.fragments.OptionsFragment"
     android:background="#ffffffff">
 
+    <TextView style="@style/options_font"
+        android:id="@+id/fbLoginMessage"
+        android:layout_below="@+id/notifications_text"
+        android:text="@string/fb_not_logged_in_message"
+        android:textSize="15sp"
+        android:textColor="@color/lloyds_green"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+
+        />
 
     <TextView style="@style/options_screen_text"
         android:text="Push Notifications"
         android:id="@+id/notifications_text"
         />
+
+    <TextView style="@style/options_screen_text"
+        android:text="Font Size:"
+        android:id="@+id/font_size_text"
+        android:layout_below="@+id/login_button"
+        />
+
 
     <Switch style="@style/Options_switch"
         android:text="Notifications Switch"
@@ -21,11 +41,7 @@
         android:switchTextAppearance="@style/SwitchTextAppearance"
         />
 
-    <TextView style="@style/options_screen_text"
-        android:text="Font Size:"
-        android:id="@+id/font_size_text"
-        android:layout_below="@+id/login_button"
-        />
+
 
     <Spinner style="@style/options_spinner"
         android:id="@+id/font_size_spinner"
@@ -39,10 +55,10 @@
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70dp"
-        android:layout_alignTop="@+id/notifications_switch"
+        android:layout_marginTop="30dp"
+        android:layout_alignTop="@+id/fbLoginMessage"
         android:layout_marginLeft="10dp"
         />
+
 
 </RelativeLayout>
