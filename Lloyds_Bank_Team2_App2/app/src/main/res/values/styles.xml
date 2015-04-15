@@ -13,6 +13,11 @@
 
     </style>
 
+    <style name="mySpinnerStyle" parent="android:Widget.ListView.DropDown">
+        <item name="android:divider">#ffffff</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+
     <style name="divider_thin">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
@@ -28,6 +33,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:textColor">@color/lloyds_green</item>
+        <item name="android:dropDownListViewStyle">@style/mySpinnerStyle</item>
     </style>
 
     <style name="MyCustomToolBar" parent="MyTheme">
