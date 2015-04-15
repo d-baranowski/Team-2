@@ -1,1 +1,1 @@
-include ':app', ':BaseGameUtils', ':facebook'
+include ':app', ':facebook'
