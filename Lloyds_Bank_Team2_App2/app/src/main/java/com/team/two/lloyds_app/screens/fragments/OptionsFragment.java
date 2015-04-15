@@ -37,17 +37,19 @@ Purpose : Options screen
         import com.team.two.lloyds_app.R;
         import com.facebook.FacebookSdk;
 
+        import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
-
-public class OptionsFragment extends android.support.v4.app.Fragment implements CompoundButton.OnCheckedChangeListener {
+  public class OptionsFragment extends android.support.v4.app.Fragment implements CompoundButton.OnCheckedChangeListener {
     View Root;
     public static final String TITLE = "Options";
 
     //UI References
     private ToggleButton notificationsToggle;
     private Spinner FontSpinner;
-    private String[] Font_size = {"1", "2", "3"};
+    private String[] Font = {"1", "2", "3"};
+    private Button doneButton;
+
 
     //facebook SDK References
     private CallbackManager mCallbackManager;
@@ -58,6 +60,7 @@ public class OptionsFragment extends android.support.v4.app.Fragment implements 
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         mCallbackManager = CallbackManager.Factory.create();
         notificationsToggle = (ToggleButton) getActivity().findViewById(R.id.notifications_toggle);
+
     }
 
 
@@ -93,22 +96,45 @@ public class OptionsFragment extends android.support.v4.app.Fragment implements 
         Root = inflater.inflate(R.layout.fragment_options, container, false);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         final Spinner FontSpinner = (Spinner) Root.findViewById(R.id.font_size_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, Font_size);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, Font);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         FontSpinner.setAdapter(adapter);
-        FontSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        AdapterView.OnItemSelectedListener onSpinner = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String font1 = "1";
+                String font2="2";
+                String font3="3";
+                if (((String) parent.getSelectedItem()) == font1 ) {
+                    CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                            .setDefaultFontPath("fonts/Exo2-Bold.ttf")
+                            .setFontAttrId(R.attr.fontPath)
+                            .build());
+                }
+                if ((String)parent.getSelectedItem() == font2) {
+                    CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                            .setDefaultFontPath("fonts/Oxygen-Bold.otf")
+                            .setFontAttrId(R.attr.fontPath)
+                            .build());
+                }
+                if ((String)parent.getSelectedItem() == font3) {
+                    CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                            .setDefaultFontPath("fonts/TitilliumWeb-Bold.ttf")
+                            .setFontAttrId(R.attr.fontPath)
+                            .build());
+
+                }
 
             }
+                @Override
+                public void onNothingSelected (AdapterView < ? > parent){
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                }
 
-            }
 
-    });
+        };
 
+        FontSpinner.setOnItemSelectedListener(onSpinner);
         return Root;
     }
 
