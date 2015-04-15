@@ -135,7 +135,6 @@ Purpose : Options screen
 
 
         };
-
         FontSpinner.setOnItemSelectedListener(onSpinner);
         return Root;
     }
