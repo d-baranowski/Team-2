@@ -5,13 +5,15 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.team.two.lloyds_app.R;
+
 /**
 * Created by danielbaranowski on 24/02/15.
 */
 public class DbHelp extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "lloyds";
-    private static final int DATABASE_VERSION = 30;
-
+    private static final int DATABASE_VERSION = 36;
+    private Context context;
 
     public DbHelp(Context context){
         super(context, DATABASE_NAME,null,DATABASE_VERSION);
@@ -25,6 +27,8 @@ public class DbHelp extends SQLiteOpenHelper {
         db.execSQL(SqlCons.CREATE_ACCOUNT_TABLE);
         db.execSQL(SqlCons.CREATE_TRANSACTIONS_TABLE);
         db.execSQL(SqlCons.CREATE_RECIPIENTS_TABLE);
+        db.execSQL(SqlCons.CREATE_AVAILABLE_OFFERS_TABLE);
+        db.execSQL(SqlCons.CREATE_ACTIVE_OFFERS_TABLE);
         populate(db);
     }
 
@@ -35,11 +39,17 @@ public class DbHelp extends SQLiteOpenHelper {
         final String DROP_CUSTOMER_TABLE = "DROP TABLE IF EXISTS " + SqlCons.CUSTOMER_TABLE_NAME;
         final String DROP_ACCOUNTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACCOUNTS_TABLE_NAME;
         final String DROP_TRANSACTIONS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.TRANSACTIONS_TABLE_NAME;
-        final String DROP_RECIPMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.RECIPIENTS_TABLE_NAME;
+        final String DROP_RECIPIENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.RECIPIENTS_TABLE_NAME;
+        final String DROP_AVAILABLE_OFFERS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.AVAIL_OFFERS_TABLE_NAME;
+        final String DROP_ACTIVE_OFFERS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACTIVE_OFFERS_TABLE_NAME;
+
         db.execSQL(DROP_CUSTOMER_TABLE);
         db.execSQL(DROP_ACCOUNTS_TABLE);
         db.execSQL(DROP_TRANSACTIONS_TABLE);
-        db.execSQL(DROP_RECIPMENTS_TABLE);
+        db.execSQL(DROP_RECIPIENTS_TABLE);
+        db.execSQL(DROP_AVAILABLE_OFFERS_TABLE);
+        db.execSQL(DROP_ACTIVE_OFFERS_TABLE);
+
         onCreate(db);
     }
 
@@ -53,6 +63,7 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValCustomers.put(SqlCons.CUSTOMER_POSTCODE, "NE9 9HA");
         contentValCustomers.put(SqlCons.CUSTOMER_USERID, 123456789);
         contentValCustomers.put(SqlCons.CUSTOMER_PASSWORD, "password");
+        contentValCustomers.put(SqlCons.CUSTOMER_OFFERS_POINTS, 1000);
         db.insert(SqlCons.CUSTOMER_TABLE_NAME,null,contentValCustomers);
 
         contentValCustomers = new ContentValues();
@@ -221,5 +232,14 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValuesTransactions.put(SqlCons.TRANSACTION_BALANCE,2228.94);
         contentValuesTransactions.put(SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN,1);
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
+
+        ContentValues availableOfferContentValue = new ContentValues();
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.lloydsbanklogo);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_NAME, "Morrisons Saver");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_DESCRIPTION, "Get 5% off certain products at Morrisons Shops");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_PRICE,500);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ACTIVE, 0);
+        db.insert(SqlCons.AVAIL_OFFERS_TABLE_NAME,null,availableOfferContentValue);
+
     }
 }

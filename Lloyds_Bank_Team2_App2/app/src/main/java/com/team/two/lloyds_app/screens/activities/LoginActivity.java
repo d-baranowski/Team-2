@@ -37,7 +37,7 @@ public class LoginActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.login);
         mPasswordView = (EditText) findViewById(R.id.password);
         remember = (CheckBox) findViewById(R.id.remember_id);
 

@@ -36,12 +36,9 @@ public class MainScreenFragment extends android.support.v4.app.Fragment {
     private Button openPlanner;
     private Button openOffers;
 
-    Customer customer;
-    Account account;
-
-    public static MainScreenFragment newInstance() {
-        return new MainScreenFragment();
-    }
+    private DecimalFormat df = new DecimalFormat("#.##");
+    private Customer customer;
+    private Account account;
 
     public MainScreenFragment() {
         // Required empty public constructor
@@ -52,7 +49,7 @@ public class MainScreenFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        getActivity().setTitle("Home");
+        getActivity().setTitle(TITLE);
     }
 
     @Override
@@ -179,10 +176,36 @@ public class MainScreenFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        DecimalFormat df = new DecimalFormat("#.00");
+        openOffers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).openOffers();
+            }
+        });
+
+        openOffers.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(0xe0add8e6, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+
+
         accountName.setText(account.getAccountName());
-        accountBalance.setText("£"+String.valueOf(df.format(account.getAccountBalance())));
-        accountAvailable.setText("£"+String.valueOf(df.format(account.getAvailableBalance())));
+        accountBalance.setText("£"+df.format(account.getAccountBalance()));
+        accountAvailable.setText("£"+df.format(account.getAvailableBalance()));
         accountType.setText(account.getAccountType());
         accountNumber.setText(String.valueOf(account.getAccountNumber()));
         accountSortCode.setText(account.getSortCode());
@@ -196,8 +219,8 @@ public class MainScreenFragment extends android.support.v4.app.Fragment {
         account = ((MainActivity)getActivity()).getAccounts().get(0);
 
         accountName.setText(account.getAccountName());
-        accountBalance.setText("£"+String.valueOf(account.getAccountBalance()));
-        accountAvailable.setText("£"+String.valueOf(account.getAvailableBalance()));
+        accountBalance.setText("£"+df.format(account.getAccountBalance()));
+        accountAvailable.setText("£"+df.format(account.getAvailableBalance()));
         accountType.setText(account.getAccountType());
         accountNumber.setText(String.valueOf(account.getAccountNumber()));
         accountSortCode.setText(account.getSortCode());

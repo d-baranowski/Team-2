@@ -43,7 +43,7 @@
             android:textSize="@dimen/text_size_eighteen" />
 
         <TextView
-            android:id="@+id/loginLabel"
+            android:id="@+id/login_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -52,7 +52,7 @@
             android:textColor="@color/lloyds_green" />
 
         <AutoCompleteTextView
-            android:id="@+id/email"
+            android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textColor="#000"
@@ -65,7 +65,7 @@
             android:singleLine="true" />
 
         <TextView
-            android:id="@+id/passwordLabel"
+            android:id="@+id/password_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -98,7 +98,7 @@
             android:text="@string/login_remember_Id" />
 
         <Button
-            android:id="@+id/email_sign_in_button"
+            android:id="@+id/sign_in_button"
             style="?android:textAppearanceSmall"
             android:layout_width="250dp"
             android:layout_height="wrap_content"

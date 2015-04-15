@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.format.Time;
 
 import com.team.two.lloyds_app.objects.Account;
+import com.team.two.lloyds_app.objects.Offer;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
 
@@ -280,7 +281,7 @@ public class DatabaseAdapter {
             if (t.getCount() > 0) {
                 t.moveToFirst();
 
-                for (int j = 0; j < t.getCount(); j++) {
+                for (int i = 0; i < t.getCount(); i++) {
                     int id = t.getInt(t.getColumnIndex(SqlCons.RECIPIENT_ID));
                     String name = t.getString(t.getColumnIndex(SqlCons.RECIPIENT_NAME));
                     String sortCode = t.getString(t.getColumnIndex(SqlCons.RECIPIENT_SORTCODE));
@@ -304,19 +305,20 @@ public class DatabaseAdapter {
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columns = SqlCons.CUSTOMER_COLUMNS;
         String query = SqlCons.CUSTOMER_ID + " = '" + id + "'";
-        Cursor cursor = db.query(SqlCons.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
+        Cursor t = db.query(SqlCons.CUSTOMER_TABLE_NAME,columns,query,null,null,null,null);
 
-        if (cursor != null) {
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                String firstName = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_NAME));
-                String surname = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_SURNAME));
-                String addressOne = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_ADDRESSONE));
-                String addressTwo = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_ADDRESSTWO));
-                String postcode = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_POSTCODE));
-                String userId = cursor.getString(cursor.getColumnIndex(SqlCons.CUSTOMER_USERID));
+        if (t != null) {
+            if (t.getCount() > 0) {
+                t.moveToFirst();
+                String firstName = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_NAME));
+                String surname = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_SURNAME));
+                String addressOne = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_ADDRESSONE));
+                String addressTwo = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_ADDRESSTWO));
+                String postcode = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_POSTCODE));
+                String userId = t.getString(t.getColumnIndex(SqlCons.CUSTOMER_USERID));
+                int points = t.getInt(t.getColumnIndex(SqlCons.CUSTOMER_OFFERS_POINTS));
 
-                Customer cust = new Customer(id,firstName,surname,addressOne,addressTwo,postcode,userId);
+                Customer cust = new Customer(id,firstName,surname,addressOne,addressTwo,postcode,userId,points);
 
                 db.close();
                 return cust;
@@ -325,6 +327,62 @@ public class DatabaseAdapter {
 
         db.close();
         return null;
+    }
+
+    public ArrayList<Offer> getAvailableOffers() {
+        ArrayList<Offer> list = new ArrayList<>();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String[] columns = SqlCons.AVAILABLE_OFFERS_COLUMNS;
+        String query = SqlCons.AVAIL_OFFER_ACTIVE + " = '" + 0 + "'";
+
+        Cursor t = db.query(SqlCons.AVAIL_OFFERS_TABLE_NAME, columns, null,null, null, null, null);
+
+        if (t != null) {
+            if (t.getCount() > 0) {
+                t.moveToFirst();
+
+                for (int i = 0; i < t.getCount(); i++) {
+                    int id = t.getInt(t.getColumnIndex(SqlCons.AVAIL_OFFER_ID));
+                    int icon = t.getInt(t.getColumnIndex(SqlCons.AVAIL_OFFER_ICON));
+                    String name = t.getString(t.getColumnIndex(SqlCons.AVAIL_OFFER_NAME));
+                    String desc = t.getString(t.getColumnIndex(SqlCons.AVAIL_OFFER_DESCRIPTION));
+                    int price = t.getInt(t.getColumnIndex(SqlCons.AVAIL_OFFER_PRICE));
+
+                    list.add(new Offer(id,icon,name,desc,price,false));
+
+                    t.moveToNext();
+                }
+                db.close();
+            }
+        }
+
+        return list;
+    }
+
+    public void activateOffer(Offer offer, int ownerId){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = SqlCons.AVAILABLE_OFFERS_COLUMNS;
+        String query = SqlCons.AVAIL_OFFER_ID + " = '" + offer.getId() + "'";
+        Cursor t = db.query(SqlCons.AVAIL_OFFERS_TABLE_NAME, columns, query,null, null, null, null);
+
+        if (t != null) {
+            if (t.getCount() > 0) {
+                t.moveToFirst();
+
+                ContentValues offerValues = new ContentValues();
+                offerValues.put(SqlCons.AVAIL_OFFER_ACTIVE,1);
+                db.update(SqlCons.AVAIL_OFFERS_TABLE_NAME,offerValues, query,null);
+
+                ContentValues activeOfferValues = new ContentValues();
+                activeOfferValues.put(SqlCons.ACTIVE_OFFER_ICON,offer.getIcon());
+                activeOfferValues.put(SqlCons.ACTIVE_OFFER_BARCODE,offer.getBarcode());
+                activeOfferValues.put(SqlCons.ACCOUNT_NAME,offer.getName());
+                activeOfferValues.put(SqlCons.ACTIVE_OFFER_DESCRIPTION,offer.getDescription());
+                activeOfferValues.put(SqlCons.ACTIVE_OFFER_OWNER_ID,ownerId);
+                db.insert(SqlCons.ACTIVE_OFFERS_TABLE_NAME,null,activeOfferValues);
+            }
+        }
+        db.close();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")

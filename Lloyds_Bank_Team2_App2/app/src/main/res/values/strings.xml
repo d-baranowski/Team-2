@@ -41,4 +41,7 @@
     <string name="action_sign_in">Log In</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
+    <string name="active_deals">Active Deals:</string>
+    <string name="deals_available">Available Deals:</string>
+    <string name="confirm">Confirm</string>
 </resources>

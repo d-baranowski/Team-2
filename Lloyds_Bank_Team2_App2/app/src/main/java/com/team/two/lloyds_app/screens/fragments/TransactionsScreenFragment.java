@@ -50,12 +50,6 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
     private List<String>  recipientsNames;
     private HashMap<String,Recipient> mapRecipients;
 
-
-    public static TransactionsScreenFragment newInstance() {
-        TransactionsScreenFragment fragment = new TransactionsScreenFragment();
-        return fragment;
-    }
-
     public TransactionsScreenFragment() {
         // Required empty public constructor
     }
@@ -83,7 +77,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         transferButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transfer();
+                passwordValidationDialog("Transfer");
             }
         });
 
@@ -107,7 +101,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                payment();
+                passwordValidationDialog("Payment");
             }
         });
 
@@ -279,6 +273,43 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                 } catch (EmptyMandatoryFieldException e) {
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(getActivity(), Constants.TOAST_MANDATORY_DATA, duration);
+                    toast.show();
+                }
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void passwordValidationDialog(final String caller){
+        // Create custom dialog object
+        final Dialog dialog = new Dialog(getActivity());
+        // Include dialog.xml file
+        dialog.setContentView(R.layout.password_validation_dialog);
+        // Set dialog title
+        dialog.setTitle("Enter Password");
+
+        //UI References
+        final EditText password = (EditText) dialog.findViewById(R.id.dialog_password);
+        Button loginButton = (Button) dialog.findViewById(R.id.dialog_sign_in_button);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = ((MainActivity)getActivity()).getCustomer().getUserId();
+
+                if (((MainActivity)getActivity()).getAdapter().login(id,password.getText().toString())){
+                    if (caller.equals("Transfer")){
+                        transfer();
+                    }
+
+                    if (caller.equals("Payment")){
+                        payment();
+                    }
+                    dialog.dismiss();
+                } else {
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(getActivity(), "Wrong Password", duration);
                     toast.show();
                 }
             }

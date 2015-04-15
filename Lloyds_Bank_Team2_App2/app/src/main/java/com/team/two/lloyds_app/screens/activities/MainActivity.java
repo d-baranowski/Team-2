@@ -18,11 +18,13 @@ import com.team.two.lloyds_app.exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.database.DatabaseAdapter;
 import com.team.two.lloyds_app.objects.Account;
+import com.team.two.lloyds_app.objects.Offer;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
 import com.team.two.lloyds_app.screens.drawer.NavigationDrawerFragment;
 import com.team.two.lloyds_app.screens.fragments.BranchFinderFragment;
 import com.team.two.lloyds_app.screens.fragments.MainScreenFragment;
+import com.team.two.lloyds_app.screens.fragments.OffersFragment;
 import com.team.two.lloyds_app.screens.fragments.StatementScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.TransactionsScreenFragment;
 import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
@@ -121,6 +123,13 @@ public class MainActivity extends ActionBarActivity  {
         fm.beginTransaction().replace(R.id.mainFragmentHolder, bf).commit();
     }
 
+    public void openOffers(){
+        Fragment bf = new OffersFragment();
+        title = OffersFragment.TITLE;
+        toolbar.setTitle(title);
+        fm.beginTransaction().replace(R.id.mainFragmentHolder,bf).commit();
+    }
+
     public void logOut(){
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
@@ -138,6 +147,12 @@ public class MainActivity extends ActionBarActivity  {
     public ArrayList<Recipient> getRecipients() {
         return dbadapter.getRecipients(customerId);
     }
+
+    public ArrayList<Offer> getAvailableOffers(){
+        return dbadapter.getAvailableOffers();
+    }
+
+    public void activateOffer(Offer offer){ dbadapter.activateOffer(offer, customerId);}
 
     public DatabaseAdapter getAdapter(){
         return dbadapter;

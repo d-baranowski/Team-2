@@ -14,20 +14,22 @@ public class SqlCons {
     static final String CUSTOMER_POSTCODE = "Postcode";
     static final String CUSTOMER_USERID = "UserID";
     static final String CUSTOMER_PASSWORD = "Password";
+    static final String CUSTOMER_OFFERS_POINTS = "Points";
 
     static final String CREATE_CUSTOMER_TABLE =
             "CREATE TABLE "+
                     CUSTOMER_TABLE_NAME + " (" +
                     CUSTOMER_ID + "	INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    CUSTOMER_NAME + "   TEXT NOT NULL," +
-                    CUSTOMER_SURNAME + "	TEXT NOT NULL," +
-                    CUSTOMER_ADDRESSONE + "	TEXT NOT NULL," +
-                    CUSTOMER_ADDRESSTWO + "	TEXT NOT NULL," +
-                    CUSTOMER_POSTCODE + "	TEXT NOT NULL," +
+                    CUSTOMER_NAME + "   STRING NOT NULL," +
+                    CUSTOMER_SURNAME + "	STRING NOT NULL," +
+                    CUSTOMER_ADDRESSONE + "	STRING NOT NULL," +
+                    CUSTOMER_ADDRESSTWO + "	STRING NOT NULL," +
+                    CUSTOMER_POSTCODE + "	STRING NOT NULL," +
                     CUSTOMER_USERID + "	INTEGER NOT NULL UNIQUE ," +
-                    CUSTOMER_PASSWORD + "	TEXT NOT NULL);";
+                    CUSTOMER_PASSWORD + "	STRING NOT NULL," +
+                    CUSTOMER_OFFERS_POINTS +"  INTEGER NOT NULL DEFAULT 0);";
 
-    static final String[] CUSTOMER_COLUMNS = {CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_SURNAME, CUSTOMER_ADDRESSONE, CUSTOMER_ADDRESSTWO, CUSTOMER_POSTCODE, CUSTOMER_USERID, CUSTOMER_PASSWORD};
+    static final String[] CUSTOMER_COLUMNS = {CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_SURNAME, CUSTOMER_ADDRESSONE, CUSTOMER_ADDRESSTWO, CUSTOMER_POSTCODE, CUSTOMER_USERID, CUSTOMER_PASSWORD,CUSTOMER_OFFERS_POINTS};
 
     //Accounts table SQL
     static final String ACCOUNTS_TABLE_NAME = "Accounts";
@@ -102,4 +104,46 @@ public class SqlCons {
                     RECIPIENT_OWNER_ID + " INTEGER REFERENCES " + CUSTOMER_TABLE_NAME + "("+ CUSTOMER_ID  +"));";
 
     static final String[] RECIPIENT_COLUMNS = {RECIPIENT_ID,RECIPIENT_NAME,RECIPIENT_SORTCODE,RECIPIENT_ACCOUNTNUMBER,RECIPIENT_OWNER_ID};
+
+
+    //Available Offers and Deals
+    static final String AVAIL_OFFERS_TABLE_NAME = "AvailableOffers";
+    static final String AVAIL_OFFER_ID = "_id";
+    static final String AVAIL_OFFER_ICON = "Icon";
+    static final String AVAIL_OFFER_NAME = "Name";
+    static final String AVAIL_OFFER_DESCRIPTION = "Description";
+    static final String AVAIL_OFFER_PRICE = "Price";
+    static final String AVAIL_OFFER_ACTIVE = "Active";
+
+    static final String CREATE_AVAILABLE_OFFERS_TABLE =
+            "CREATE TABLE " +
+                    AVAIL_OFFERS_TABLE_NAME + " (" +
+                    AVAIL_OFFER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    AVAIL_OFFER_ICON + " INTEGER," +
+                    AVAIL_OFFER_NAME + " STRING," +
+                    AVAIL_OFFER_DESCRIPTION + " STRING," +
+                    AVAIL_OFFER_ACTIVE + " INTEGER DEFAULT 0," +
+                    AVAIL_OFFER_PRICE + " INTEGER);";
+
+    static final String[] AVAILABLE_OFFERS_COLUMNS = {AVAIL_OFFER_ID, AVAIL_OFFER_ICON, AVAIL_OFFER_NAME, AVAIL_OFFER_DESCRIPTION, AVAIL_OFFER_PRICE,AVAIL_OFFER_ACTIVE};
+
+    static final String ACTIVE_OFFERS_TABLE_NAME = "ActiveOffers";
+    static final String ACTIVE_OFFER_ID = "_id";
+    static final String ACTIVE_OFFER_ICON = "Icon";
+    static final String ACTIVE_OFFER_BARCODE = "Barcode";
+    static final String ACTIVE_OFFER_NAME = "Name";
+    static final String ACTIVE_OFFER_DESCRIPTION = "Description";
+    static final String ACTIVE_OFFER_OWNER_ID = "OwnerId";
+
+    static final String CREATE_ACTIVE_OFFERS_TABLE =
+            "CREATE TABLE " +
+                    ACTIVE_OFFERS_TABLE_NAME + " (" +
+                    ACTIVE_OFFER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    ACTIVE_OFFER_ICON + " INTEGER," +
+                    ACTIVE_OFFER_BARCODE + " INTEGER," +
+                    ACTIVE_OFFER_NAME + " STRING," +
+                    ACTIVE_OFFER_DESCRIPTION + " STRING," +
+                    ACTIVE_OFFER_OWNER_ID + " INTEGER REFERENCES " + CUSTOMER_TABLE_NAME + "("+ CUSTOMER_ID  +"));";
+
+    static final String[] ACTIVE_OFFERS_COLUMN_NAMES = {ACTIVE_OFFER_ID,ACTIVE_OFFER_ICON,ACTIVE_OFFER_BARCODE,ACTIVE_OFFER_NAME,ACTIVE_OFFER_DESCRIPTION,ACTIVE_OFFER_OWNER_ID};
 }

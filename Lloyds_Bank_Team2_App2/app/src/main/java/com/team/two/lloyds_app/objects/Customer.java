@@ -10,9 +10,10 @@ public class Customer {
     private String addressOne;
     private String addressTwo;
     private String postCode;
+    private int offerPoints;
     private final String userId;
 
-    public Customer(int id, String firstName, String surname, String addressOne, String addressTwo, String postCode, String userId){
+    public Customer(int id, String firstName, String surname, String addressOne, String addressTwo, String postCode, String userId, int offerPoints){
         this.id = id;
         this.firstName = firstName;
         this.surname = surname;
@@ -20,6 +21,7 @@ public class Customer {
         this.addressTwo = addressTwo;
         this.postCode = postCode;
         this.userId = userId;
+        this.offerPoints = offerPoints;
     }
 
     public int getId() {
@@ -49,4 +51,6 @@ public class Customer {
     public String getUserId() {
         return userId;
     }
+
+    public int getOfferPoints() { return offerPoints; }
 }

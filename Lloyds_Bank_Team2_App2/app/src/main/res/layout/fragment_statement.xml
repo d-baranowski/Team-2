@@ -11,10 +11,6 @@
         android:layout_height="5dp"
         android:background="@drawable/drop_shadow" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -94,18 +90,20 @@
                 android:textSize="@dimen/text_size_twenty"
                 tools:ignore="RtlHardcoded" />
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentBottom="true"
                 android:layout_below="@id/account_available"
-                android:orientation="vertical">
+                tools:ignore="UselessParent">
 
-                <ScrollView
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    tools:ignore="UselessParent">
+                    android:layout_height="400dp"
+
+                    android:orientation="vertical">
+
 
                     <TableLayout
                         android:id="@+id/tableLayout1"
@@ -114,12 +112,10 @@
                         android:shrinkColumns="*"
                         android:stretchColumns="*" />
 
-                </ScrollView>
 
-            </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
         </RelativeLayout>
-
-    </ScrollView>
 
     <View
         android:layout_width="fill_parent"

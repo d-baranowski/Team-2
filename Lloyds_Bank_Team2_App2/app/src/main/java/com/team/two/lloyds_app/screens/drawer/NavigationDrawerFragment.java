@@ -90,6 +90,9 @@ public class NavigationDrawerFragment extends Fragment {
                     case 4:
                         ((MainActivity) getActivity()).openPlanner();
                         break;
+                    case 5:
+                        ((MainActivity) getActivity()).openOffers();
+                        break;
                     case 9:
                         ((MainActivity) getActivity()).logOut();
                         break;

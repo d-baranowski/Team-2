@@ -45,9 +45,7 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
     private TextView accountAvailable;
     private TableLayout table;
 
-    public static StatementScreenFragment newInstance() {
-        return new StatementScreenFragment();
-    }
+    private DecimalFormat df = new DecimalFormat("#.##");
 
     public StatementScreenFragment() {
         // Required empty public constructor
@@ -98,9 +96,9 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
 
     public void updateAccount(int position) {
         account = ((MainActivity) getActivity()).getAccounts().get(position);
-        DecimalFormat df = new DecimalFormat("#.00");
-        accountBalance.setText("£" + String.valueOf(df.format(account.getAccountBalance())));
-        accountAvailable.setText("£" + String.valueOf(df.format(account.getAvailableBalance())));
+
+        accountBalance.setText("£" +df.format(account.getAccountBalance()));
+        accountAvailable.setText("£"+df.format(account.getAvailableBalance()));
         accountType.setText(account.getAccountType());
 
         if (!account.getAccountType().equals("Subaccount")) {
