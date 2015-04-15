@@ -7,6 +7,10 @@ Date : 06/04/2015
 Purpose : Options screen
  */
 
+        import android.app.Notification;
+        import android.app.NotificationManager;
+        import android.app.PendingIntent;
+        import android.content.Context;
         import android.content.Intent;
         import android.content.pm.ActivityInfo;
         import android.graphics.BitmapFactory;
@@ -14,11 +18,14 @@ Purpose : Options screen
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
+        import android.widget.AdapterView;
         import android.widget.ArrayAdapter;
         import android.widget.Button;
+        import android.widget.CompoundButton;
         import android.widget.Spinner;
         import android.widget.Switch;
         import android.widget.TextView;
+        import android.widget.ToggleButton;
 
         import com.facebook.AccessToken;
         import com.facebook.CallbackManager;
@@ -31,27 +38,26 @@ Purpose : Options screen
         import com.facebook.FacebookSdk;
 
 
-public class OptionsFragment extends android.support.v4.app.Fragment {
+
+
+public class OptionsFragment extends android.support.v4.app.Fragment implements CompoundButton.OnCheckedChangeListener {
     View Root;
     public static final String TITLE = "Options";
 
     //UI References
-    private Switch notifications_switch;
-    private TextView notifications_text;
+    private ToggleButton notificationsToggle;
     private Spinner FontSpinner;
     private String[] Font_size = {"1", "2", "3"};
 
     //facebook SDK References
     private CallbackManager mCallbackManager;
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         mCallbackManager = CallbackManager.Factory.create();
-
+        notificationsToggle = (ToggleButton) getActivity().findViewById(R.id.notifications_toggle);
     }
 
 
@@ -81,20 +87,28 @@ public class OptionsFragment extends android.support.v4.app.Fragment {
 
     };
 
-
-
-
-
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         Root = inflater.inflate(R.layout.fragment_options, container, false);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        Spinner FontSpinner = (Spinner) Root.findViewById(R.id.font_size_spinner);
+        final Spinner FontSpinner = (Spinner) Root.findViewById(R.id.font_size_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, Font_size);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         FontSpinner.setAdapter(adapter);
+        FontSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+    });
+
         return Root;
     }
 
@@ -110,7 +124,7 @@ public class OptionsFragment extends android.support.v4.app.Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Profile profile=Profile.getCurrentProfile();
+        Profile profile = Profile.getCurrentProfile();
 
     }
 
@@ -121,23 +135,44 @@ public class OptionsFragment extends android.support.v4.app.Fragment {
         fbMessage.setText(R.string.fb_not_logged_in_message);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-
-    public void onNotificationsSwitchClicked(View view) {
-        boolean on = ((Switch) view.findViewById(R.id.notifications_switch)).isChecked();
-
-        if (on) {
-            //enable notifications
+    //method used when toggle button is set/unset
+    @Override
+    public void onCheckedChanged(CompoundButton notificationsToggle, boolean isChecked) {
+        notificationsToggle.setOnCheckedChangeListener(this);
+        if (isChecked = true) {
+            Intent intent = new Intent();
+            PendingIntent pIntent = PendingIntent.getActivity(this.getActivity(), 0, intent, 0);
+            Notification testNotification = new Notification.Builder(this.getActivity())
+                    .setTicker("Notifications On")
+                    .setContentTitle("You have switched On Notifications")
+                    .setSmallIcon(R.drawable.lloydsbanklogo)
+                    .setContentText("Notifications On")
+                    .setContentIntent(pIntent)
+                    .build();
+            testNotification.flags = Notification.FLAG_AUTO_CANCEL;
+            NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
+            notificationManager.notify(0, testNotification);
         } else {
-            //disable notifications
+            Intent intent = new Intent();
+            PendingIntent pIntent = PendingIntent.getActivity(this.getActivity(), 0, intent, 0);
+            Notification testNotification = new Notification.Builder(this.getActivity())
+                    .setTicker("Notifications Off")
+                    .setContentTitle("You have switched off Notifications")
+                    .setSmallIcon(R.drawable.lloydsbanklogo)
+                    .setContentText("Notifications Off")
+                    .setContentIntent(pIntent)
+                    .build();
+            testNotification.flags = Notification.FLAG_AUTO_CANCEL;
+            NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
+            notificationManager.notify(1, testNotification);
         }
-
-
     }
+
 
 
 }

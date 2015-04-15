@@ -21,7 +21,7 @@
         />
 
     <TextView style="@style/options_screen_text"
-        android:text="Push Notifications"
+        android:text="Notifications"
         android:id="@+id/notifications_text"
         />
 
@@ -32,13 +32,14 @@
         />
 
 
-    <Switch style="@style/Options_switch"
-        android:text="Notifications Switch"
-        android:id="@+id/notifications_switch"
-        android:onClick="onNotificationsSwitchClicked"
+    <ToggleButton style="@style/Options_switch"
+        android:id="@+id/notifications_toggle"
         android:layout_alignTop="@+id/notifications_text"
         android:layout_toRightOf="@+id/notifications_text"
-        android:switchTextAppearance="@style/SwitchTextAppearance"
+        android:textOff="Off"
+        android:textOn="On"
+        android:background="@color/light_gray"
+
         />
 
 

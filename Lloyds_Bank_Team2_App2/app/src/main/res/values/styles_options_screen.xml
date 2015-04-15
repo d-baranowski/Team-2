@@ -16,8 +16,8 @@
     </style>
 
     <style name="Options_switch">
-        <item name="android:layout_width">45dp</item>
-        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:textColor">@color/lloyds_green</item>
         <item name="android:layout_marginLeft">50dp</item>
     </style>
