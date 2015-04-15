@@ -2,5 +2,11 @@
 <resources>
     <string name="branch_address_title">"Address"</string>
     <string name="branch_opening_times_title">"Opening times"</string>
-    <string name="branch_times_days">"Mon: \nTue: \nWed: \nThu: \nFri: \nSat: \nSun: \n"</string>
+    <string name="branch_days">"Mon: \nTue: \nWed: \nThu: \nFri: \nSat: \nSun: \n"</string>
+    <string name="branch_hint">"Search"</string>
+    <string name="branch_general_search_error">"There was an error with your search"</string>
+    <string name="branch_empty_search_error">"Please type into the search bar!"</string>
+    <string name="branch_network_search_error">"Connection problem: please check your internet settings"</string>
+    <string name="branch_gps_search_error">"Error getting location: check your GPS settings"</string>
+    <string name="branch_general_map_error">"There was a problem loading the map"</string>
 </resources>

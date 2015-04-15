@@ -44,7 +44,7 @@
                     android:layout_height="170dp"
                 />
 
-                <View style="@style/divider"/>
+                <View style="@style/divider_thin"/>
             </LinearLayout>
 
             <LinearLayout
@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="170dp" />
 
-                <View style="@style/divider"/>
+                <View style="@style/divider_thin"/>
             </LinearLayout>
 
             <LinearLayout
