@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -57,6 +58,7 @@ public class BranchFinderFragment extends Fragment {
     TextView addressView;
     TextView timesTitle;
     TextView timesView;
+
 
     public BranchFinderFragment() {
         // Required empty public constructor
@@ -105,6 +107,8 @@ public class BranchFinderFragment extends Fragment {
 
         Button button = (Button) root.findViewById(R.id.branch_search_button);
 
+        final InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
         button.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -115,6 +119,7 @@ public class BranchFinderFragment extends Fragment {
                 if (!input.isEmpty() || input.equals(null)) {
 
                     try{
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                         popup.setVisibility(View.INVISIBLE);
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
                             .target(getSearchPosition(input))

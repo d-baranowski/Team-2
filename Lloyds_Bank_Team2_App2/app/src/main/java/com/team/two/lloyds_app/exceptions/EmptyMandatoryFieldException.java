@@ -1,4 +1,4 @@
-package com.team.two.lloyds_app.exceptions;
+package com.team.two.lloyds_app.Exceptions;
 
 /**
  * Created by danielbaranowski on 29/03/15.
