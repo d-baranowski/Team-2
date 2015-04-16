@@ -26,8 +26,8 @@ import com.team.two.lloyds_app.screens.activities.MainActivity;
 import java.util.ArrayList;
 
 /**
- * Author:
- * Date:
+ * Author:Daniel Baranowski
+ * Date: 22/03/2015
  * Purpose: Navigation Bar
  */
 
