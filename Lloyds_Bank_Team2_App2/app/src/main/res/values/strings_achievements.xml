@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="achievement_title">Available Achievements</string>
+    <string name="rewards_title">Rewards</string>
+</resources>

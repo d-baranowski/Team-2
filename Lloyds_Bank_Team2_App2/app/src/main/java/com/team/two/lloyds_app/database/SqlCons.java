@@ -155,6 +155,7 @@ public class SqlCons {
     static final String ACHIEVEMENT_TITLE = "achievement_title";
     static final String ACHIEVEMENT_DESCRIPTION = "achievement_description";
     static final String ACHIEVEMENT_POINTS = "achievement_points";
+    static final String ACHIEVEMENT_ICON_ID = "achievement_icon_id";
 
     static final String CREATE_ACHIEVEMENTS_TABLE =
             "CREATE TABLE " +
@@ -162,9 +163,10 @@ public class SqlCons {
                     ACHIEVEMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     ACHIEVEMENT_TITLE + " STRING," +
                     ACHIEVEMENT_DESCRIPTION + " STRING," +
-                    ACHIEVEMENT_POINTS + " INTEGER" + ");";
+                    ACHIEVEMENT_POINTS + " INTEGER, " +
+                    ACHIEVEMENT_ICON_ID + " INTEGER" + ");";
 
-    static final String[] ACHIEVEMENTS_COLUMNS = {ACHIEVEMENT_ID, ACHIEVEMENT_TITLE, ACHIEVEMENT_DESCRIPTION, ACHIEVEMENT_POINTS};
+    static final String[] ACHIEVEMENTS_COLUMNS = {ACHIEVEMENT_ID, ACHIEVEMENT_TITLE, ACHIEVEMENT_DESCRIPTION, ACHIEVEMENT_POINTS, ACHIEVEMENT_ICON_ID};
 
     // Customer achievements table SQL
     static final String CUSTOMER_ACHIEVEMENTS_TABLE_NAME = "CustomerAchievements";

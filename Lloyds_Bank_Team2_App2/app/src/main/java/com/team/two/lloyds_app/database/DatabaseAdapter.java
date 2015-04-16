@@ -8,6 +8,7 @@ import android.text.format.Time;
 
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
+import com.team.two.lloyds_app.objects.Achievement;
 import com.team.two.lloyds_app.objects.Offer;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
 
@@ -562,5 +564,33 @@ public class DatabaseAdapter {
         }
 
         return spendingDateMap;
+    }
+
+    public List<Achievement> getAchievements(){
+        List<Achievement> achievements = new ArrayList<Achievement>();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String[] columns = SqlCons.ACHIEVEMENTS_COLUMNS;
+        Cursor cursor = db.query(SqlCons.ACHIEVEMENTS_TABLE_NAME,columns,null,null,null,null,null);
+
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                for (int j = 0; j < cursor.getCount(); j++)
+                {
+                    int achievementId = cursor.getInt(cursor.getColumnIndex(SqlCons.ACHIEVEMENT_ID));
+                    String achievementTitle = cursor.getString(cursor.getColumnIndex(SqlCons.ACHIEVEMENT_TITLE));
+                    String achievementDescription = cursor.getString(cursor.getColumnIndex(SqlCons.ACHIEVEMENT_DESCRIPTION));
+                    int achievementPoints = cursor.getInt(cursor.getColumnIndex(SqlCons.ACHIEVEMENT_POINTS));
+                    int achievementIconId = cursor.getInt(cursor.getColumnIndex(SqlCons.ACHIEVEMENT_ICON_ID));
+
+                    achievements.add(new Achievement(achievementId, achievementTitle, achievementDescription, achievementPoints, achievementIconId));
+                    cursor.moveToNext();
+                }
+            }
+        }
+
+        db.close();
+        return achievements;
     }
 }
