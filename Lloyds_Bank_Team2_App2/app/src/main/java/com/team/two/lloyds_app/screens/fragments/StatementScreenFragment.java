@@ -178,7 +178,7 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
 
             for (int j = 0; j < cols; j++) {
                 TextView textBox = new TextView(getActivity());
-                textBox.setTextSize(12);
+                textBox.setTextSize(15);
                 textBox.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 textBox.setPadding(5, 5, 5, 5);
 
@@ -189,6 +189,13 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
                 } else {
                     HashMap<String, String> transactionRow = transactionsList.get(i - 1);
                     String cellData = transactionRow.get(keys[j]);
+
+                    if (j == 1){
+                        if (cellData.length() > 15){
+                            cellData = cellData.substring(0,15) + "...";
+                        }
+                    }
+
                     if (j == 2) {
                         double income = Double.parseDouble(transactionRow.get(keys[2]));
                         double outcome = Double.parseDouble(transactionRow.get("Outcome"));
