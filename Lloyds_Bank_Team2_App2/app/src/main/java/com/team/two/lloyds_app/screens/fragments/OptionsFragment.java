@@ -13,8 +13,13 @@
         import android.content.Context;
         import android.content.Intent;
         import android.content.pm.ActivityInfo;
+        import android.content.res.ColorStateList;
         import android.graphics.BitmapFactory;
+        import android.graphics.Color;
         import android.os.Bundle;
+        import android.text.Layout;
+        import android.text.style.UpdateAppearance;
+        import android.util.Size;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -22,9 +27,11 @@
         import android.widget.ArrayAdapter;
         import android.widget.Button;
         import android.widget.CompoundButton;
+        import android.widget.RelativeLayout;
         import android.widget.Spinner;
         import android.widget.Switch;
         import android.widget.TextView;
+        import android.widget.Toast;
         import android.widget.ToggleButton;
 
         import com.facebook.AccessToken;
@@ -36,108 +43,70 @@
         import com.facebook.login.widget.LoginButton;
         import com.team.two.lloyds_app.R;
         import com.facebook.FacebookSdk;
+        import com.team.two.lloyds_app.screens.activities.MainActivity;
+
+        import java.awt.font.TextAttribute;
 
         import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
-  public class OptionsFragment extends android.support.v4.app.Fragment implements CompoundButton.OnCheckedChangeListener {
-    View Root;
-    public static final String TITLE = "Options";
+  public class OptionsFragment extends android.support.v4.app.Fragment implements AdapterView.OnItemSelectedListener {
+      View Root;
+      public static final String TITLE = "Options";
 
-    //UI References
-    private ToggleButton notificationsToggle;
-    private Spinner FontSpinner;
-    private String[] Font = {"1", "2", "3"};
-    private Button doneButton;
+      //UI References
 
+      private Spinner FontSpinner;
+      private Button doneButton;
 
-    //facebook SDK References
-    private CallbackManager mCallbackManager;
+      public OptionsFragment() {
+          // Required empty public constructor
+      }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
-        mCallbackManager = CallbackManager.Factory.create();
-        notificationsToggle = (ToggleButton) getActivity().findViewById(R.id.notifications_toggle);
+      //facebook SDK References
+      private CallbackManager mCallbackManager;
 
-    }
-
-
-    private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
-        @Override
-        public void onSuccess(LoginResult loginResult) {
-            AccessToken accessToken = loginResult.getAccessToken();
-            Profile profile = Profile.getCurrentProfile();
-            if (profile != null) {
-                TextView fbMessage = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
-                fbMessage.setText("Welcome " + profile.getName() + "!");
-
-            }
-        }
-
-        @Override
-        public void onCancel() {
-            TextView fbMessage = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
-            fbMessage.setText(R.string.fb_not_logged_in_message);
-        }
-
-        @Override
-        public void onError(FacebookException e) {
-            TextView fbMessage = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
-            fbMessage.setText(R.string.fb_not_logged_in_message);
-        }
-
-    };
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        Root = inflater.inflate(R.layout.fragment_options, container, false);
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        final Spinner FontSpinner = (Spinner) Root.findViewById(R.id.font_size_spinner);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, Font);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        FontSpinner.setAdapter(adapter);
+      @Override
+      public void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+          mCallbackManager = CallbackManager.Factory.create();
 
 
-        AdapterView.OnItemSelectedListener onSpinner = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String font1 = "1";
-                String font2="2";
-                String font3="3";
-                if (((String) parent.getSelectedItem()) == font1 ) {
-                    CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                            .setDefaultFontPath("fonts/Exo2-Bold.ttf")
-                            .setFontAttrId(R.attr.fontPath)
-                            .build());
-                }
-                if ((String)parent.getSelectedItem() == font2) {
-                    CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                            .setDefaultFontPath("fonts/Oxygen-Bold.otf")
-                            .setFontAttrId(R.attr.fontPath)
-                            .build());
-                }
-                if ((String)parent.getSelectedItem() == font3) {
-                    CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                            .setDefaultFontPath("fonts/TitilliumWeb-Bold.ttf")
-                            .setFontAttrId(R.attr.fontPath)
-                            .build());
-
-                }
-
-            }
-                @Override
-                public void onNothingSelected (AdapterView < ? > parent){
-
-                }
+      }
 
 
-        };
-        FontSpinner.setOnItemSelectedListener(onSpinner);
-        return Root;
-    }
+      private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
+          @Override
+          public void onSuccess(LoginResult loginResult) {
+              AccessToken accessToken = loginResult.getAccessToken();
+              Profile profile = Profile.getCurrentProfile();
+              if (profile != null) {
+                  TextView fbMessage = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
+                  fbMessage.setText("Welcome " + profile.getName() + "!");
+
+              }
+          }
+
+          @Override
+          public void onCancel() {
+              TextView fbMessage = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
+              fbMessage.setText(R.string.fb_not_logged_in_message);
+          }
+
+          @Override
+          public void onError(FacebookException e) {
+              TextView fbMessage = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
+              fbMessage.setText(R.string.fb_not_logged_in_message);
+          }
+      };
+
+      public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                               Bundle savedInstanceState) {
+          Root = inflater.inflate(R.layout.fragment_options, container, false);
+          getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+      return Root;
+  }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -146,14 +115,17 @@
         loginButton.setReadPermissions("user_friends");
         loginButton.setFragment(this);
         loginButton.registerCallback(mCallbackManager, mCallBack);
+        FontSpinner = (Spinner) Root.findViewById(R.id.font_size_spinner);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.font_color, android.R.layout.simple_spinner_dropdown_item);
+        FontSpinner.setAdapter(adapter);
+        FontSpinner.setOnItemSelectedListener(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Profile profile = Profile.getCurrentProfile();
-
-    }
+        }
 
     @Override
     public void onStop() {
@@ -167,39 +139,34 @@
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    //method used when toggle button is set/unset
-    @Override
-    public void onCheckedChanged(CompoundButton notificationsToggle, boolean isChecked) {
-        notificationsToggle.setOnCheckedChangeListener(this);
-        if (isChecked = true) {
-            Intent intent = new Intent();
-            PendingIntent pIntent = PendingIntent.getActivity(this.getActivity(), 0, intent, 0);
-            Notification testNotification = new Notification.Builder(this.getActivity())
-                    .setTicker("Notifications On")
-                    .setContentTitle("You have switched On Notifications")
-                    .setSmallIcon(R.drawable.lloydsbanklogo)
-                    .setContentText("Notifications On")
-                    .setContentIntent(pIntent)
-                    .build();
-            testNotification.flags = Notification.FLAG_AUTO_CANCEL;
-            NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
-            notificationManager.notify(0, testNotification);
-        } else {
-            Intent intent = new Intent();
-            PendingIntent pIntent = PendingIntent.getActivity(this.getActivity(), 0, intent, 0);
-            Notification testNotification = new Notification.Builder(this.getActivity())
-                    .setTicker("Notifications Off")
-                    .setContentTitle("You have switched off Notifications")
-                    .setSmallIcon(R.drawable.lloydsbanklogo)
-                    .setContentText("Notifications Off")
-                    .setContentIntent(pIntent)
-                    .build();
-            testNotification.flags = Notification.FLAG_AUTO_CANCEL;
-            NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
-            notificationManager.notify(1, testNotification);
-        }
-    }
+      @Override
+      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+          if (position == 0) {
+              TextView tv1 = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
+              tv1.setTextColor(getResources().getColor(R.color.lloyds_green));
+              TextView tv2 = (TextView) getActivity().findViewById(R.id.font_size_text);
+              tv2.setTextColor(getResources().getColor(R.color.lloyds_green));
+              FontSpinner.setSelection(position);
+          }
+          if (position ==1) {
+              TextView tv1 = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
+              tv1.setTextColor(getResources().getColor(R.color.black));
+              TextView tv2 = (TextView) getActivity().findViewById(R.id.font_size_text);
+              tv2.setTextColor(getResources().getColor(R.color.black));
+              FontSpinner.setSelection(position);
+          }
+          if (position==2) {
+              TextView tv1 = (TextView) getActivity().findViewById(R.id.fbLoginMessage);
+              TextView tv2 = (TextView) getActivity().findViewById(R.id.font_size_text);
+              tv2.setTextColor(getResources().getColor(R.color.com_facebook_blue));
+              tv1.setTextColor(getResources().getColor(R.color.com_facebook_blue));
+              FontSpinner.setSelection(position);
+          }
 
+      }
+      @Override
+      public void onNothingSelected(AdapterView<?> parent) {
 
+      }
 
-}
+  }
