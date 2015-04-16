@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.team.two.lloyds_app.database.DatabaseAdapter;
 import com.team.two.lloyds_app.R;
@@ -27,7 +28,8 @@ public class LoginActivity extends Activity {
     private static DatabaseAdapter dbadapter;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private ImageView logo;
+    private AutoCompleteTextView mLoginView;
     private EditText mPasswordView;
     private CheckBox remember;
 
@@ -39,16 +41,18 @@ public class LoginActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.login);
+        logo = (ImageView) findViewById(R.id.login_logo);
+        mLoginView = (AutoCompleteTextView) findViewById(R.id.login);
         mPasswordView = (EditText) findViewById(R.id.password);
         remember = (CheckBox) findViewById(R.id.remember_id);
 
         SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences(Constants.PREF_FILE_NAME, Context.MODE_PRIVATE);
         remember.setChecked(sharedPreferences.getBoolean("remember",false));
-        mEmailView.setText(sharedPreferences.getString("userId",""));
+        mLoginView.setText(sharedPreferences.getString("userId", ""));
+        logo.setImageResource(R.drawable.lloydsbanklogo);
     }
     public void login(View view){
-        String userId = mEmailView.getText().toString();
+        String userId = mLoginView.getText().toString();
         String password = mPasswordView.getText().toString();
         if (true){
 
