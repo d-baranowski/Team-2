@@ -25,6 +25,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Author: Deniz
+ * Date: 08/04/2015
+ * Purpose: Code for transactions screen
+ */
+
 public class TransactionsScreenFragment extends android.support.v4.app.Fragment {
     public static final String TITLE = "Transfers";
     private View root;

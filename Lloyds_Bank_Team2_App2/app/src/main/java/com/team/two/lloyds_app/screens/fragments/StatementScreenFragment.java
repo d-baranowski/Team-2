@@ -27,6 +27,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Author:
+ * Date:
+ * Purpose: code for statements screen
+ */
+
 public class StatementScreenFragment extends android.support.v4.app.Fragment {
     public static final String TITLE = "Statement";
     protected View root;

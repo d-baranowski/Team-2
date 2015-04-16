@@ -1,9 +1,9 @@
 package com.team.two.lloyds_app.screens.fragments;
 
-/*
-    Author: Matthew Selby
-    Date: 07/04/15
-    Purpose Help Screen
+/**
+ * Author: Matthew Selby
+ * Date: 07/04/15
+ * Purpose Help Screen
  */
 
 

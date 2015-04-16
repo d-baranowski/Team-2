@@ -17,6 +17,12 @@ import com.team.two.lloyds_app.screens.activities.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Author: Deniz
+ * Date: 12/04/2015
+ * Purpose: Code for achievements
+ */
+
 public class AchievementsFragment extends android.support.v4.app.Fragment {
     public static final String TITLE = "Achievements";
 
