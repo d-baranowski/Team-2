@@ -7,7 +7,6 @@ package com.team.two.lloyds_app.screens.fragments;
  */
 
 
-
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -18,23 +17,22 @@ import android.view.ViewGroup;
 import com.team.two.lloyds_app.R;
 
 
-public class HelpScreenFragment extends android.support.v4.app.Fragment {
-    View Root;
-    public static final String TITLE = "Help and About";
+public class HelpScreenFragment extends android.support.v4.app.Fragment{
+	View Root;
+	public static final String TITLE = "Help and About";
 
-    public HelpScreenFragment() {
-        // Required empty public constructor
-    }
+	public HelpScreenFragment(){
+		// Required empty public constructor
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        Root = inflater.inflate(R.layout.fragment_help_screen, container, false);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+		Root = inflater.inflate(R.layout.fragment_help_screen, container, false);
 
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        return Root;
+		getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		return Root;
 
-    }
+	}
 
 
 }
