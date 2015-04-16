@@ -227,16 +227,16 @@ public class NavigationDrawerFragment extends Fragment {
 
     public ArrayList<DrawerItem> getDrawerData(){
         ArrayList<DrawerItem> data = new ArrayList<>();
-        data.add(new DrawerItem(Constants.SCREEN_NAMES[0],R.drawable.homeicon));
+        data.add(new DrawerItem(Constants.SCREEN_NAMES[0],R.drawable.ic_home));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[1],R.drawable.ic_statement_icon));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[2],R.drawable.ic_transfers_icon));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[3],R.drawable.ic_branch_finder_icon));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[4],R.drawable.ic_money_planner_icon));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[5],R.drawable.ic_offers_icon));
         data.add(new DrawerItem(Constants.SCREEN_NAMES[6],R.drawable.ic_achievements_icon));
-        data.add(new DrawerItem(Constants.SCREEN_NAMES[7],R.drawable.optionsicon));
-        data.add(new DrawerItem(Constants.SCREEN_NAMES[8],R.drawable.helpicon));
-        data.add(new DrawerItem(Constants.SCREEN_NAMES[9],R.drawable.signouticon));
+        data.add(new DrawerItem(Constants.SCREEN_NAMES[7],R.drawable.ic_options));
+        data.add(new DrawerItem(Constants.SCREEN_NAMES[8],R.drawable.ic_help));
+        data.add(new DrawerItem(Constants.SCREEN_NAMES[9],R.drawable.ic_logout));
         return data;
     }
 

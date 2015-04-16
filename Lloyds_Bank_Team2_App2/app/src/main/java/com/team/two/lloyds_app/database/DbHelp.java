@@ -14,7 +14,7 @@ import com.team.two.lloyds_app.R;
  */
 public class DbHelp extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "lloyds";
-    private static final int DATABASE_VERSION = 49;
+    private static final int DATABASE_VERSION = 51;
     private Context context;
 
     public DbHelp(Context context){
@@ -290,9 +290,65 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValuesTransactions.put(SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID, 1);
 
         ContentValues availableOfferContentValue = new ContentValues();
-        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.lloydsbanklogo);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.morrisons_logo);
         availableOfferContentValue.put(SqlCons.AVAIL_OFFER_NAME, "Morrisons Saver");
         availableOfferContentValue.put(SqlCons.AVAIL_OFFER_DESCRIPTION, "Get 5% off certain products at Morrisons Shops");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_PRICE,500);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ACTIVE, 0);
+        db.insert(SqlCons.AVAIL_OFFERS_TABLE_NAME,null,availableOfferContentValue);
+
+        availableOfferContentValue = new ContentValues();
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.tesco_logo);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_NAME, "Tesco Saver");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_DESCRIPTION, "Get 5% off certain products at Tesco Shops");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_PRICE,600);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ACTIVE, 0);
+        db.insert(SqlCons.AVAIL_OFFERS_TABLE_NAME,null,availableOfferContentValue);
+
+        availableOfferContentValue = new ContentValues();
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.mc_logo);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_NAME, "Mc Donald's Saver");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_DESCRIPTION, "Get 10% cheaper Cheeseburgers !");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_PRICE,300);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ACTIVE, 0);
+        db.insert(SqlCons.AVAIL_OFFERS_TABLE_NAME,null,availableOfferContentValue);
+
+        availableOfferContentValue = new ContentValues();
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.sports_direct_logo);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_NAME, "Sports Direct Socks");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_DESCRIPTION, "Get 50% off socks at Sports Direct exclusive socks");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_PRICE,500);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ACTIVE, 0);
+        db.insert(SqlCons.AVAIL_OFFERS_TABLE_NAME,null,availableOfferContentValue);
+
+        availableOfferContentValue = new ContentValues();
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.waitrose_logo);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_NAME, "Waitrose Saver");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_DESCRIPTION, "Get 5% off certain products at Waitrose Shops");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_PRICE,800);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ACTIVE, 0);
+        db.insert(SqlCons.AVAIL_OFFERS_TABLE_NAME,null,availableOfferContentValue);
+
+        availableOfferContentValue = new ContentValues();
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.subway_logo);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_NAME, "Subway Saver");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_DESCRIPTION, "Get 15% off Steak & Cheese sandwich");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_PRICE,350);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ACTIVE, 0);
+        db.insert(SqlCons.AVAIL_OFFERS_TABLE_NAME,null,availableOfferContentValue);
+
+        availableOfferContentValue = new ContentValues();
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.lidl_logo);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_NAME, "Lidl Saver");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_DESCRIPTION, "Get 5% off certain products at Lidl Shops");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_PRICE,500);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ACTIVE, 0);
+        db.insert(SqlCons.AVAIL_OFFERS_TABLE_NAME,null,availableOfferContentValue);
+
+        availableOfferContentValue = new ContentValues();
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.sainsburys_logo);
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_NAME, "Sainsbury Saver");
+        availableOfferContentValue.put(SqlCons.AVAIL_OFFER_DESCRIPTION, "Get 5% off certain products at Sainsbury Shops");
         availableOfferContentValue.put(SqlCons.AVAIL_OFFER_PRICE,500);
         availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ACTIVE, 0);
         db.insert(SqlCons.AVAIL_OFFERS_TABLE_NAME,null,availableOfferContentValue);
