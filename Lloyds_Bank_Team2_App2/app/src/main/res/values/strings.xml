@@ -10,6 +10,12 @@
     <string name="title_activity_add_recipient">Add Recipient</string>
     <string name="title_activity_main">Home</string>
 
+    <string-array name="font_color">
+       <item>Green</item>
+       <item>Black</item>
+       <item>Blue</item>
+    </string-array>
+
     <string name="login_remember_Id">Remember my User ID</string>
     <string name="new_recipient">Create a new recipient</string>
     <string name="recipient_name">Name of recipient:</string>
