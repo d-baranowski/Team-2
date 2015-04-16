@@ -83,15 +83,15 @@ public class AchievementsFragment extends android.support.v4.app.Fragment {
         TextView achievementDescription = (TextView) dialog.findViewById(R.id.achievementInformation);
         achievementDescription.setText(achievement.getDescription());
 
+        // Check if achievement is an incremental achievement (requires mutliple steps to be accomplished)
         if(achievement.isIncremental() == 1)
         {
             ProgressBar achievementProgress = (ProgressBar) dialog.findViewById(R.id.achievementProgressBar);
             achievementProgress.setVisibility(View.VISIBLE);
         }
 
-        //UI References
-        Button okButton = (Button) dialog.findViewById(R.id.ok_button);
 
+        Button okButton = (Button) dialog.findViewById(R.id.ok_button);
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,18 +106,7 @@ public class AchievementsFragment extends android.support.v4.app.Fragment {
     private void populateAchievementList()
     {
         achievements = ((MainActivity)getActivity()).getAchievements();
-
         TextView achievementTitle = (TextView) getActivity().findViewById(R.id.achievementTitle);
-
-        //achievements.add(new Achievement(1, "Transaction over £100 a b c d e f g h i h j l m n o p q r s t u v w", "To get this achievement, make a transaction over £100", 451, R.drawable.achievement_1));
-        //achievements.add(new Achievement(2, "Transaction over £200", "To get this achievement, make a transaction over £200", 90, R.drawable.achievement_2));
-        //achievements.add(new Achievement(3, "Transaction over £400", "To get this achievement, make a transaction over £400", 180, R.drawable.achievement_3));
-        //achievements.add(new Achievement(1, "Transaction over £100", "To get this achievement, make a transaction over £100", 45, R.drawable.achievement_1));
-        //achievements.add(new Achievement(2, "Transaction over £200", "To get this achievement, make a transaction over £200", 90, R.drawable.achievement_2));
-        //achievements.add(new Achievement(3, "Transaction over £400", "To get this achievement, make a transaction over £400", 180, R.drawable.achievement_3));
-        //achievements.add(new Achievement(1, "Transaction over £100", "To get this achievement, make a transaction over £100", 45, R.drawable.achievement_1));
-        //achievements.add(new Achievement(2, "Transaction over £200", "To get this achievement, make a transaction over £200", 90, R.drawable.achievement_2));
-        //achievements.add(new Achievement(3, "Transaction over £400", "To get this achievement, make a transaction over £400", 180, R.drawable.achievement_3));
     }
 
     private void populateListView()
