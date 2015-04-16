@@ -264,6 +264,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                     toast.show();
                     dialog.dismiss();
                     ((MainActivity) getActivity()).openTransfers();
+                    dialog.dismiss();
 
                 } catch (NumberFormatException e){
                     accountNumberText = 0;
