@@ -241,30 +241,48 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValuesTransactions.put(SqlCons.TRANSACTION_ACCOUNT_ID_FOREIGN,1);
         db.insert(SqlCons.TRANSACTIONS_TABLE_NAME,null,contentValuesTransactions);
 
-        // Add sample achievements
-        contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_TITLE, "Login 10 times");
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "Use your banking app 10 times to gain this achievement.");
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_POINTS, 50);
-        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValuesTransactions);
+        // Add all achievements
+        ContentValues contentValAchievements = new ContentValues();
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_TITLE, "£200 Incoming transaction");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You must receive an incoming transaction of at least £200 to complete this achievement.");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 50);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_1);
+        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
-        contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_TITLE, "Save £1000");
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "Have a balance of at least £1000 to gain this achievement.");
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_POINTS, 200);
-        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValuesTransactions);
+        contentValAchievements = new ContentValues();
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_TITLE, "£200 Outgoing transaction");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You must make a transfer of at least £200 to complete this achievement.");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 50);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_2);
+        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
-        contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_TITLE, "Incoming transaction £200");
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "Have an incoming transaction of at least £200 gain this achievement.");
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_POINTS, 200);
-        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValuesTransactions);
+        contentValAchievements = new ContentValues();
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_TITLE, "Transfer £10,000 in total");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You must make a total of £10,000 worth of outgoing transfers to any account to gain this achievement.");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 500);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_3);
+        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
-        contentValuesTransactions = new ContentValues();
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_TITLE, "Outgoing transaction £200");
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "Spend more than £200 to gain this achievement.");
-        contentValuesTransactions.put(SqlCons.ACHIEVEMENT_POINTS, 200);
-        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValuesTransactions);
+        contentValAchievements = new ContentValues();
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_TITLE, "£5000 Balance");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You must have a main account balance of at least £5000");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 100);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_4);
+        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
+
+        contentValAchievements = new ContentValues();
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_TITLE, "5 Logins");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You need to have logged in to the app at least 5 times to gain this achievement.");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 50);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_5);
+        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
+
+        contentValAchievements = new ContentValues();
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_TITLE, "50 Logins");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You need to have logged in to the app at least 50 times to gain this achievement.");
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 150);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_6);
+        db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
         // Add achievements achieved by a customer
         contentValuesTransactions = new ContentValues();

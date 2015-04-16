@@ -1,58 +1,65 @@
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffffff"
-    tools:context="com.team.two.lloyds_app.screens.fragments.OptionsFragment">
+    tools:context="com.team.two.lloyds_app.screens.fragments.OptionsFragment"
+    android:background="#ffffffff">
 
     <TextView
         android:id="@+id/fbLoginMessage"
-        style="@style/options_font"
+        android:layout_below="@+id/notifications_text"
+        android:text="@string/fb_not_logged_in_message"
+        android:textSize="14sp"
+        android:textColor="@color/lloyds_green"
+        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/notifications_text"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
-        android:text="@string/fb_not_logged_in_message"
-        android:textColor="@color/lloyds_green"
-        android:textSize="15sp"/>
+        android:layout_marginBottom="10dp"
 
-    <TextView
+        />
+
+    <TextView style="@style/options_screen_text"
+        android:text="Notifications"
         android:id="@+id/notifications_text"
-        style="@style/options_screen_text"
-        android:text="Notifications" />
+        />
 
-    <TextView
+    <TextView style="@style/options_screen_text"
+        android:text="Change Font:"
         android:id="@+id/font_size_text"
-        style="@style/options_screen_text"
         android:layout_below="@+id/login_button"
-        android:text="Font Size:" />
+        />
 
 
-    <ToggleButton
+    <ToggleButton style="@style/Options_switch"
         android:id="@+id/notifications_toggle"
-        style="@style/Options_switch"
         android:layout_alignTop="@+id/notifications_text"
         android:layout_toRightOf="@+id/notifications_text"
-        android:background="@color/light_gray"
         android:textOff="Off"
-        android:textOn="On" />
+        android:textOn="On"
+        android:background="@color/light_gray"
+
+        />
 
 
-    <Spinner
+
+    <Spinner style="@style/options_spinner"
         android:id="@+id/font_size_spinner"
-        style="@style/options_spinner"
+        android:layout_below="@+id/font_size_text"
         android:layout_alignLeft="@+id/font_size_text"
         android:layout_alignStart="@+id/font_size_text"
-        android:layout_below="@+id/font_size_text"
-        android:popupBackground="#D2D2D2" />
+        android:popupBackground="#D2D2D2"
+        />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:layout_alignTop="@+id/fbLoginMessage"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp" />
+        />
+
+
 </RelativeLayout>

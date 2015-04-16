@@ -1,21 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/white"
-tools:context="com.team.two.lloyds_app.screens.fragments.AchievementsFragment"
-tools:ignore="Overdraw">
-
-<View
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="5dp"
-    android:background="@drawable/drop_shadow"
-    />
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.team.two.lloyds_app.screens.fragments.AchievementsFragment"
+    tools:ignore="Overdraw">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
@@ -27,25 +16,37 @@ tools:ignore="Overdraw">
         android:paddingTop="@dimen/activity_vertical_margin"
         android:weightSum="3">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Show Achievements"
-            android:id="@+id/show_achievements"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="52dp"
-            android:layout_marginStart="52dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
+            <TextView style="@style/achievement_title"
+                android:id="@+id/achievement_title"
+                android:text="@string/achievement_title" />
+
+            <ListView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView"
+                android:layout_below="@+id/view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
+        </LinearLayout>
     </LinearLayout>
-</ScrollView>
 
-<View
-    android:layout_width="fill_parent"
-    android:layout_height="50dp"
-    android:layout_alignParentBottom="true"
-    android:background="@color/lloyds_green"
-    android:id="@+id/button" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true" >
+
+        <TextView style="@style/rewards_title"
+            android:id="@+id/rewards_title"
+            android:text="@string/rewards_title" />
+    </LinearLayout>
+
 
 </RelativeLayout>

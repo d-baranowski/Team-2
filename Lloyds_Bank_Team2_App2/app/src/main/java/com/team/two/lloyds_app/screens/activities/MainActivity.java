@@ -19,10 +19,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.team.two.lloyds_app.Exceptions.EmptyMandatoryFieldException;
+import com.team.two.lloyds_app.exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.database.DatabaseAdapter;
 import com.team.two.lloyds_app.objects.Account;
+import com.team.two.lloyds_app.objects.Achievement;
 import com.team.two.lloyds_app.objects.Offer;
 import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
@@ -38,6 +39,7 @@ import com.team.two.lloyds_app.screens.fragments.MoneyPlannerFragment;
 import com.team.two.lloyds_app.screens.fragments.AchievementsFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -194,6 +196,8 @@ public class MainActivity extends ActionBarActivity implements
     public ArrayList<Offer> getAvailableOffers(){
         return dbadapter.getAvailableOffers();
     }
+
+    public List<Achievement> getAchievements() { return dbadapter.getAchievements(); }
 
     public ArrayList<Offer> getActiveOffers() { return dbadapter.getActiveOffers(customerId); }
 
