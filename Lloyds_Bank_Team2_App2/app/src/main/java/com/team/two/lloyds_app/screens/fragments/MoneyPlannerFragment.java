@@ -129,7 +129,6 @@ public class MoneyPlannerFragment extends android.support.v4.app.Fragment {
         Calendar c = Calendar.getInstance();
         for(DataPoint dp : knownBalancePoints){
             c.setTimeInMillis((long)dp.getX());
-            Log.d("test", df.format(c.getTime()) + " " + dp.getY());
         }
         return knownBalancePoints;
     }

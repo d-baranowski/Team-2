@@ -27,7 +27,7 @@ import java.util.TreeMap;
  */
 public class DatabaseAdapter {
 
-    private final DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
     private final int MAX_TRACKBACK_DAYS = 50;
     private final double FALLBACK_BALANCE = 0;
     private final DbHelp helper;
