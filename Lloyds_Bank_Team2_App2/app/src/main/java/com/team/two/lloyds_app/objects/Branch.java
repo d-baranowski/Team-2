@@ -3,7 +3,7 @@ package com.team.two.lloyds_app.objects;
 /**
  * Author: Michael Edwards
  * Date: 07/04/2015
- * Purpose:
+ * Purpose: Hold data about a particular branch
  * Modified By Daniel Smith on 12/04/2015
  */
 

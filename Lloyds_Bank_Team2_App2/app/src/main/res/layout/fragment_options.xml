@@ -8,10 +8,8 @@
 
     <TextView
         android:id="@+id/fbLoginMessage"
-        android:layout_below="@+id/notifications_text"
         android:text="@string/fb_not_logged_in_message"
-        android:textSize="14sp"
-        android:textColor="@color/lloyds_green"
+        android:textSize="15sp"
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,29 +19,10 @@
         />
 
     <TextView style="@style/options_screen_text"
-        android:text="Notifications"
-        android:id="@+id/notifications_text"
-        />
-
-    <TextView style="@style/options_screen_text"
-        android:text="Change Font:"
+        android:text="Font Colour:"
         android:id="@+id/font_size_text"
         android:layout_below="@+id/login_button"
         />
-
-
-    <ToggleButton style="@style/Options_switch"
-        android:id="@+id/notifications_toggle"
-        android:layout_alignTop="@+id/notifications_text"
-        android:layout_toRightOf="@+id/notifications_text"
-        android:textOff="Off"
-        android:textOn="On"
-        android:background="@color/light_gray"
-
-        />
-
-
-
     <Spinner style="@style/options_spinner"
         android:id="@+id/font_size_spinner"
         android:layout_below="@+id/font_size_text"

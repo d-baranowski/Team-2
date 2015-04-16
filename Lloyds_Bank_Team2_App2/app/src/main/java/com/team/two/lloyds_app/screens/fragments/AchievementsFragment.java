@@ -1,56 +1,112 @@
 package com.team.two.lloyds_app.screens.fragments;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Achievement;
+import com.team.two.lloyds_app.objects.Offer;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Author: Deniz
+ * Date: 12/04/2015
+ * Purpose: Code for achievements
+ */
 
 public class AchievementsFragment extends android.support.v4.app.Fragment {
     public static final String TITLE = "Achievements";
 
     private List<Achievement> achievements = new ArrayList<Achievement>();
     private ListView achievementListView;
+    private Button redeemRewards;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         RelativeLayout rl = (RelativeLayout)inflater.inflate(R.layout.fragment_achievements, container, false);
         achievementListView = (ListView)rl.findViewById(R.id.listView);
+        redeemRewards = (Button) rl.findViewById(R.id.redeemRewardsButton);
+
         populateAchievementList();
         populateListView();
 
+        achievementListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Achievement achievement = (Achievement) parent.getAdapter().getItem(position);
+                showAchievementDialog(achievement);
+            }
+        });
+
+        redeemRewards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).openOffers();
+            }
+        });
+
         // Inflate the layout for this fragment
         return rl;
+    }
+
+    public void showAchievementDialog(Achievement achievement){
+        // Create custom dialog object
+        final Dialog dialog = new Dialog(getActivity());
+
+        // Include dialog.xml file
+        dialog.setContentView(R.layout.achievement_information_dialog);
+
+        // Set dialog title
+        dialog.setTitle(achievement.getTitle());
+
+        // Print achievement instructions
+        TextView achievementDescription = (TextView) dialog.findViewById(R.id.achievementInformation);
+        achievementDescription.setText(achievement.getDescription());
+
+        // Check if achievement is an incremental achievement (requires mutliple steps to be accomplished)
+        if(achievement.isIncremental() == 1)
+        {
+            ProgressBar achievementProgress = (ProgressBar) dialog.findViewById(R.id.achievementProgressBar);
+            achievementProgress.setVisibility(View.VISIBLE);
+        }
+
+
+        Button okButton = (Button) dialog.findViewById(R.id.ok_button);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     // Test achievement list population
     private void populateAchievementList()
     {
         achievements = ((MainActivity)getActivity()).getAchievements();
-
         TextView achievementTitle = (TextView) getActivity().findViewById(R.id.achievementTitle);
-
-        //achievements.add(new Achievement(1, "Transaction over £100 a b c d e f g h i h j l m n o p q r s t u v w", "To get this achievement, make a transaction over £100", 451, R.drawable.achievement_1));
-        //achievements.add(new Achievement(2, "Transaction over £200", "To get this achievement, make a transaction over £200", 90, R.drawable.achievement_2));
-        //achievements.add(new Achievement(3, "Transaction over £400", "To get this achievement, make a transaction over £400", 180, R.drawable.achievement_3));
-        //achievements.add(new Achievement(1, "Transaction over £100", "To get this achievement, make a transaction over £100", 45, R.drawable.achievement_1));
-        //achievements.add(new Achievement(2, "Transaction over £200", "To get this achievement, make a transaction over £200", 90, R.drawable.achievement_2));
-        //achievements.add(new Achievement(3, "Transaction over £400", "To get this achievement, make a transaction over £400", 180, R.drawable.achievement_3));
-        //achievements.add(new Achievement(1, "Transaction over £100", "To get this achievement, make a transaction over £100", 45, R.drawable.achievement_1));
-        //achievements.add(new Achievement(2, "Transaction over £200", "To get this achievement, make a transaction over £200", 90, R.drawable.achievement_2));
-        //achievements.add(new Achievement(3, "Transaction over £400", "To get this achievement, make a transaction over £400", 180, R.drawable.achievement_3));
     }
 
     private void populateListView()
@@ -93,4 +149,6 @@ public class AchievementsFragment extends android.support.v4.app.Fragment {
             return achievementView;
         }
     }
+
+
 }

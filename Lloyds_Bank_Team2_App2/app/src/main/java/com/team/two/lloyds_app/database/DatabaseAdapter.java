@@ -583,8 +583,9 @@ public class DatabaseAdapter {
                     String achievementDescription = cursor.getString(cursor.getColumnIndex(SqlCons.ACHIEVEMENT_DESCRIPTION));
                     int achievementPoints = cursor.getInt(cursor.getColumnIndex(SqlCons.ACHIEVEMENT_POINTS));
                     int achievementIconId = cursor.getInt(cursor.getColumnIndex(SqlCons.ACHIEVEMENT_ICON_ID));
+                    int achievementIsIncremental = cursor.getInt(cursor.getColumnIndex(SqlCons.ACHIEVEMENT_IS_INCREMENTAL));
 
-                    achievements.add(new Achievement(achievementId, achievementTitle, achievementDescription, achievementPoints, achievementIconId));
+                    achievements.add(new Achievement(achievementId, achievementTitle, achievementDescription, achievementPoints, achievementIconId, achievementIsIncremental));
                     cursor.moveToNext();
                 }
             }
