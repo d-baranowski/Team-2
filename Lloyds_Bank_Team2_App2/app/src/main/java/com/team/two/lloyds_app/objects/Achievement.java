@@ -11,14 +11,16 @@ public class Achievement {
     private String description;
     private int pointsAchieved;
     private int iconId;
+    private int incremental;
 
-    public Achievement(int achievementId, String title, String description, int pointsAchieved, int iconId)
+    public Achievement(int achievementId, String title, String description, int pointsAchieved, int iconId, int incremental)
     {
         this.achievementId = achievementId;
         this.title = title;
         this.description = description;
         this.pointsAchieved = pointsAchieved;
         this.iconId = iconId;
+        this.incremental = incremental;
     }
 
     public int getAchievementId()
@@ -42,4 +44,6 @@ public class Achievement {
     }
 
     public int getIconId() { return this.iconId; }
+
+    public int isIncremental() { return this.incremental; }
 }

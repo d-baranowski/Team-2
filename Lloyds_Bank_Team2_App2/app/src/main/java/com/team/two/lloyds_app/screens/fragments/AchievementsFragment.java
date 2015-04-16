@@ -1,21 +1,27 @@
 package com.team.two.lloyds_app.screens.fragments;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Achievement;
+import com.team.two.lloyds_app.objects.Offer;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -32,48 +38,68 @@ public class AchievementsFragment extends android.support.v4.app.Fragment {
 
     private List<Achievement> achievements = new ArrayList<Achievement>();
     private ListView achievementListView;
-    private Button openOffers;
+    private Button redeemRewards;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         RelativeLayout rl = (RelativeLayout)inflater.inflate(R.layout.fragment_achievements, container, false);
         achievementListView = (ListView)rl.findViewById(R.id.listView);
-        openOffers = (Button) rl.findViewById(R.id.redeemRewardsButton);
+        redeemRewards = (Button) rl.findViewById(R.id.redeemRewardsButton);
 
-        openOffers.setOnClickListener(new View.OnClickListener() {
+        populateAchievementList();
+        populateListView();
+
+        achievementListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Achievement achievement = (Achievement) parent.getAdapter().getItem(position);
+                showAchievementDialog(achievement);
+            }
+        });
+
+        redeemRewards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).openOffers();
             }
         });
 
-        /*
-        openOffers.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        v.getBackground().setColorFilter(0xe0add8e6, PorterDuff.Mode.SRC_ATOP);
-                        v.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        v.getBackground().clearColorFilter();
-                        v.invalidate();
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
-        */
-
-        populateAchievementList();
-        populateListView();
-
         // Inflate the layout for this fragment
         return rl;
+    }
+
+    public void showAchievementDialog(Achievement achievement){
+        // Create custom dialog object
+        final Dialog dialog = new Dialog(getActivity());
+
+        // Include dialog.xml file
+        dialog.setContentView(R.layout.achievement_information_dialog);
+
+        // Set dialog title
+        dialog.setTitle(achievement.getTitle());
+
+        // Print achievement instructions
+        TextView achievementDescription = (TextView) dialog.findViewById(R.id.achievementInformation);
+        achievementDescription.setText(achievement.getDescription());
+
+        if(achievement.isIncremental() == 1)
+        {
+            ProgressBar achievementProgress = (ProgressBar) dialog.findViewById(R.id.achievementProgressBar);
+            achievementProgress.setVisibility(View.VISIBLE);
+        }
+
+        //UI References
+        Button okButton = (Button) dialog.findViewById(R.id.ok_button);
+
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     // Test achievement list population

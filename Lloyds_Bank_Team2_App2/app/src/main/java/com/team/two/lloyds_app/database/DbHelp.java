@@ -247,6 +247,7 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You must receive an incoming transaction of at least £200 to complete this achievement.");
         contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 50);
         contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_1);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_IS_INCREMENTAL, 0);
         db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
         contentValAchievements = new ContentValues();
@@ -254,6 +255,7 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You must make a transfer of at least £200 to complete this achievement.");
         contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 50);
         contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_2);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_IS_INCREMENTAL, 0);
         db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
         contentValAchievements = new ContentValues();
@@ -261,6 +263,7 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You must make a total of £10,000 worth of outgoing transfers to any account to gain this achievement.");
         contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 500);
         contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_3);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_IS_INCREMENTAL, 1);
         db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
         contentValAchievements = new ContentValues();
@@ -268,6 +271,7 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You must have a main account balance of at least £5000");
         contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 100);
         contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_4);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_IS_INCREMENTAL, 1);
         db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
         contentValAchievements = new ContentValues();
@@ -275,6 +279,7 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You need to have logged in to the app at least 5 times to gain this achievement.");
         contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 50);
         contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_5);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_IS_INCREMENTAL, 1);
         db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
         contentValAchievements = new ContentValues();
@@ -282,6 +287,7 @@ public class DbHelp extends SQLiteOpenHelper {
         contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You need to have logged in to the app at least 50 times to gain this achievement.");
         contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 150);
         contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_6);
+        contentValAchievements.put(SqlCons.ACHIEVEMENT_IS_INCREMENTAL, 1);
         db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
         // Add achievements achieved by a customer
