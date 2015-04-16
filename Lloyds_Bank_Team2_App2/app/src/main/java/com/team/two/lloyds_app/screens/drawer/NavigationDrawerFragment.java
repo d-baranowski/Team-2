@@ -25,6 +25,12 @@ import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 import java.util.ArrayList;
 
+/**
+ * Author:
+ * Date:
+ * Purpose: Navigation Bar
+ */
+
 public class NavigationDrawerFragment extends Fragment {
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;

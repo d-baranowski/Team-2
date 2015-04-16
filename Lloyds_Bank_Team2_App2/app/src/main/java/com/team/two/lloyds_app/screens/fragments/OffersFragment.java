@@ -21,10 +21,12 @@ import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 import java.util.ArrayList;
 
-
 /**
- * Created by danielbaranowski on 02/04/15.
+ * Author: Daniel Baranowski
+ * Date: 02/04/2015
+ * Purpose: Code for offers
  */
+
 public class OffersFragment extends android.support.v4.app.Fragment {
     public static final String TITLE = "Offers and Deals";
     View root;

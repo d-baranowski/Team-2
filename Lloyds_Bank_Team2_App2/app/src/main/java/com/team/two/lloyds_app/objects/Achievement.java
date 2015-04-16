@@ -1,7 +1,9 @@
 package com.team.two.lloyds_app.objects;
 
 /**
- * Created by Deniz on 15/04/2015.
+ * Author: Deniz
+ * Date: 15/04/2015
+ * Purpose: data about achievements
  */
 public class Achievement {
     private int achievementId;

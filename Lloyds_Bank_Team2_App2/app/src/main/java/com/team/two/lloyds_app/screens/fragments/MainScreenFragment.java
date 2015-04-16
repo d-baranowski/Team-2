@@ -17,6 +17,12 @@ import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 import java.text.DecimalFormat;
 
+/**
+ * Author:
+ * Date:
+ * Purpose: code for main screen
+ */
+
 public class MainScreenFragment extends android.support.v4.app.Fragment {
     public static final String TITLE = "Home";
     protected View root;

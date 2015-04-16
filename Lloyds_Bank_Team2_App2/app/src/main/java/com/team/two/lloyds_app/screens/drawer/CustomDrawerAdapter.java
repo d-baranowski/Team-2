@@ -12,7 +12,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Daniel on 18/03/2015.
+ * Author: Daniel
+ * Date: 18/03/2015
+ * Purpose: code for drawer adapter
  */
 public class CustomDrawerAdapter extends RecyclerView.Adapter<CustomDrawerAdapter.MyViewHolder> {
     private final LayoutInflater inflater;

@@ -1,7 +1,9 @@
 package com.team.two.lloyds_app.objects;
 
 /**
-* Created by danielbaranowski on 15/04/15.
+ * Author: Daniel Baranowski
+ * Date: 15/04/15
+ * Purpose: code to hold data about offers
 */
 public class Offer {
     int id;

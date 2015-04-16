@@ -1,10 +1,10 @@
 
   package com.team.two.lloyds_app.screens.fragments;
 
-/*
-Author : Matthew Selby, Oliver McPheely
-Date : 06/04/2015
-Purpose : Options screen
+/**
+ * Author : Matthew Selby, Oliver McPheely
+ * Date : 06/04/2015
+ * Purpose : Options screen
  */
 
         import android.app.Notification;

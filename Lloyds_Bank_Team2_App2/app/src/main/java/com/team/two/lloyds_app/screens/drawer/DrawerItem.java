@@ -1,7 +1,9 @@
 package com.team.two.lloyds_app.screens.drawer;
 
 /**
- * Created by Daniel on 18/03/2015.
+ * Author: Daniel
+ * Date: 18/03/2015
+ * Purpose: Drawer code
  */
 class DrawerItem {
     private final String ItemName;
