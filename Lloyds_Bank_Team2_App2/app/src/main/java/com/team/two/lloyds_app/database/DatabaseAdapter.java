@@ -4,15 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.text.format.Time;
 
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Achievement;
-import com.team.two.lloyds_app.objects.Offer;
-import com.team.two.lloyds_app.objects.Customer;
-import com.team.two.lloyds_app.objects.Recipient;
 import com.team.two.lloyds_app.objects.Address;
+import com.team.two.lloyds_app.objects.Customer;
+import com.team.two.lloyds_app.objects.Offer;
+import com.team.two.lloyds_app.objects.Recipient;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

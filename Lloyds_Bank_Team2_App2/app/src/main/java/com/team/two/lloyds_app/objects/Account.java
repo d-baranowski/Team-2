@@ -10,14 +10,14 @@ import java.util.HashMap;
  */
 public class Account{
 	private final int accountID;
-	private int accountNumber;
-	private String sortCode;
 	private final String accountName;
 	private final String accountType;
+	private final int ownerId;
+	private int accountNumber;
+	private String sortCode;
 	private double accountBalance;
 	private double availableBalance;
 	private double overdraft;
-	private final int ownerId;
 	private ArrayList<HashMap<String, String>> transactions;
 
 	//Constructors. One takes all the information about an account and the other simply takes the bare minimum.

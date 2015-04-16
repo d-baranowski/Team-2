@@ -21,46 +21,6 @@ public class DbHelp extends SQLiteOpenHelper{
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
-	//Executed when the database is created for the first time on the device
-	@Override
-	public void onCreate(SQLiteDatabase db){
-		//SQL query to create a table inside our database.
-		db.execSQL(SqlCons.CREATE_CUSTOMER_TABLE);
-		db.execSQL(SqlCons.CREATE_ACCOUNT_TABLE);
-		db.execSQL(SqlCons.CREATE_TRANSACTIONS_TABLE);
-		db.execSQL(SqlCons.CREATE_RECIPIENTS_TABLE);
-		db.execSQL(SqlCons.CREATE_ACHIEVEMENTS_TABLE);
-		db.execSQL(SqlCons.CREATE_CUSTOMER_ACHIEVEMENTS_TABLE);
-		db.execSQL(SqlCons.CREATE_AVAILABLE_OFFERS_TABLE);
-		db.execSQL(SqlCons.CREATE_ACTIVE_OFFERS_TABLE);
-		populate(db);
-	}
-
-	//Executed when the DATABASE_VERSION variable value is increased, when we change something about the database, create new tables or change columns etc...
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-		//SQL query to delete customer table if it exists
-		final String DROP_CUSTOMER_TABLE = "DROP TABLE IF EXISTS " + SqlCons.CUSTOMER_TABLE_NAME;
-		final String DROP_ACCOUNTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACCOUNTS_TABLE_NAME;
-		final String DROP_TRANSACTIONS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.TRANSACTIONS_TABLE_NAME;
-		final String DROP_RECIPIENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.RECIPIENTS_TABLE_NAME;
-		final String DROP_AVAILABLE_OFFERS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.AVAIL_OFFERS_TABLE_NAME;
-		final String DROP_ACTIVE_OFFERS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACTIVE_OFFERS_TABLE_NAME;
-		final String DROP_ACHIEVEMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACHIEVEMENTS_TABLE_NAME;
-		final String DROP_CUSTOMER_ACHIEVEMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME;
-
-		db.execSQL(DROP_CUSTOMER_TABLE);
-		db.execSQL(DROP_ACCOUNTS_TABLE);
-		db.execSQL(DROP_TRANSACTIONS_TABLE);
-		db.execSQL(DROP_RECIPIENTS_TABLE);
-		db.execSQL(DROP_AVAILABLE_OFFERS_TABLE);
-		db.execSQL(DROP_ACTIVE_OFFERS_TABLE);
-		db.execSQL(DROP_RECIPIENTS_TABLE);
-		db.execSQL(DROP_ACHIEVEMENTS_TABLE);
-		db.execSQL(DROP_CUSTOMER_ACHIEVEMENTS_TABLE);
-		onCreate(db);
-	}
-
 	private static void populate(SQLiteDatabase db){
 		//Create sample dummy data and insert into database
 		ContentValues contentValCustomers = new ContentValues();
@@ -359,5 +319,45 @@ public class DbHelp extends SQLiteOpenHelper{
 		availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ACTIVE, 0);
 		db.insert(SqlCons.AVAIL_OFFERS_TABLE_NAME, null, availableOfferContentValue);
 
+	}
+
+	//Executed when the database is created for the first time on the device
+	@Override
+	public void onCreate(SQLiteDatabase db){
+		//SQL query to create a table inside our database.
+		db.execSQL(SqlCons.CREATE_CUSTOMER_TABLE);
+		db.execSQL(SqlCons.CREATE_ACCOUNT_TABLE);
+		db.execSQL(SqlCons.CREATE_TRANSACTIONS_TABLE);
+		db.execSQL(SqlCons.CREATE_RECIPIENTS_TABLE);
+		db.execSQL(SqlCons.CREATE_ACHIEVEMENTS_TABLE);
+		db.execSQL(SqlCons.CREATE_CUSTOMER_ACHIEVEMENTS_TABLE);
+		db.execSQL(SqlCons.CREATE_AVAILABLE_OFFERS_TABLE);
+		db.execSQL(SqlCons.CREATE_ACTIVE_OFFERS_TABLE);
+		populate(db);
+	}
+
+	//Executed when the DATABASE_VERSION variable value is increased, when we change something about the database, create new tables or change columns etc...
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+		//SQL query to delete customer table if it exists
+		final String DROP_CUSTOMER_TABLE = "DROP TABLE IF EXISTS " + SqlCons.CUSTOMER_TABLE_NAME;
+		final String DROP_ACCOUNTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACCOUNTS_TABLE_NAME;
+		final String DROP_TRANSACTIONS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.TRANSACTIONS_TABLE_NAME;
+		final String DROP_RECIPIENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.RECIPIENTS_TABLE_NAME;
+		final String DROP_AVAILABLE_OFFERS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.AVAIL_OFFERS_TABLE_NAME;
+		final String DROP_ACTIVE_OFFERS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACTIVE_OFFERS_TABLE_NAME;
+		final String DROP_ACHIEVEMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACHIEVEMENTS_TABLE_NAME;
+		final String DROP_CUSTOMER_ACHIEVEMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME;
+
+		db.execSQL(DROP_CUSTOMER_TABLE);
+		db.execSQL(DROP_ACCOUNTS_TABLE);
+		db.execSQL(DROP_TRANSACTIONS_TABLE);
+		db.execSQL(DROP_RECIPIENTS_TABLE);
+		db.execSQL(DROP_AVAILABLE_OFFERS_TABLE);
+		db.execSQL(DROP_ACTIVE_OFFERS_TABLE);
+		db.execSQL(DROP_RECIPIENTS_TABLE);
+		db.execSQL(DROP_ACHIEVEMENTS_TABLE);
+		db.execSQL(DROP_CUSTOMER_ACHIEVEMENTS_TABLE);
+		onCreate(db);
 	}
 }
