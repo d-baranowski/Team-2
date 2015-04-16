@@ -49,16 +49,4 @@
     <string name="facebook_app_id">1639455966286939</string>
     <string name="fb_not_logged_in_message">Log in with Facebook to share your achievements!</string>
 
-
-    <!-- Achievements -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="achievements_not_available">Please sign in to view achievements.</string>
-    <string name="achievement_prime_toast_text">Prime score!</string>
-    <string name="achievement_arrogant_toast_text">Arrogant (requested maximum score)!</string>
-    <string name="achievement_humble_toast_text">Humble! (requested 0 score)</string>
-    <string name="achievement_leet_toast_text">L33t! (got 1337 score)</string>
-    <string name="achievement">Achievement</string>
-    <string name="your_progress_will_be_uploaded">Your existing achievements and score will be uploaded shortly.</string>
-    <string name="signed_out_greeting">Hello, anonymous user (not signed in)!</string>
-    <string name="signin_other_error">There was an issue with sign in.  Please try again later.</string>
 </resources>

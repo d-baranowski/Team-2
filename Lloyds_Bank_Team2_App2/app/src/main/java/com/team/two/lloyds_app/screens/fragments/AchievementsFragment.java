@@ -1,13 +1,16 @@
 package com.team.two.lloyds_app.screens.fragments;
 
 import android.app.Activity;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -25,12 +28,43 @@ public class AchievementsFragment extends android.support.v4.app.Fragment {
 
     private List<Achievement> achievements = new ArrayList<Achievement>();
     private ListView achievementListView;
+    private Button openOffers;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         RelativeLayout rl = (RelativeLayout)inflater.inflate(R.layout.fragment_achievements, container, false);
         achievementListView = (ListView)rl.findViewById(R.id.listView);
+        openOffers = (Button) rl.findViewById(R.id.redeemRewardsButton);
+
+        openOffers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).openOffers();
+            }
+        });
+
+        /*
+        openOffers.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(0xe0add8e6, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+        */
+
         populateAchievementList();
         populateListView();
 
@@ -96,4 +130,6 @@ public class AchievementsFragment extends android.support.v4.app.Fragment {
             return achievementView;
         }
     }
+
+
 }
