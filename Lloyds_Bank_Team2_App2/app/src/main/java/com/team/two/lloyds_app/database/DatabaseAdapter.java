@@ -25,8 +25,11 @@ import java.util.Locale;
 import java.util.TreeMap;
 
 /**
- * Created by Daniel on 01/02/2015.
+ * Author: Daniel B
+ * Date: 01/02/2015
+ * Purpose: to pull data from the database and convert into a format that the app can read
  */
+
 public class DatabaseAdapter {
 
     private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -70,30 +73,31 @@ public class DatabaseAdapter {
         db.close();
         return false;
     }
-
+	//This method returns an ArrayList of accounts unique to the ownerID specified.
     public ArrayList<Account> getAccounts(int ownerId){
+		//It starts by querying the database
         ArrayList<Account> accounts = new ArrayList<>();
         String[] columns = SqlCons.ACCOUNT_COLUMNS;
         SQLiteDatabase db = helper.getReadableDatabase();
         String query = SqlCons.ACCOUNT_OWNERID + " = '" + ownerId + "'";
         Cursor c = db.query(SqlCons.ACCOUNTS_TABLE_NAME,columns,query,null,null,null,null);
-
         if (c != null) {
             if (c.getCount() > 0) {
                 c.moveToFirst();
-
+				//Then loops through and pulls the data from the database
                 for(int i = 0; i < c.getCount(); i++){
                     int id = c.getInt(c.getColumnIndex(SqlCons.ACCOUNT_ID));
                     String accountType = c.getString(c.getColumnIndex(SqlCons.ACCOUNT_TYPE));
                     double accountBalance = c.getDouble(c.getColumnIndex(SqlCons.ACCOUNT_BALANCE));
                     double availableBalance = c.getDouble(c.getColumnIndex(SqlCons.ACCOUNT_AVAILABLEBALANCE));
                     String accountName = c.getString(c.getColumnIndex(SqlCons.ACCOUNT_NAME));
-
+					/*If the account in question is a sub account then it pulls the data specific to that,
+					as a sub account is treated differently*/
                     if (!accountType.equals("Subaccount")){
                         int accountNumber = c.getInt(c.getColumnIndex(SqlCons.ACCOUNT_NUMBER));
                         String sortCode = c.getString(c.getColumnIndex(SqlCons.ACCOUNT_SORTCODE));
                         double overdraft = c.getDouble(c.getColumnIndex(SqlCons.ACCOUNT_OVERDRAFTLIMIT));
-
+						//Then a new account object is created and added to the list
                         accounts.add(new Account(id, accountNumber, sortCode, accountName, accountType, accountBalance, availableBalance, overdraft, ownerId,getTransactions(id)));
                     } else {
                         accounts.add(new Account(id, accountName, accountType, accountBalance, availableBalance,ownerId,getTransactions(id)));
@@ -107,8 +111,10 @@ public class DatabaseAdapter {
         db.close();
         return accounts;
     }
-
+	/*Similarly to the getAccounts method, this method pulls the transactions information but instead
+	puts it in a hashmap*/
     public ArrayList<HashMap<String,String>> getTransactions(int id){
+		//The map is created and the database queried
         ArrayList<HashMap<String,String>> list = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columnsT = SqlCons.TRANSACTION_COLUMNS;
@@ -120,7 +126,7 @@ public class DatabaseAdapter {
         if (t != null) {
             if (t.getCount() > 0) {
                 t.moveToFirst();
-
+				//then the cursor loops through and fills the map with the relevant information
                 for (int j = 0; j < t.getCount(); j++) {
                     HashMap<String, String> temp = new HashMap<>();
                     temp.put(SqlCons.TRANSACTION_DATE, t.getString(t.getColumnIndex(SqlCons.TRANSACTION_DATE)));
@@ -138,7 +144,7 @@ public class DatabaseAdapter {
         db.close();
         return list;
     }
-
+	//The method for transferring money
     public void transfer(Account source, Account destination, Double balance) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -149,7 +155,7 @@ public class DatabaseAdapter {
         String date = format1.format(date1);
 
         String descSource = "To " + destination.getAccountName();
-        String descDesctination = "From " + source.getAccountName();
+        String descDestination = "From " + source.getAccountName();
 
         //Source transaction
         ContentValues sourceTransaction = new ContentValues();
@@ -173,7 +179,7 @@ public class DatabaseAdapter {
         ContentValues destinationTransaction = new ContentValues();
         destinationTransaction.put(SqlCons.TRANSACTION_DATE, date);
         destinationTransaction.put(SqlCons.TRANSACTION_TIME, time);
-        destinationTransaction.put(SqlCons.TRANSACTION_DESCRIPTION, descDesctination);
+        destinationTransaction.put(SqlCons.TRANSACTION_DESCRIPTION, descDestination);
         destinationTransaction.put(SqlCons.TRANSACTION_TYPE, "User Transaction");
         destinationTransaction.put(SqlCons.TRANSACTION_IN, balance);
         destinationTransaction.put(SqlCons.TRANSACTION_OUT, 0.00);
@@ -263,7 +269,7 @@ public class DatabaseAdapter {
 
         dba.close();
     }
-
+	//The method to add a person to the list of trusted recipients
     public void addRecipient(int ownerId, String name, String sortCode, int accountNumber){
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues contentRecipient = new ContentValues();
@@ -275,7 +281,8 @@ public class DatabaseAdapter {
 
         db.close();
     }
-
+	/*Pulls the current trusted recipients from the database in the same way as the getAccounts and
+	getTransactions methods*/
     public ArrayList<Recipient> getRecipients(int ownerId){
         ArrayList<Recipient> temp = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -307,7 +314,7 @@ public class DatabaseAdapter {
         db.close();
         return temp;
     }
-
+	//Similar to the other get methods, however this one puts the pulled info into a Customer object
     public Customer getCustomer(int id){
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] columns = SqlCons.CUSTOMER_COLUMNS;
@@ -337,7 +344,7 @@ public class DatabaseAdapter {
         db.close();
         return null;
     }
-
+	//Works the same as the other getters.
     public ArrayList<Offer> getAvailableOffers() {
         ArrayList<Offer> list = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -396,11 +403,12 @@ public class DatabaseAdapter {
         return list;
     }
 
+	//Method to activate an offer that a user qualifies for.
     public void activateOffer(Offer offer, int ownerId){
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = SqlCons.AVAILABLE_OFFERS_COLUMNS;
         String query = SqlCons.AVAIL_OFFER_ID + " = '" + offer.getId() + "'";
-        Cursor t = db.query(SqlCons.AVAIL_OFFERS_TABLE_NAME, columns, query,null, null, null, null);
+        Cursor t = db.query(SqlCons.AVAIL_OFFERS_TABLE_NAME, columns, query, null, null, null, null);
 
         if (t != null) {
             if (t.getCount() > 0) {
