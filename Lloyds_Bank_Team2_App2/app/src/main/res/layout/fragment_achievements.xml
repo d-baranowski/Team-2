@@ -33,7 +33,9 @@
                 android:layout_below="@+id/view"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="80dp" />
+                android:layout_marginBottom="80dp"
+                android:divider="@color/lloyds_green"
+                android:dividerHeight="1dp" />
         </LinearLayout>
     </LinearLayout>
 
