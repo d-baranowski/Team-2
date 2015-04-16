@@ -12,6 +12,7 @@ public class Recipient {
     private final int accountNumber;
     private final int ownerId;
 
+	//Single constructor
     public Recipient(int id, String name, String sortCode, int accountNumber, int ownerId) {
         this.id = id;
         this.name = name;
@@ -20,6 +21,7 @@ public class Recipient {
         this.ownerId = ownerId;
     }
 
+	//getters for fields
     public int getId() {
         return id;
     }

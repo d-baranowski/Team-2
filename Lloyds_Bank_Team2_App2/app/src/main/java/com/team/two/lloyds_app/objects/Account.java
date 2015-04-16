@@ -20,6 +20,7 @@ public class Account {
     private final int ownerId;
     private ArrayList<HashMap<String,String>> transactions;
 
+	//Constructors. One takes all the information about an account and the other simply takes the bare minimum.
     public Account(int id, int accountNumber, String sortCode, String accountName, String accountType, double accountBalance, double availableBalance, double overdraft, int ownerId,ArrayList<HashMap<String,String>> transactions) {
         this.accountID = id;
         this.accountNumber = accountNumber;
@@ -43,6 +44,7 @@ public class Account {
         this.transactions = transactions;
     }
 
+	//getters for all fields.
     public int getOwnerId() {
         return ownerId;
     }

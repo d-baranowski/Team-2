@@ -15,6 +15,7 @@ public class Branch {
     private String phoneNumber;
     private String[] openingTimes;
 
+	//Single constructor
 	public Branch(String name, double latitude, double longitude, Address address, String phoneNumber, String[] openingTimes)
 	{
 		this.name = name;
@@ -25,13 +26,10 @@ public class Branch {
 		this.openingTimes = openingTimes;
 	}
 
+	//getters for fields
     public String getName() {
         return name;
     }
-
-   /*	public void setName(String name) {
-        this.name = name;
-    }*/
 
     public double getLatitude() {
         return latitude;
@@ -40,7 +38,6 @@ public class Branch {
     public double getLongitude() {
         return longitude;
     }
-
 
     public Address getAddress() {
         return address;

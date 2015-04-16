@@ -14,6 +14,7 @@ public class Offer {
     int price;
     boolean active;
 
+	//Single constructor
     public Offer(int id, int icon, int barcode, String name, String description, int price, boolean active) {
         this.id = id;
         this.icon = icon;
@@ -24,6 +25,7 @@ public class Offer {
         this.active = active;
     }
 
+	//Getters for fields
     public int getId() {
         return id;
     }

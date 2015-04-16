@@ -1,12 +1,8 @@
 package com.team.two.lloyds_app.screens.fragments;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.net.Uri;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,11 +13,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Achievement;
-import com.team.two.lloyds_app.objects.Offer;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -43,7 +37,9 @@ public class AchievementsFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RelativeLayout rl = (RelativeLayout)inflater.inflate(R.layout.fragment_achievements, container, false);
+        RelativeLayout rl = (RelativeLayout)inflater.inflate
+		//Builds the horizontal aspect of the table
+		(R.layout.fragment_achievements, container, false);
         achievementListView = (ListView)rl.findViewById(R.id.listView);
         redeemRewards = (Button) rl.findViewById(R.id.redeemRewardsButton);
 
@@ -84,7 +80,7 @@ public class AchievementsFragment extends android.support.v4.app.Fragment {
         achievementDescription.setText(achievement.getDescription());
 
         // Check if achievement is an incremental achievement (requires mutliple steps to be accomplished)
-        if(achievement.isIncremental() == 1)
+        if(achievement.getIncremental() == 1)
         {
             ProgressBar achievementProgress = (ProgressBar) dialog.findViewById(R.id.achievementProgressBar);
             achievementProgress.setVisibility(View.VISIBLE);

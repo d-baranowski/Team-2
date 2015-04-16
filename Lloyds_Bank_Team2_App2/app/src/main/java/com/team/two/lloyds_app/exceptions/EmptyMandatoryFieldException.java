@@ -1,7 +1,9 @@
 package com.team.two.lloyds_app.exceptions;
 
 /**
- * Created by danielbaranowski on 29/03/15.
+ * Author: Daniel Baranowski
+ * Date: 16/04/15
+ * Purpose: Throws an exception relating to a field that shouldn't be empty
  */
 public class EmptyMandatoryFieldException extends Exception {
     public EmptyMandatoryFieldException(String fieldName) {

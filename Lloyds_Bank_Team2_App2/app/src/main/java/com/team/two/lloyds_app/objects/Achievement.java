@@ -13,6 +13,7 @@ public class Achievement {
     private int iconId;
     private int incremental;
 
+	//Single constructor
     public Achievement(int achievementId, String title, String description, int pointsAchieved, int iconId, int incremental)
     {
         this.achievementId = achievementId;
@@ -23,27 +24,28 @@ public class Achievement {
         this.incremental = incremental;
     }
 
+	//getters for fields
     public int getAchievementId()
     {
-        return this.achievementId;
+        return achievementId;
     }
 
     public String getTitle()
     {
-        return this.title;
+        return title;
     }
 
     public String getDescription()
     {
-        return this.description;
+        return description;
     }
 
     public int getPointsAchieved()
     {
-        return this.pointsAchieved;
+        return pointsAchieved;
     }
 
-    public int getIconId() { return this.iconId; }
+    public int getIconId() { return iconId; }
 
-    public int isIncremental() { return this.incremental; }
+    public int getIncremental() { return incremental; }
 }

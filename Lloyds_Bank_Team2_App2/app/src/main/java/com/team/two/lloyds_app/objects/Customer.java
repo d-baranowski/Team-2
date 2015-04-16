@@ -13,6 +13,7 @@ public class Customer {
     private final String userId;
     private final int points;
 
+	//Single constructor
     public Customer(int id, String firstName, String surname, Address address, String userId, int points){
         this.id = id;
         this.firstName = firstName;
@@ -21,7 +22,7 @@ public class Customer {
         this.userId = userId;
         this.points = points;
     }
-
+	//getters for fields
     public int getId() {
         return id;
     }
