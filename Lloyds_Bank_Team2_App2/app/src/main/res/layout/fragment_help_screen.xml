@@ -2,75 +2,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.team.two.lloyds_app.screens.fragments.HelpScreenFragment"
-    android:background="#ffffffff">
+    android:background="#ffffffff"
+    tools:context="com.team.two.lloyds_app.screens.fragments.HelpScreenFragment">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/drop_shadow" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="How to use app"
-        android:id="@+id/helpTitle"
-        android:layout_marginLeft="41dp"
-        android:layout_marginStart="41dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="26dp"
-        android:textStyle="bold" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="How do I access features? \n You can select the many various features of the app through the large icons on the home screen or through the navigation bar \n\n How do I access the Navigation Bar? \n The Navigation bar is accessed by clicking the three-hyphen icon in the top left corner of any view."
-        android:id="@+id/helpBox"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/helpTitle"
-        android:layout_alignLeft="@+id/helpTitle"
-        android:layout_alignStart="@+id/helpTitle"
-        android:layout_marginRight="25dp" />
+        <TextView
+            android:id="@+id/helpTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="41dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="26dp"
+            android:text="How to use app"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="About the app"
-        android:id="@+id/aboutTitle"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/helpBox"
-        android:layout_alignStart="@+id/helpBox"
-        android:textStyle="bold"
-        android:textColor="@color/lloyds_green"/>
+        <TextView
+            android:id="@+id/helpBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/helpTitle"
+            android:layout_alignStart="@+id/helpTitle"
+            android:layout_below="@+id/helpTitle"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="15dp"
+            android:text="How do I access features? \n You can select the many various features of the app through the large icons on the home screen or through the navigation bar \n\n How do I access the Navigation Bar? \n The Navigation bar is accessed by clicking the three-hyphen icon in the top left corner of any view." />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="App was developed by Team 2 @ Newcastle University 2015"
-        android:id="@+id/aboutBox"
-        android:layout_below="@+id/aboutTitle"
-        android:layout_alignLeft="@+id/aboutTitle"
-        android:layout_alignStart="@+id/aboutTitle"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="25dp"/>
+        <TextView
+            android:id="@+id/aboutTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/helpBox"
+            android:layout_alignStart="@+id/helpBox"
+            android:layout_centerVertical="true"
+            android:text="About the app"
+            android:textColor="@color/lloyds_green"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Development Credits: "
-        android:id="@+id/textView2"
-        android:layout_below="@+id/aboutBox"
-        android:layout_alignLeft="@+id/aboutBox"
-        android:layout_alignStart="@+id/aboutBox"
-        android:layout_marginTop="24dp" />
+        <TextView
+            android:id="@+id/aboutBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/aboutTitle"
+            android:layout_alignStart="@+id/aboutTitle"
+            android:layout_below="@+id/aboutTitle"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="15dp"
+            android:text="App was developed by Team 2 @ Newcastle University 2015" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-Matthew Selby \n -Daniel Baranowski \n -Jack Hookham \n -Deniz Kucukterzi \n -Oliver McPheely \n -Daniel Smith \n -Mikey Edwards \n -Josh Greenwood "
-        android:id="@+id/credits"
-        android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_marginTop="15dp"
-        android:lineSpacingExtra="2dp"/>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/aboutBox"
+            android:layout_alignStart="@+id/aboutBox"
+            android:layout_below="@+id/aboutBox"
+            android:layout_marginTop="24dp"
+            android:text="Development Credits: " />
+
+        <TextView
+            android:id="@+id/credits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="15dp"
+            android:lineSpacingExtra="2dp"
+            android:text="-Matthew Selby \n -Daniel Baranowski \n -Jack Hookham \n -Deniz Kucukterzi \n -Oliver McPheely \n -Daniel Smith \n -Mikey Edwards \n -Josh Greenwood " />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/lloyds_green" />
 
 </RelativeLayout>

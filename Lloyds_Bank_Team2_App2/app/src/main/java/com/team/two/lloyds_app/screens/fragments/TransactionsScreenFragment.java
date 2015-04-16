@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.team.two.lloyds_app.Constants;
 import com.team.two.lloyds_app.exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
+import com.team.two.lloyds_app.exceptions.InvalidAccountNumberFormatException;
+import com.team.two.lloyds_app.exceptions.InvalidSortCodeFormatException;
 import com.team.two.lloyds_app.objects.Account;
 import com.team.two.lloyds_app.objects.Recipient;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
@@ -262,9 +264,11 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                     ((MainActivity)getActivity()).checkEmptyField(name, "Name");
                     ((MainActivity)getActivity()).checkEmptyField(sortCode,"Sort Code");
                     String nameText = name.getText().toString();
+                    validateSortCode(sortCode.getText().toString());
                     String sortCodeText = sortCode.getText().toString();
+                    validateAccountNumber(accountNumber.getText().toString());
                     accountNumberText = Integer.parseInt(accountNumber.getText().toString());
-                    ((MainActivity)getActivity()).addRecipient(nameText,sortCodeText,accountNumberText);
+                    ((MainActivity)getActivity()).addRecipient(nameText, sortCodeText, accountNumberText);
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(getActivity(), "Recipient Added", duration);
                     toast.show();
@@ -281,12 +285,32 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(getActivity(), Constants.TOAST_MANDATORY_DATA, duration);
                     toast.show();
+                } catch (InvalidSortCodeFormatException e) {
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(getActivity(), Constants.TOAST_WRONG_SORT_CODE, duration);
+                    toast.show();
+                } catch (InvalidAccountNumberFormatException e) {
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(getActivity(), Constants.TOAST_WRONG_ACCOUNT_NUMBER, duration);
+                    toast.show();
                 }
             }
         });
 
         dialog.show();
     }
+
+    public void validateSortCode(String sortCode) throws InvalidSortCodeFormatException {
+        if (!sortCode.matches("^(\\d){2}-(\\d){2}-(\\d){2}$")){
+            throw new InvalidSortCodeFormatException();
+        }
+    }
+    public void validateAccountNumber(String number) throws InvalidAccountNumberFormatException {
+        if (!number.matches("^(\\d){7,8}$")){
+            throw new InvalidAccountNumberFormatException();
+        }
+    }
+
 
     public void passwordValidationDialog(final String caller){
         // Create custom dialog object

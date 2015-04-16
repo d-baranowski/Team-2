@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:text="@string/new_recipient"
-        android:textColor="@color/lloyds_green"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_size_twenty" />
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_below="@+id/add_recipient_label"
         android:layout_marginTop="10dp"
         android:text="@string/recipient_name"
-        android:textColor="@color/lloyds_green" />
+        android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/description_text"
@@ -46,7 +46,7 @@
         android:layout_below="@+id/description_text"
         android:layout_marginTop="10dp"
         android:text="@string/sort_code"
-        android:textColor="@color/lloyds_green" />
+        android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/sort_code_text"
@@ -65,7 +65,7 @@
         android:layout_below="@+id/sort_code_text"
         android:layout_marginTop="10dp"
         android:text="@string/account_number"
-        android:textColor="@color/lloyds_green" />
+        android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/account_number_text"
@@ -86,8 +86,5 @@
         android:background="@drawable/mybutton"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_button" />
-
-
-
 </RelativeLayout>
 

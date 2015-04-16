@@ -11,4 +11,6 @@ public class Constants {
     public static final String TOAST_MANDATORY_DATA = "Make sure you filled all mandatory fields";
     public static final String TOAST_BELOW_ZERO = "Balance can't be below 0";
     public static final String TOAST_NO_FUNDS = "Not enough available balance";
+    public static final String TOAST_WRONG_SORT_CODE = "Wrong sort code format";
+    public static final String TOAST_WRONG_ACCOUNT_NUMBER = "Wrong account number format";
 }
