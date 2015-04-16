@@ -28,8 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Author: Deniz
- * Date: 08/04/2015
+ * Author: Daniel B
+ * Date: 22/03/2015
  * Purpose: Code for transactions screen
  */
 
@@ -62,14 +62,14 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         // Required empty public constructor
     }
 
-    @Override
+    @Override//onCreate - creates activity.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getActivity().setTitle(TITLE);
     }
 
-    @Override
+    @Override//onCreateView - Initialises the view and inflates the layout
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         accounts = ((MainActivity)getActivity()).getAccounts();
 
@@ -134,6 +134,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         return root;
     }
 
+    //transfer()- The function for transferring Money between personal accounts
     public void transfer(){
         Account destination = mapAccounts.get((String)transferTo.getSelectedItem());
         Account source = mapAccounts.get((String)transferFrom.getSelectedItem());
@@ -187,6 +188,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
     }
 
+    //payment()- The function for transferring a payment to an external account
     public void payment(){
         Account source = mapAccounts.get((String)paymentFrom.getSelectedItem());
         Recipient destination = mapRecipients.get((String)paymentRecipient.getSelectedItem());

@@ -28,8 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Author:
- * Date:
+ * Author:Daniel Baronowski
+ * Date: 23/03/2015
  * Purpose: code for statements screen
  */
 
@@ -51,26 +51,26 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
     private TextView accountAvailable;
     private TableLayout table;
 
+    //Formats a decimal variable
     private DecimalFormat df = new DecimalFormat("#.##");
 
     public StatementScreenFragment() {
         // Required empty public constructor
     }
 
-    @Override
+    @Override//onCreate - creates activity.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
         getActivity().setTitle("Statement");
     }
 
-    @Override
+    @Override //onCreateView - Initialises the view and inflates the layout
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         customer = ((MainActivity) getActivity()).getCustomer();
         account = ((MainActivity) getActivity()).getAccounts().get(0);
 
         root = inflater.inflate(R.layout.fragment_statement, container, false);
-
         accountName = (Spinner) root.findViewById(R.id.account_name);
         accountType = (TextView) root.findViewById(R.id.account_type);
         accountNumber = (TextView) root.findViewById(R.id.account_number);
@@ -78,14 +78,13 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
         accountBalance = (TextView) root.findViewById(R.id.account_balance);
         accountAvailable = (TextView) root.findViewById(R.id.account_available);
         table = (TableLayout) root.findViewById(R.id.tableLayout1);
-
         transactionsList = account.getTransactions();
         addItemsOnSpinner();
 
         return root;
     }
 
-
+    //addItemsOnSpinner - Function to adds items to the spinner widget.
     public void addItemsOnSpinner() {
         ArrayList<Account> accounts = ((MainActivity) getActivity()).getAccounts();
         List<String> list = new ArrayList<>();
@@ -99,7 +98,7 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
         accountName.setAdapter(dataAdapter);
         accountName.setOnItemSelectedListener(new CustomOnItemSelectedListener());
     }
-
+    //updateAccount() - updates the account when changes are made (money in/money out)
     public void updateAccount(int position) {
         account = ((MainActivity) getActivity()).getAccounts().get(position);
 
@@ -117,11 +116,12 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
 
         transactionsList.clear();
         transactionsList = account.getTransactions();
-
+        //Functionality for statements to be orientated vertically
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             buildTableVertical();
         }
 
+        //Functionality for statements to be oriented in landscape mode
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             buildTableHorizontal();
         }
@@ -129,7 +129,7 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
 
         table.setBackgroundResource(R.drawable.cell_shape);
     }
-
+    //buildTableHorizontal() - Function for statements to be oriented in landscape mode
     public void buildTableHorizontal() {
         table.removeAllViews();
         int rows = transactionsList.size();
@@ -170,7 +170,7 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
             table.addView(row);
         }
     }
-
+    //buildTableVertical() - Function for statements to be oriented in vertical mode
     public void buildTableVertical() {
         table.removeAllViews();
         int rows = transactionsList.size();
@@ -227,7 +227,7 @@ public class StatementScreenFragment extends android.support.v4.app.Fragment {
             table.addView(row);
         }
     }
-
+    //CustomOnItemSelectedListener() - A custom item selection listener.
     class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
