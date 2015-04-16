@@ -48,262 +48,244 @@ import java.util.Scanner;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-public class BranchFinderFragment extends Fragment {
-    public static final String TITLE = "Branch Finder";
-    private View root;
-    private GoogleMap googleMap;
-    private HashMap<String, Branch> branchMap;
+public class BranchFinderFragment extends Fragment{
+	public static final String TITLE = "Branch Finder";
+	private View root;
+	private GoogleMap googleMap;
+	private HashMap<String, Branch> branchMap;
 
-    //Set up objects for the popup details
-    RelativeLayout popup;
-    TextView branchTitle;
-    TextView addressTitle;
-    TextView addressView;
-    TextView timesTitle;
-    TextView timesView;
+	//Set up objects for the popup details
+	RelativeLayout popup;
+	TextView branchTitle;
+	TextView addressTitle;
+	TextView addressView;
+	TextView timesTitle;
+	TextView timesView;
 
-    public BranchFinderFragment() {
-        // Required empty public constructor
-    }
+	public BranchFinderFragment(){
+		// Required empty public constructor
+	}
 
-    //Create the screen by inflating layout
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+	//Create the screen by inflating layout
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
-        root = inflater.inflate(R.layout.fragment_branch_finder, container, false);
+		root = inflater.inflate(R.layout.fragment_branch_finder, container, false);
 
-        //Get objects for the popup details
-        popup = (RelativeLayout) root.findViewById(R.id.branch_popup);
-        branchTitle = (TextView) root.findViewById(R.id.branch_title);
-        addressTitle = (TextView) root.findViewById(R.id.branch_address_title);
-        addressView = (TextView) root.findViewById(R.id.branch_address);
-        timesTitle = (TextView) root.findViewById(R.id.branch_opening_times_title);
-        timesView = (TextView) root.findViewById(R.id.branch_opening_times);
+		//Get objects for the popup details
+		popup = (RelativeLayout) root.findViewById(R.id.branch_popup);
+		branchTitle = (TextView) root.findViewById(R.id.branch_title);
+		addressTitle = (TextView) root.findViewById(R.id.branch_address_title);
+		addressView = (TextView) root.findViewById(R.id.branch_address);
+		timesTitle = (TextView) root.findViewById(R.id.branch_opening_times_title);
+		timesView = (TextView) root.findViewById(R.id.branch_opening_times);
 
-        //Set the orientation to portrait
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		//Set the orientation to portrait
+		getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //Set up the button listener
-        setSearchButtonListener();
+		//Set up the button listener
+		setSearchButtonListener();
 
-        //Attempt to create the map
-        try {
-            //Create the map
-            createMapView();
+		//Attempt to create the map
+		try{
+			//Create the map
+			createMapView();
 
-            //Add the markers for the branches
-            addBranchMarkers();
-        }
-        //If a network error has been thrown, notify user
-        catch (ConnectException ce) {
-            Toast.makeText(getActivity(), ce.getMessage(), Toast.LENGTH_LONG).show();
-            return root;
-        }
-        //If the map failed to initiate, notify user
-        catch (NullPointerException npe) {
-            Toast.makeText(getActivity(), npe.getMessage(), Toast.LENGTH_LONG).show();
-        }
+			//Add the markers for the branches
+			addBranchMarkers();
+		}
+		//If a network error has been thrown, notify user
+		catch(ConnectException ce){
+			Toast.makeText(getActivity(), ce.getMessage(), Toast.LENGTH_LONG).show();
+			return root;
+		}
+		//If the map failed to initiate, notify user
+		catch(NullPointerException npe){
+			Toast.makeText(getActivity(), npe.getMessage(), Toast.LENGTH_LONG).show();
+		}
 
-        return root;
-    }
+		return root;
+	}
 
-    //Method to respond to search button press
-    private void setSearchButtonListener() {
+	//Method to respond to search button press
+	private void setSearchButtonListener(){
 
-        //Hide the keyboard (credit: http://stackoverflow.com/questions/3400028/close-virtual-keyboard-on-button-press)
+		//Hide the keyboard (credit: http://stackoverflow.com/questions/3400028/close-virtual-keyboard-on-button-press)
 
-        //Get search button object
-        Button button = (Button) root.findViewById(R.id.branch_search_button);
+		//Get search button object
+		Button button = (Button) root.findViewById(R.id.branch_search_button);
 
-        final InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        //Set up the button to respond to click
-        button.setOnClickListener(new OnClickListener() {
+		//Set up the button to respond to click
+		button.setOnClickListener(new OnClickListener(){
 
-            @Override
-            public void onClick(View v) {
+			@Override
+			public void onClick(View v){
 
-                //Get the input from the search bar
-                String input = ((EditText) root.findViewById(R.id.branch_search_bar_input)).getText().toString();
+				//Get the input from the search bar
+				String input = ((EditText) root.findViewById(R.id.branch_search_bar_input)).getText().toString();
 
-                //Make sure there is input to process
-                if (!input.isEmpty() || input.equals(null)) {
+				//Make sure there is input to process
+				if(!input.isEmpty() || input.equals(null)){
 
-                    try {
-                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+					try{
+						imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
-                        //Hide the popup if it is open
-                        popup.setVisibility(View.INVISIBLE);
+						//Hide the popup if it is open
+						popup.setVisibility(View.INVISIBLE);
 
-                        //Move the map to the desired location
-                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                                .target(getSearchPosition(input))
-                                .zoom(9)
-                                .build()));
+						//Move the map to the desired location
+						googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(getSearchPosition(input)).zoom(9).build()));
 
-                    } catch (Exception e) {
-                        //If there was a network error, notify user
-                        if (e.getClass().equals(ConnectException.class)) {
-                            Toast.makeText(getActivity(), getString(R.string.branch_network_search_error), Toast.LENGTH_SHORT).show();
-                        }
-                        //If there was an error during the search, notify user
-                        else {
-                            Toast.makeText(getActivity(), getString(R.string.branch_general_search_error), Toast.LENGTH_SHORT).show();
-                        }
-                    }
+					}catch(Exception e){
+						//If there was a network error, notify user
+						if(e.getClass().equals(ConnectException.class)){
+							Toast.makeText(getActivity(), getString(R.string.branch_network_search_error), Toast.LENGTH_SHORT).show();
+						}
+						//If there was an error during the search, notify user
+						else{
+							Toast.makeText(getActivity(), getString(R.string.branch_general_search_error), Toast.LENGTH_SHORT).show();
+						}
+					}
 
-                } else {
-                    //Tell the user to input something
-                    Toast.makeText(getActivity(), getString(R.string.branch_empty_search_error), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+				}else{
+					//Tell the user to input something
+					Toast.makeText(getActivity(), getString(R.string.branch_empty_search_error), Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+	}
 
-    //Attempt to generate the map
-    private void createMapView() throws ConnectException {
+	//Attempt to generate the map
+	private void createMapView() throws ConnectException{
 
-        if (!isNetworkAvailable()) {
-            throw new ConnectException(getString(R.string.branch_network_search_error));
-        }
-        googleMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView)).getMap();
+		if(!isNetworkAvailable()){
+			throw new ConnectException(getString(R.string.branch_network_search_error));
+		}
+		googleMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView)).getMap();
 
-        if (googleMap == null) {
-            throw new NullPointerException(getString(R.string.branch_general_map_error));
-        }
+		if(googleMap == null){
+			throw new NullPointerException(getString(R.string.branch_general_map_error));
+		}
 
-        //Enable the My Location layer
-        googleMap.setMyLocationEnabled(true);
+		//Enable the My Location layer
+		googleMap.setMyLocationEnabled(true);
 
-        //Get the latest location
-        Location lastLocation = ((MainActivity) getActivity()).mLastLocation;
-        if (lastLocation == null) {
-            Toast.makeText(getActivity(), getString(R.string.branch_gps_search_error), Toast.LENGTH_SHORT).show();
-        }
+		//Get the latest location
+		Location lastLocation = ((MainActivity) getActivity()).mLastLocation;
+		if(lastLocation == null){
+			Toast.makeText(getActivity(), getString(R.string.branch_gps_search_error), Toast.LENGTH_SHORT).show();
+		}
 
-        //Set up initial zoom to user's current location
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                .target(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()))
-                .zoom(10)
-                .build()));
+		//Set up initial zoom to user's current location
+		googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude())).zoom(10).build()));
 
-        //Set up the marker listener to manage marker clicks
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
+		//Set up the marker listener to manage marker clicks
+		googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
+			@Override
+			public boolean onMarkerClick(Marker marker){
 
-                //Get the respective branch object and get the address and opening times
-                Branch branch = branchMap.get(marker.getTitle());
-                String[] address = branch.getAddress().toStringArray();
-                String[] times = branch.getOpeningTimes();
+				//Get the respective branch object and get the address and opening times
+				Branch branch = branchMap.get(marker.getTitle());
+				String[] address = branch.getAddress().toStringArray();
+				String[] times = branch.getOpeningTimes();
 
-                //Focus map on the marker
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 11));
+				//Focus map on the marker
+				googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 11));
 
-                //Clear any previous popup
-                timesView.setText("");
-                addressView.setText("");
+				//Clear any previous popup
+				timesView.setText("");
+				addressView.setText("");
 
-                //Populate the popup with branch details
-                branchTitle.setText(branch.getName());
+				//Populate the popup with branch details
+				branchTitle.setText(branch.getName());
 
-                addressTitle.setText(getResources().getString(R.string.branch_address_title));
-                for (String s : address) {
-                    addressView.append(s + "\n");
-                }
-                addressView.append("\n" + branch.getPhoneNumber());
+				addressTitle.setText(getResources().getString(R.string.branch_address_title));
+				for(String s : address){
+					addressView.append(s + "\n");
+				}
+				addressView.append("\n" + branch.getPhoneNumber());
 
-                timesTitle.setText(getResources().getString(R.string.branch_opening_times_title));
-                for (String s : times) {
-                    timesView.append(s + "\n");
-                }
+				timesTitle.setText(getResources().getString(R.string.branch_opening_times_title));
+				for(String s : times){
+					timesView.append(s + "\n");
+				}
 
-                //Display the popup
-                popup.setVisibility(View.VISIBLE);
+				//Display the popup
+				popup.setVisibility(View.VISIBLE);
 
-                return false;
-            }
-        });
+				return false;
+			}
+		});
 
-        //Set up map listener so the popup will be removed once clicked off
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng ll) {
-                //Hide the popup
-                popup.setVisibility(View.INVISIBLE);
-            }
-        });
-    }
+		//Set up map listener so the popup will be removed once clicked off
+		googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener(){
+			@Override
+			public void onMapClick(LatLng ll){
+				//Hide the popup
+				popup.setVisibility(View.INVISIBLE);
+			}
+		});
+	}
 
-    //Read branch information from the text file to create Branch objects
-    private void addBranchMarkers() {
+	//Read branch information from the text file to create Branch objects
+	private void addBranchMarkers(){
 
-        //Make sure that the map has been initialised
-        if (googleMap == null) {
-            return;
-        }
+		//Make sure that the map has been initialised
+		if(googleMap == null){
+			return;
+		}
 
-        branchMap = new HashMap<>();
+		branchMap = new HashMap<>();
 
-        try {
-            //Open the data file for parsing
-            Scanner scanner = new Scanner(getResources().getAssets().open("branches.txt"));
+		try{
+			//Open the data file for parsing
+			Scanner scanner = new Scanner(getResources().getAssets().open("branches.txt"));
 
-            //Create Branch objects by parsing the data file
-            while (scanner.hasNextLine()) {
+			//Create Branch objects by parsing the data file
+			while(scanner.hasNextLine()){
 
-                Branch branch = new Branch(
-                        scanner.nextLine(),
-                        Double.parseDouble(scanner.nextLine()),
-                        Double.parseDouble(scanner.nextLine()),
-                        new Address(scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine()),
-                        scanner.nextLine(),
-                        new String[]{scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine()});
+				Branch branch = new Branch(scanner.nextLine(), Double.parseDouble(scanner.nextLine()), Double.parseDouble(scanner.nextLine()), new Address(scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine()), scanner.nextLine(), new String[]{scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine()});
 
-                branchMap.put(branch.getName(), branch);
+				branchMap.put(branch.getName(), branch);
 
-            }
+			}
 
-        } catch (IOException ioe) {
-            //There was an error parsing the data: notify the user
-            Toast.makeText(getActivity(), getString(R.string.branch_data_error), Toast.LENGTH_SHORT).show();
-            return;
-        }
+		}catch(IOException ioe){
+			//There was an error parsing the data: notify the user
+			Toast.makeText(getActivity(), getString(R.string.branch_data_error), Toast.LENGTH_SHORT).show();
+			return;
+		}
 
-        //Add a marker for each branch in the branch map
-        for (Branch b : branchMap.values()) {
-            googleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(b.getLatitude(), b.getLongitude()))
-                    .title(b.getName())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.finalmarker))
-                    .draggable(false));
-        }
-    }
+		//Add a marker for each branch in the branch map
+		for(Branch b : branchMap.values()){
+			googleMap.addMarker(new MarkerOptions().position(new LatLng(b.getLatitude(), b.getLongitude())).title(b.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.finalmarker)).draggable(false));
+		}
+	}
 
-    //Check whether the user is connected to the internet
-    //Credit: http://stackoverflow.com/questions/4238921/detect-whether-there-is-an-internet-connection-available-on-android
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) (getActivity().getSystemService(Context.CONNECTIVITY_SERVICE));
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
-    }
+	//Check whether the user is connected to the internet
+	//Credit: http://stackoverflow.com/questions/4238921/detect-whether-there-is-an-internet-connection-available-on-android
+	private boolean isNetworkAvailable(){
+		ConnectivityManager connectivityManager = (ConnectivityManager) (getActivity().getSystemService(Context.CONNECTIVITY_SERVICE));
+		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+		return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+	}
 
-    //Attempt to get a usable location from the user's input
-    private LatLng getSearchPosition(String input) throws IOException {
+	//Attempt to get a usable location from the user's input
+	private LatLng getSearchPosition(String input) throws IOException{
 
-        //If there is no network connection then notify user and do not continue
-        if (!isNetworkAvailable()) {
-            throw new ConnectException();
-        }
+		//If there is no network connection then notify user and do not continue
+		if(!isNetworkAvailable()){
+			throw new ConnectException();
+		}
 
-        Geocoder gc = new Geocoder(getActivity());
+		Geocoder gc = new Geocoder(getActivity());
 
-        //Get the first result from the Geocoder
-        android.location.Address address = gc.getFromLocationName(input, 1).get(0);
+		//Get the first result from the Geocoder
+		android.location.Address address = gc.getFromLocationName(input, 1).get(0);
 
-        return new LatLng(address.getLatitude(), address.getLongitude());
-    }
+		return new LatLng(address.getLatitude(), address.getLongitude());
+	}
 
 }
