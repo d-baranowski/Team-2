@@ -137,7 +137,6 @@ public class SqlCons{
     static final String CUSTOMER_ACHIEVEMENTS_TABLE_NAME = "CustomerAchievements";
     static final String CUSTOMER_ACHIEVEMENT_ID = "achievement_id";
     static final String CUSTOMER_ACHIEVEMENT_CUSTOMER_ID = "customer_id";
-
     static final String CREATE_CUSTOMER_ACHIEVEMENTS_TABLE =
             "CREATE TABLE " +
                     CUSTOMER_ACHIEVEMENTS_TABLE_NAME + " (" +
@@ -145,7 +144,21 @@ public class SqlCons{
                     CUSTOMER_ACHIEVEMENT_CUSTOMER_ID + " INTEGER REFERENCES " + ACCOUNTS_TABLE_NAME + "("+ ACCOUNT_OWNERID  +"));";
 
     static final String[] CUSTOMER_ACHIEVEMENTS_COLUMNS = {CUSTOMER_ACHIEVEMENT_ID, CUSTOMER_ACHIEVEMENT_CUSTOMER_ID};
-	private static final String TRANSACTION_ID = "transaction_id";
+	// Customer statistics table SQL
+    static final String CUSTOMER_STATISTICS_TABLE_NAME = "CustomerStatistics";
+    static final String CUSTOMER_STATISTICS_CUSTOMER_ID = "customer_id";
+    static final String CUSTOMER_TOTAL_TRANSACTIONS = "customer_total_transactions";
+    static final String CUSTOMER_LOGINS = "customer_logins";
+    static final String CREATE_CUSTOMER_STATISTICS_TABLE =
+        "CREATE TABLE " +
+                CUSTOMER_STATISTICS_TABLE_NAME + " (" +
+                CUSTOMER_STATISTICS_CUSTOMER_ID + " INTEGER, " +
+                CUSTOMER_TOTAL_TRANSACTIONS + " REAL DEFAULT 0.00, " +
+                CUSTOMER_LOGINS + " INTEGER);";
+
+    static final String[] CUSTOMER_STATISTICS_COLUMNS = {CUSTOMER_STATISTICS_CUSTOMER_ID, CUSTOMER_TOTAL_TRANSACTIONS, CUSTOMER_LOGINS};
+
+    private static final String TRANSACTION_ID = "transaction_id";
 	static final String CREATE_TRANSACTIONS_TABLE = "CREATE TABLE " +
 			TRANSACTIONS_TABLE_NAME + " (" +
 			TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +

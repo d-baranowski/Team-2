@@ -622,4 +622,14 @@ public class DatabaseAdapter{
         return false;
     }
 
+    public void addCompletedAchievement(int achievementId, int customerId)
+    {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = SqlCons.CUSTOMER_ACHIEVEMENTS_COLUMNS;
+
+        ContentValues newAchievementValues = new ContentValues();
+        newAchievementValues.put(SqlCons.CUSTOMER_ACHIEVEMENT_ID, achievementId);
+        newAchievementValues.put(SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID, customerId);
+        db.insert(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME, null, newAchievementValues);
+    }
 }

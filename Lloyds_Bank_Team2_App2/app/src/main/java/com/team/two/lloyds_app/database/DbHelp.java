@@ -47,8 +47,8 @@ public class DbHelp extends SQLiteOpenHelper{
 		ContentValues contentValAccounts = new ContentValues();
 		contentValAccounts.put(SqlCons.ACCOUNT_NUMBER, 1111111); //7 Digit account number
 		contentValAccounts.put(SqlCons.ACCOUNT_SORTCODE, "30-11-11");
-		contentValAccounts.put(SqlCons.ACCOUNT_BALANCE, 992.49);
-		contentValAccounts.put(SqlCons.ACCOUNT_AVAILABLEBALANCE, 1492.49);
+		contentValAccounts.put(SqlCons.ACCOUNT_BALANCE, 4800.00);
+		contentValAccounts.put(SqlCons.ACCOUNT_AVAILABLEBALANCE, 5300.00);
 		contentValAccounts.put(SqlCons.ACCOUNT_OWNERID, 1);
 		contentValAccounts.put(SqlCons.ACCOUNT_OVERDRAFTLIMIT, 500.00);
 		contentValAccounts.put(SqlCons.ACCOUNT_TYPE, "Student");
@@ -74,8 +74,8 @@ public class DbHelp extends SQLiteOpenHelper{
 
 		contentValAccounts = new ContentValues();
 		contentValAccounts.put(SqlCons.ACCOUNT_NAME, "Holidays");
-		contentValAccounts.put(SqlCons.ACCOUNT_BALANCE, 100.00);
-		contentValAccounts.put(SqlCons.ACCOUNT_AVAILABLEBALANCE, 100.00);
+		contentValAccounts.put(SqlCons.ACCOUNT_BALANCE, 200.00);
+		contentValAccounts.put(SqlCons.ACCOUNT_AVAILABLEBALANCE, 200.00);
 		contentValAccounts.put(SqlCons.ACCOUNT_OWNERID, 1);
 		contentValAccounts.put(SqlCons.ACCOUNT_TYPE, "Subaccount");
 		db.insert(SqlCons.ACCOUNTS_TABLE_NAME, null, contentValAccounts);
@@ -251,11 +251,20 @@ public class DbHelp extends SQLiteOpenHelper{
 		db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
 		// Add achievements achieved by a customer
-        ContentValues contentValuesCustomerAchievements = new ContentValues();
-		contentValuesCustomerAchievements = new ContentValues();
-		contentValuesCustomerAchievements.put(SqlCons.CUSTOMER_ACHIEVEMENT_ID, 2);
-		contentValuesCustomerAchievements.put(SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID, 1);
-        db.insert(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME, null, contentValuesCustomerAchievements);
+        //ContentValues contentValuesCustomerAchievements = new ContentValues();
+		//contentValuesCustomerAchievements = new ContentValues();
+		//contentValuesCustomerAchievements.put(SqlCons.CUSTOMER_ACHIEVEMENT_ID, 2);
+		//contentValuesCustomerAchievements.put(SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID, 1);
+        //db.insert(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME, null, contentValuesCustomerAchievements);
+
+        // Initialise customer statistics
+        /*
+        ContentValues contentValuesCustomerStatistics = new ContentValues();
+        contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID, 1);
+        contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_TOTAL_TRANSACTIONS, 0);
+        contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_LOGINS, 0);
+        db.insert(SqlCons.CREATE_CUSTOMER_STATISTICS_TABLE, null, contentValuesCustomerStatistics);
+        */
 
 		ContentValues availableOfferContentValue = new ContentValues();
 		availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.morrisons_logo);
@@ -335,6 +344,7 @@ public class DbHelp extends SQLiteOpenHelper{
 		db.execSQL(SqlCons.CREATE_CUSTOMER_ACHIEVEMENTS_TABLE);
 		db.execSQL(SqlCons.CREATE_AVAILABLE_OFFERS_TABLE);
 		db.execSQL(SqlCons.CREATE_ACTIVE_OFFERS_TABLE);
+        db.execSQL(SqlCons.CREATE_CUSTOMER_STATISTICS_TABLE);
 		populate(db);
 	}
 
@@ -350,6 +360,7 @@ public class DbHelp extends SQLiteOpenHelper{
 		final String DROP_ACTIVE_OFFERS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACTIVE_OFFERS_TABLE_NAME;
 		final String DROP_ACHIEVEMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.ACHIEVEMENTS_TABLE_NAME;
 		final String DROP_CUSTOMER_ACHIEVEMENTS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME;
+        final String DROP_CUSTOMER_STATISTICS_TABLE = "DROP TABLE IF EXISTS " + SqlCons.CUSTOMER_STATISTICS_TABLE_NAME;
 
 		db.execSQL(DROP_CUSTOMER_TABLE);
 		db.execSQL(DROP_ACCOUNTS_TABLE);
@@ -360,6 +371,7 @@ public class DbHelp extends SQLiteOpenHelper{
 		db.execSQL(DROP_RECIPIENTS_TABLE);
 		db.execSQL(DROP_ACHIEVEMENTS_TABLE);
 		db.execSQL(DROP_CUSTOMER_ACHIEVEMENTS_TABLE);
+        db.execSQL(DROP_CUSTOMER_STATISTICS_TABLE);
 		onCreate(db);
 	}
 }

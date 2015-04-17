@@ -20,6 +20,7 @@ import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.exceptions.InvalidAccountNumberFormatException;
 import com.team.two.lloyds_app.exceptions.InvalidSortCodeFormatException;
 import com.team.two.lloyds_app.objects.Account;
+import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.objects.Recipient;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 
@@ -149,8 +150,18 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
             if (balance > 0) {
                 if (balance <= source.getAvailableBalance()) {
+                    checkAchievement1(balance);
+
                     result = "Successful Transfer";
                     ((MainActivity) getActivity()).getAdapter().transfer(source, destination, balance);
+
+                    // get the main account
+                    String accountName = "Account";
+                    if(accountName.equals(destination.getAccountName()))
+                    {
+                        checkAchievement4(destination.getAccountBalance()+balance);
+                    }
+
                     ((MainActivity) getActivity()).openHome();
                 } else {
                     result = Constants.TOAST_NO_FUNDS;
@@ -203,6 +214,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
             if (balance > 0) {
                 if (balance <= source.getAvailableBalance()) {
+                    checkAchievement2(balance);
                     result = "Successful Payment";
                     ((MainActivity) getActivity()).getAdapter().payment(source, destination, balance, description);
                     ((MainActivity) getActivity()).openHome();
@@ -427,4 +439,67 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
         super.onResume();
     }
+
+    public void checkAchievement1(double balance)
+    {
+        if(balance>=200)
+        {
+            // Add the achievement to the database
+            MainActivity context = (MainActivity)getActivity();
+            Customer customer = context.getCustomer();
+            int customerId = customer.getId();
+
+            // Check that achievement has not already been achieved
+            if(!context.achievementIsComplete(1, customerId))
+            {
+                context.addCompletedAchievement(1, customer.getId());
+                context.gainOffersPoints(50);
+            }
+        }
+    }
+
+    public void checkAchievement2(double balance)
+    {
+        if(balance>=200)
+        {
+            // Add the achievement to the database
+            MainActivity context = (MainActivity)getActivity();
+            Customer customer = context.getCustomer();
+            int customerId = customer.getId();
+
+            // Check that achievement has not already been achieved
+            if(!context.achievementIsComplete(2, customerId))
+            {
+                context.addCompletedAchievement(2, customer.getId());
+                context.gainOffersPoints(50);
+            }
+        }
+    }
+
+    // Check if at least £10,000 has been transferred until now
+    public boolean checkAchievement3()
+    {
+        // get total transactions value, if >=10,000 then return true
+
+        return false;
+    }
+
+    // Check if current balance is 5000 or more
+    public void checkAchievement4(double balance)
+    {
+        if(balance>=5000)
+        {
+            // Add the achievement to the database
+            MainActivity context = (MainActivity)getActivity();
+            Customer customer = context.getCustomer();
+            int customerId = customer.getId();
+
+            // Check that achievement has not already been achieved
+            if(!context.achievementIsComplete(4, customerId))
+            {
+                context.addCompletedAchievement(4, customer.getId());
+            }
+        }
+    }
+
 }

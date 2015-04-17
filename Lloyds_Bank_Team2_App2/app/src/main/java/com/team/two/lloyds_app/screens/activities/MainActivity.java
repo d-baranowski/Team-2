@@ -201,6 +201,8 @@ public class MainActivity extends ActionBarActivity implements
 
     public boolean achievementIsComplete(int achievementId, int customerId) { return dbadapter.achievementAccomplished(achievementId, customerId); }
 
+    public void addCompletedAchievement(int achievementId, int customerId) { dbadapter.addCompletedAchievement(achievementId, customerId); }
+
     public ArrayList<Offer> getActiveOffers() { return dbadapter.getActiveOffers(customerId); }
 
     public void activateOffer(Offer offer){ dbadapter.activateOffer(offer, customerId);}
@@ -209,8 +211,8 @@ public class MainActivity extends ActionBarActivity implements
         dbadapter.spendOfferPoints(customerId,price);
     }
 
-    public void gainOffersPoints(int ammount){
-        dbadapter.gainOfferPoints(customerId,ammount);
+    public void gainOffersPoints(int amount){
+        dbadapter.gainOfferPoints(customerId,amount);
     }
 
     public DatabaseAdapter getAdapter(){
@@ -258,6 +260,4 @@ public class MainActivity extends ActionBarActivity implements
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
-
-
 }
