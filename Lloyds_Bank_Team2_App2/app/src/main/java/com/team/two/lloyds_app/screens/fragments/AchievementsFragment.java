@@ -46,7 +46,7 @@ public class AchievementsFragment extends android.support.v4.app.Fragment{
         title = (TextView) rl.findViewById(R.id.achievement_title);
 
         int totalPoints = ((MainActivity) getActivity()).getCustomer().getOfferPoints();
-        title.setText("Available Achievements - " + Integer.toString(totalPoints));
+        title.setText("Available Achievements - Total Points: " + Integer.toString(totalPoints));
 
 		populateAchievementList();
 		populateListView();
