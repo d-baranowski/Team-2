@@ -8,7 +8,7 @@
     </style>
 
     <style name="options_screen_text">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:textColor">@color/lloyds_green</item>
 
     </style>

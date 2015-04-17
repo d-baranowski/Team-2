@@ -29,7 +29,7 @@
 
   public class OptionsFragment extends android.support.v4.app.Fragment {
       View Root;
-     public static final String TITLE = "Options";
+     public static final String TITLE = "Options and About";
      public OptionsFragment() {
           // Required empty public constructor
       }
