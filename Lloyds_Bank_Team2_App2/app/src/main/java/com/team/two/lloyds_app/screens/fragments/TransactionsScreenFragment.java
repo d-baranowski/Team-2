@@ -498,6 +498,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
             if(!context.achievementIsComplete(4, customerId))
             {
                 context.addCompletedAchievement(4, customer.getId());
+                context.gainOffersPoints(100);
             }
         }
     }
