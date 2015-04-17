@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Account;
@@ -670,11 +671,12 @@ public class DatabaseAdapter{
     {
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = SqlCons.CUSTOMER_STATISTICS_COLUMNS;
-        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = " + customerId;
+        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = '" + customerId +"'";
 
-        Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME,columns,query,null,null,null,null);
+        Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME,columns,null,null,null,null,null);
+
         int count = cursor.getCount();
-
+        Log.d("testdb", Integer.toString(count));
         if(count == 1)
         {
 

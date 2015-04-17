@@ -14,7 +14,7 @@ import com.team.two.lloyds_app.R;
  */
 public class DbHelp extends SQLiteOpenHelper{
 	private static final String DATABASE_NAME = "lloyds";
-	private static final int DATABASE_VERSION = 52;
+	private static final int DATABASE_VERSION = 53;
 	private Context context;
 
 	public DbHelp(Context context){
@@ -22,6 +22,7 @@ public class DbHelp extends SQLiteOpenHelper{
 	}
 
 	private static void populate(SQLiteDatabase db){
+
 		//Create sample dummy data and insert into database
 		ContentValues contentValCustomers = new ContentValues();
 		contentValCustomers.put(SqlCons.CUSTOMER_NAME, "Daniel");
@@ -262,7 +263,6 @@ public class DbHelp extends SQLiteOpenHelper{
         contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID, 1);
         contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_TOTAL_TRANSACTIONS, 0.00);
         contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_LOGINS, 0);
-        db.insert(SqlCons.CREATE_CUSTOMER_STATISTICS_TABLE, null, contentValuesCustomerStatistics);
 
 		ContentValues availableOfferContentValue = new ContentValues();
 		availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.morrisons_logo);

@@ -18,6 +18,8 @@ public class SqlCons{
 	static final String CUSTOMER_PASSWORD = "Password";
 	static final String CUSTOMER_OFFERS_POINTS = "Points";
 
+
+
 	static final String CREATE_CUSTOMER_TABLE = "CREATE TABLE " +
 			CUSTOMER_TABLE_NAME + " (" +
 			CUSTOMER_ID + "	INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -32,6 +34,8 @@ public class SqlCons{
 
 	static final String[] CUSTOMER_COLUMNS = {CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_SURNAME, CUSTOMER_STREET_ADDRESS, CUSTOMER_CITY, CUSTOMER_POSTCODE, CUSTOMER_USERID, CUSTOMER_PASSWORD, CUSTOMER_OFFERS_POINTS};
 
+
+
 	//Accounts table SQL
 	static final String ACCOUNTS_TABLE_NAME = "Accounts";
 	static final String ACCOUNT_ID = "account_id";
@@ -43,6 +47,8 @@ public class SqlCons{
 	static final String ACCOUNT_AVAILABLEBALANCE = "Available";
 	static final String ACCOUNT_OVERDRAFTLIMIT = "Overdraft";
 	static final String ACCOUNT_OWNERID = "Owner";
+
+
 
 	static final String CREATE_ACCOUNT_TABLE = "CREATE TABLE " +
 			ACCOUNTS_TABLE_NAME + " (" +
@@ -58,6 +64,8 @@ public class SqlCons{
 
 	static final String[] ACCOUNT_COLUMNS = {ACCOUNT_ID, ACCOUNT_NUMBER, ACCOUNT_SORTCODE, ACCOUNT_NAME, ACCOUNT_TYPE, ACCOUNT_BALANCE, ACCOUNT_AVAILABLEBALANCE, ACCOUNT_OVERDRAFTLIMIT, ACCOUNT_OWNERID};
 
+
+
 	//Transactions table SQL
 	static final String TRANSACTIONS_TABLE_NAME = "Transactions";
 	static final String TRANSACTION_DATE = "Date";
@@ -68,6 +76,9 @@ public class SqlCons{
 	static final String TRANSACTION_OUT = "Outcome";
 	static final String TRANSACTION_BALANCE = "TransactionBalance";
 	static final String TRANSACTION_ACCOUNT_ID_FOREIGN = "AccountReference";
+
+
+
 	//Recipients table SQL
 	static final String RECIPIENTS_TABLE_NAME = "Recipients";
 	static final String RECIPIENT_ID = "_id";
@@ -83,6 +94,9 @@ public class SqlCons{
 			RECIPIENT_ACCOUNTNUMBER + " INTEGER," +
 			RECIPIENT_OWNER_ID + " INTEGER REFERENCES " + CUSTOMER_TABLE_NAME + "(" + CUSTOMER_ID + "));";
 	static final String[] RECIPIENT_COLUMNS = {RECIPIENT_ID, RECIPIENT_NAME, RECIPIENT_SORTCODE, RECIPIENT_ACCOUNTNUMBER, RECIPIENT_OWNER_ID};
+
+
+
 	//Available Offers and Deals
 	static final String AVAIL_OFFERS_TABLE_NAME = "AvailableOffers";
 	static final String AVAIL_OFFER_ID = "_id";
@@ -99,7 +113,10 @@ public class SqlCons{
 			AVAIL_OFFER_DESCRIPTION + " STRING," +
 			AVAIL_OFFER_ACTIVE + " INTEGER DEFAULT 0," +
 			AVAIL_OFFER_PRICE + " INTEGER);";
-	static final String[] AVAILABLE_OFFERS_COLUMNS = {AVAIL_OFFER_ID, AVAIL_OFFER_ICON, AVAIL_OFFER_NAME, AVAIL_OFFER_DESCRIPTION, AVAIL_OFFER_PRICE, AVAIL_OFFER_ACTIVE};
+
+
+
+    static final String[] AVAILABLE_OFFERS_COLUMNS = {AVAIL_OFFER_ID, AVAIL_OFFER_ICON, AVAIL_OFFER_NAME, AVAIL_OFFER_DESCRIPTION, AVAIL_OFFER_PRICE, AVAIL_OFFER_ACTIVE};
 	static final String ACTIVE_OFFERS_TABLE_NAME = "ActiveOffers";
 	static final String ACTIVE_OFFER_ID = "_id";
 	static final String ACTIVE_OFFER_ICON = "Icon";
@@ -116,6 +133,8 @@ public class SqlCons{
 			ACTIVE_OFFER_DESCRIPTION + " STRING," +
 			ACTIVE_OFFER_OWNER_ID + " INTEGER REFERENCES " + CUSTOMER_TABLE_NAME + "(" + CUSTOMER_ID + "));";
 	static final String[] ACTIVE_OFFERS_COLUMN_NAMES = {ACTIVE_OFFER_ID, ACTIVE_OFFER_ICON, ACTIVE_OFFER_BARCODE, ACTIVE_OFFER_NAME, ACTIVE_OFFER_DESCRIPTION, ACTIVE_OFFER_OWNER_ID};
+
+
 	// Achievements table SQL
 	static final String ACHIEVEMENTS_TABLE_NAME = "Achievements";
 	static final String ACHIEVEMENT_ID = "achievement_id";
@@ -133,6 +152,9 @@ public class SqlCons{
 			ACHIEVEMENT_ICON_ID + " INTEGER, " +
 			ACHIEVEMENT_IS_INCREMENTAL + " INTEGER" + ");";
 	static final String[] ACHIEVEMENTS_COLUMNS = {ACHIEVEMENT_ID, ACHIEVEMENT_TITLE, ACHIEVEMENT_DESCRIPTION, ACHIEVEMENT_POINTS, ACHIEVEMENT_ICON_ID, ACHIEVEMENT_IS_INCREMENTAL};
+
+
+
     // Customer achievements table SQL
     static final String CUSTOMER_ACHIEVEMENTS_TABLE_NAME = "CustomerAchievements";
     static final String CUSTOMER_ACHIEVEMENT_ID = "achievement_id";
@@ -141,21 +163,29 @@ public class SqlCons{
             "CREATE TABLE " +
                     CUSTOMER_ACHIEVEMENTS_TABLE_NAME + " (" +
                     CUSTOMER_ACHIEVEMENT_ID + " INTEGER REFERENCES " + ACHIEVEMENTS_TABLE_NAME + "("+ ACHIEVEMENT_ID  +"), " +
-                    CUSTOMER_ACHIEVEMENT_CUSTOMER_ID + " INTEGER REFERENCES " + ACCOUNTS_TABLE_NAME + "("+ ACCOUNT_OWNERID  +"));";
+                    CUSTOMER_ACHIEVEMENT_CUSTOMER_ID + " INTEGER REFERENCES " + CUSTOMER_TABLE_NAME + "(" + CUSTOMER_ID + "));";
 
     static final String[] CUSTOMER_ACHIEVEMENTS_COLUMNS = {CUSTOMER_ACHIEVEMENT_ID, CUSTOMER_ACHIEVEMENT_CUSTOMER_ID};
+
+
+
 	// Customer statistics table SQL
     static final String CUSTOMER_STATISTICS_TABLE_NAME = "CustomerStatistics";
     static final String CUSTOMER_STATISTICS_CUSTOMER_ID = "customer_id";
     static final String CUSTOMER_TOTAL_TRANSACTIONS = "customer_total_transactions";
     static final String CUSTOMER_LOGINS = "customer_logins";
+
+
+
     static final String CREATE_CUSTOMER_STATISTICS_TABLE =
         "CREATE TABLE " +
                 CUSTOMER_STATISTICS_TABLE_NAME + " (" +
                 CUSTOMER_TOTAL_TRANSACTIONS + " REAL DEFAULT 0.00, " +
                 CUSTOMER_LOGINS + " INTEGER, " +
-                CUSTOMER_STATISTICS_CUSTOMER_ID + " INTEGER REFERENCES " + ACCOUNTS_TABLE_NAME + "(" + ACCOUNT_OWNERID + "));";
+                CUSTOMER_STATISTICS_CUSTOMER_ID + " INTEGER REFERENCES " + CUSTOMER_TABLE_NAME + "(" + CUSTOMER_ID + "));";
     static final String[] CUSTOMER_STATISTICS_COLUMNS = {CUSTOMER_STATISTICS_CUSTOMER_ID, CUSTOMER_TOTAL_TRANSACTIONS, CUSTOMER_LOGINS};
+
+
 
     private static final String TRANSACTION_ID = "transaction_id";
 	static final String CREATE_TRANSACTIONS_TABLE = "CREATE TABLE " +

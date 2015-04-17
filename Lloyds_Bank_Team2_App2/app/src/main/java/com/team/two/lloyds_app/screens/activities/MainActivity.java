@@ -84,7 +84,7 @@ public class MainActivity extends ActionBarActivity implements
 
         // Increment login
         //addincrement();
-        //incrementLogin(customerId);
+        incrementLogin(customerId);
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
