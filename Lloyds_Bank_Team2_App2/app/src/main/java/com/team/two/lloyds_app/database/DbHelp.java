@@ -252,7 +252,7 @@ public class DbHelp extends SQLiteOpenHelper{
 
 		// Add achievements achieved by a customer
 		contentValuesTransactions = new ContentValues();
-		contentValuesTransactions.put(SqlCons.CUSTOMER_ACHIEVEMENT_ID, 1);
+		contentValuesTransactions.put(SqlCons.CUSTOMER_ACHIEVEMENT_ID, 2);
 		contentValuesTransactions.put(SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID, 1);
 
 		ContentValues availableOfferContentValue = new ContentValues();

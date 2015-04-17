@@ -605,4 +605,21 @@ public class DatabaseAdapter{
 		db.close();
 		return achievements;
 	}
+
+    public boolean achievementAccomplished(int achievementId, int customerId)
+    {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String[] columns = SqlCons.CUSTOMER_ACHIEVEMENTS_COLUMNS;
+        String query = SqlCons.CUSTOMER_ACHIEVEMENT_ID + " = '" + achievementId + "' AND " + SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID + " = " + customerId;
+        Cursor cursor = db.query(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME,columns,query,null,null,null,null);
+
+        int count = cursor.getCount();
+
+        if (cursor.getCount() > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
