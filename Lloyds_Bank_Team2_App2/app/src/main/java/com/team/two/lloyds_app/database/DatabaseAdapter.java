@@ -613,7 +613,7 @@ public class DatabaseAdapter{
         String query = SqlCons.CUSTOMER_ACHIEVEMENT_ID + " = '" + achievementId + "' AND " + SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID + " = " + customerId;
         Cursor cursor = db.query(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME,columns,query,null,null,null,null);
 
-        int count = cursor.getCount();
+        //int count = cursor.getCount();
 
         if (cursor.getCount() > 0) {
             return true;

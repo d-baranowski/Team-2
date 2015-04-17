@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.team.two.lloyds_app.R;
 import com.team.two.lloyds_app.objects.Achievement;
+import com.team.two.lloyds_app.objects.Customer;
 import com.team.two.lloyds_app.screens.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -132,6 +133,17 @@ public class AchievementsFragment extends android.support.v4.app.Fragment{
 			TextView achievementTitle = (TextView) achievementView.findViewById(R.id.achievementTitle);
 			achievementTitle.setText(achievement.getTitle());
 
+            // Show status
+            TextView status = (TextView) achievementView.findViewById(R.id.achievementStatus);
+            if(achievementIsCompleted(achievement))
+            {
+                status.setText("Complete");
+            }
+            else
+            {
+                status.setText("Incomplete");
+            }
+
 			// Show points
 			TextView achievementPoints = (TextView) achievementView.findViewById(R.id.achievementPoints);
 			int pointsInt = achievement.getPointsAchieved();
@@ -141,6 +153,13 @@ public class AchievementsFragment extends android.support.v4.app.Fragment{
 			return achievementView;
 		}
 	}
+
+    public boolean achievementIsCompleted(Achievement achievement)
+    {
+        MainActivity context = (MainActivity) getActivity();
+        Customer customer = context.getCustomer();
+        return context.achievementIsComplete(achievement.getAchievementId(), customer.getId());
+    }
 
 
 }

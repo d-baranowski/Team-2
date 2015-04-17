@@ -199,6 +199,8 @@ public class MainActivity extends ActionBarActivity implements
 
     public List<Achievement> getAchievements() { return dbadapter.getAchievements(); }
 
+    public boolean achievementIsComplete(int achievementId, int customerId) { return dbadapter.achievementAccomplished(achievementId, customerId); }
+
     public ArrayList<Offer> getActiveOffers() { return dbadapter.getActiveOffers(customerId); }
 
     public void activateOffer(Offer offer){ dbadapter.activateOffer(offer, customerId);}
