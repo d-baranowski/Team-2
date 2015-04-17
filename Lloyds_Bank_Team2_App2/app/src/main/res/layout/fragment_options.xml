@@ -6,6 +6,47 @@
     tools:context="com.team.two.lloyds_app.screens.fragments.OptionsFragment"
     android:background="#ffffffff">
 
+
+    <TextView style="@style/options_screen_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About:"
+        android:id="@+id/about_text"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        />
+
+
+    <TextView style="@style/options_screen_text"
+        android:id="@+id/aboutBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/about_text"
+        android:layout_below="@+id/about_text"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="3dp"
+        android:text="App was developed by Team 2 @ Newcastle University 2015" />
+
+    <TextView style="@style/options_screen_title"
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/aboutBox"
+        android:layout_below="@+id/aboutBox"
+        android:layout_marginTop="20dp"
+        android:text="Development Credits: " />
+
+    <TextView style="@style/options_screen_text"
+        android:id="@+id/credits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="3dp"
+        android:text="-Matthew Selby \n -Daniel Baranowski \n -Jack Hookham \n -Deniz Kucukterzi \n -Oliver McPheely \n -Daniel Smith \n -Mikey Edwards \n -Josh Greenwood " />
+        />
+
     <TextView
         android:id="@+id/fbLoginMessage"
         android:text="@string/fb_not_logged_in_message"
@@ -15,20 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
-
-        />
-
-    <TextView style="@style/options_screen_text"
-        android:text="Font Colour:"
-        android:id="@+id/font_size_text"
-        android:layout_below="@+id/login_button"
-        />
-    <Spinner style="@style/options_spinner"
-        android:id="@+id/font_size_spinner"
-        android:layout_below="@+id/font_size_text"
-        android:layout_alignLeft="@+id/font_size_text"
-        android:layout_alignStart="@+id/font_size_text"
-        android:popupBackground="#D2D2D2"
+        android:layout_below="@id/credits"
         />
 
     <com.facebook.login.widget.LoginButton
@@ -38,7 +66,6 @@
         android:layout_marginTop="30dp"
         android:layout_alignTop="@+id/fbLoginMessage"
         android:layout_marginLeft="10dp"
+        android:layout_below="@id/fbLoginMessage"
         />
-
-
-</RelativeLayout>
+    </RelativeLayout>

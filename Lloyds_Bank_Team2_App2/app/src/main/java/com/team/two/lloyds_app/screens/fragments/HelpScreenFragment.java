@@ -19,7 +19,7 @@ import com.team.two.lloyds_app.R;
 
 public class HelpScreenFragment extends android.support.v4.app.Fragment{
 	View Root;
-	public static final String TITLE = "Help and About";
+	public static final String TITLE = "Help";
 
 	public HelpScreenFragment(){
 		// Required empty public constructor
