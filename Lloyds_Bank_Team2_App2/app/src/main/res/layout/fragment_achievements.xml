@@ -29,7 +29,8 @@
 
             <TextView style="@style/achievement_title"
                 android:id="@+id/achievement_title"
-                android:text="@string/achievement_title" />
+                android:text="@string/achievement_title"
+                android:layout_width="match_parent" />
 
             <ListView
                 android:layout_width="fill_parent"
