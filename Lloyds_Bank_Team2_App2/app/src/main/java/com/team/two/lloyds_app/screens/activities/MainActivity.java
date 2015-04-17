@@ -76,6 +76,9 @@ public class MainActivity extends ActionBarActivity implements
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
 
+        // Increment login
+        //incrementLogin(customerId);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null){
@@ -202,6 +205,14 @@ public class MainActivity extends ActionBarActivity implements
     public boolean achievementIsComplete(int achievementId, int customerId) { return dbadapter.achievementAccomplished(achievementId, customerId); }
 
     public void addCompletedAchievement(int achievementId, int customerId) { dbadapter.addCompletedAchievement(achievementId, customerId); }
+
+    public void updateTransactionsTotal(int customerId, double updateAmount) { dbadapter.updateTransactionsTotal(customerId, updateAmount); }
+
+    public double getTransactionsTotal(int customerId) { return dbadapter.getTransactionsTotal(customerId); }
+
+    public void incrementLogin(int customerId) { dbadapter.incrementLogin(customerId); }
+
+    public int getLoginsTotal(int customerId) { return dbadapter.getLoginsTotal(customerId); }
 
     public ArrayList<Offer> getActiveOffers() { return dbadapter.getActiveOffers(customerId); }
 

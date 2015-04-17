@@ -632,4 +632,66 @@ public class DatabaseAdapter{
         newAchievementValues.put(SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID, customerId);
         db.insert(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME, null, newAchievementValues);
     }
+
+    public void updateTransactionsTotal(int customerId, double updateAmount)
+    {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = SqlCons.CUSTOMER_STATISTICS_COLUMNS;
+        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = " + customerId + "";
+
+        Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME,columns,query,null,null,null,null);
+        int count = cursor.getCount();
+
+        if(count == 1)
+        {
+            cursor.moveToFirst();
+
+            double previousTotal = cursor.getDouble(cursor.getColumnIndex(SqlCons.CUSTOMER_TOTAL_TRANSACTIONS));
+            double newTotal = updateAmount+previousTotal;
+
+            ContentValues transactionValues = new ContentValues();
+            transactionValues.put(SqlCons.CUSTOMER_TOTAL_TRANSACTIONS, newTotal);
+            db.update(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME, transactionValues, query, null);
+        }
+    }
+
+    public double getTransactionsTotal(int customerId)
+    {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String[] columns = SqlCons.CUSTOMER_STATISTICS_COLUMNS;
+        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = '" + customerId + "'";
+
+        Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME, columns, query, null, null, null, null);
+        cursor.moveToFirst();
+
+        return cursor.getDouble(cursor.getColumnIndex(SqlCons.CUSTOMER_TOTAL_TRANSACTIONS));
+    }
+
+    public void incrementLogin(int customerId)
+    {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = SqlCons.CUSTOMER_ACHIEVEMENTS_COLUMNS;
+        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = " + customerId + "";
+
+        Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME,columns,query,null,null,null,null);
+        int count = cursor.getCount();
+
+        if(count == 1)
+        {
+
+        }
+
+    }
+
+    public int getLoginsTotal(int customerId)
+    {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String[] columns = SqlCons.CUSTOMER_STATISTICS_COLUMNS;
+        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = '" + customerId + "'";
+
+        Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME, columns, query, null, null, null, null);
+        cursor.moveToFirst();
+
+        return cursor.getInt(cursor.getColumnIndex(SqlCons.CUSTOMER_LOGINS));
+    }
 }

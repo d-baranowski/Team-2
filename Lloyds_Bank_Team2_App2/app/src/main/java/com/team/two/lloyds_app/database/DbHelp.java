@@ -203,8 +203,8 @@ public class DbHelp extends SQLiteOpenHelper{
 
 		// Add all achievements
 		ContentValues contentValAchievements = new ContentValues();
-		contentValAchievements.put(SqlCons.ACHIEVEMENT_TITLE, "£200 Incoming transaction");
-		contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You must receive an incoming transaction of at least £200 to complete this achievement.");
+		contentValAchievements.put(SqlCons.ACHIEVEMENT_TITLE, "£200 Personal transaction");
+		contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You must receive an personal transaction of at least £200 to complete this achievement.");
 		contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 50);
 		contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_1);
 		contentValAchievements.put(SqlCons.ACHIEVEMENT_IS_INCREMENTAL, 0);
@@ -258,13 +258,12 @@ public class DbHelp extends SQLiteOpenHelper{
         //db.insert(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME, null, contentValuesCustomerAchievements);
 
         // Initialise customer statistics
-        /*
+
         ContentValues contentValuesCustomerStatistics = new ContentValues();
         contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID, 1);
-        contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_TOTAL_TRANSACTIONS, 0);
+        contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_TOTAL_TRANSACTIONS, 0.00);
         contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_LOGINS, 0);
         db.insert(SqlCons.CREATE_CUSTOMER_STATISTICS_TABLE, null, contentValuesCustomerStatistics);
-        */
 
 		ContentValues availableOfferContentValue = new ContentValues();
 		availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.morrisons_logo);
