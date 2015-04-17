@@ -251,9 +251,11 @@ public class DbHelp extends SQLiteOpenHelper{
 		db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
 		// Add achievements achieved by a customer
-		contentValuesTransactions = new ContentValues();
-		contentValuesTransactions.put(SqlCons.CUSTOMER_ACHIEVEMENT_ID, 2);
-		contentValuesTransactions.put(SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID, 1);
+        ContentValues contentValuesCustomerAchievements = new ContentValues();
+		contentValuesCustomerAchievements = new ContentValues();
+		contentValuesCustomerAchievements.put(SqlCons.CUSTOMER_ACHIEVEMENT_ID, 2);
+		contentValuesCustomerAchievements.put(SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID, 1);
+        db.insert(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME, null, contentValuesCustomerAchievements);
 
 		ContentValues availableOfferContentValue = new ContentValues();
 		availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.morrisons_logo);
