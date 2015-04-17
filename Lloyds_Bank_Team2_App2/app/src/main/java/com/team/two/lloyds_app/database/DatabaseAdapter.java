@@ -673,7 +673,7 @@ public class DatabaseAdapter{
         String[] columns = SqlCons.CUSTOMER_STATISTICS_COLUMNS;
         String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = '" + customerId +"'";
 
-        Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME,columns,null,null,null,null,null);
+        Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME,columns,query,null,null,null,null);
 
         int count = cursor.getCount();
         Log.d("testdb", Integer.toString(count));
