@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Author: Daniel
+ * Author: Daniel Baranowski
  * Date: 18/03/2015
  * Purpose: code for drawer adapter
  */

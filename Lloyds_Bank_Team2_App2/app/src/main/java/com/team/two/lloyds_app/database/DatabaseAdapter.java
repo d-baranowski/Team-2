@@ -24,7 +24,7 @@ import java.util.Locale;
 import java.util.TreeMap;
 
 /**
- * Author: Daniel B
+ * Author: Daniel Baranowski
  * Date: 01/02/2015
  * Purpose: to pull data from the database and convert into a format that the app can read
  */

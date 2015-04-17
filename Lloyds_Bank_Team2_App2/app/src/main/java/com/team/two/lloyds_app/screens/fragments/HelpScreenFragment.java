@@ -6,6 +6,8 @@ package com.team.two.lloyds_app.screens.fragments;
  * Purpose Help Screen
  */
 
+/*Modified by Oliver McPheely*/
+
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;

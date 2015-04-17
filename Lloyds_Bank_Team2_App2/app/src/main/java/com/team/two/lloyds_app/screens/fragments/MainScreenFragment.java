@@ -18,9 +18,9 @@ import com.team.two.lloyds_app.screens.activities.MainActivity;
 import java.text.DecimalFormat;
 
 /**
- * Author:
- * Date:
- * Purpose: code for main screen
+ * Author: Daniel Baranowski
+ * Date:18/03/2015
+ * Purpose: Code for main screen
  */
 
 public class MainScreenFragment extends android.support.v4.app.Fragment{

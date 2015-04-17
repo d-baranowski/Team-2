@@ -1,4 +1,10 @@
 package com.team.two.lloyds_app.screens.activities;
+/*
+Author: Daniel Baranowski
+Date: 18/3/2015
+Purpose : The backbone Activity of the app.
+ */
+
 
 import android.content.Context;
 import android.content.Intent;

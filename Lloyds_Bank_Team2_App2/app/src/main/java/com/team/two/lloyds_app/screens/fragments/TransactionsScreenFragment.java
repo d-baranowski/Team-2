@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Author: Daniel B
+ * Author: Daniel Baranowski
  * Date: 22/03/2015
  * Purpose: Code for transactions screen
  */

@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Author:Daniel Baronowski
+ * Author:Daniel Baranowski
  * Date: 23/03/2015
  * Purpose: code for statements screen
  */
