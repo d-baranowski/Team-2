@@ -473,6 +473,10 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
             {
                 context.addCompletedAchievement(1, customer.getId());
                 context.gainOffersPoints(50);
+
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(getActivity(), "You completed the £200 Personal transaction achievement!", duration);
+                toast.show();
             }
         }
     }
@@ -491,6 +495,10 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
             {
                 context.addCompletedAchievement(2, customer.getId());
                 context.gainOffersPoints(50);
+
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(getActivity(), "You completed the £200 Outgoing transaction achievement!", duration);
+                toast.show();
             }
         }
     }
@@ -526,6 +534,10 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
             {
                 context.addCompletedAchievement(4, customer.getId());
                 context.gainOffersPoints(100);
+
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(getActivity(), "You completed the £5000 balance achievement!", duration);
+                toast.show();
             }
         }
     }

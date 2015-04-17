@@ -258,7 +258,6 @@ public class DbHelp extends SQLiteOpenHelper{
         //db.insert(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME, null, contentValuesCustomerAchievements);
 
         // Initialise customer statistics
-
         ContentValues contentValuesCustomerStatistics = new ContentValues();
         contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID, 1);
         contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_TOTAL_TRANSACTIONS, 0.00);

@@ -34,6 +34,7 @@ public class AchievementsFragment extends android.support.v4.app.Fragment{
 	private List<Achievement> achievements = new ArrayList<Achievement>();
 	private ListView achievementListView;
 	private Button redeemRewards;
+    private TextView title;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -42,6 +43,10 @@ public class AchievementsFragment extends android.support.v4.app.Fragment{
 				(R.layout.fragment_achievements, container, false);
 		achievementListView = (ListView) rl.findViewById(R.id.listView);
 		redeemRewards = (Button) rl.findViewById(R.id.redeemRewardsButton);
+        title = (TextView) rl.findViewById(R.id.achievement_title);
+
+        int totalPoints = ((MainActivity) getActivity()).getCustomer().getOfferPoints();
+        title.setText("Available Achievements - " + Integer.toString(totalPoints));
 
 		populateAchievementList();
 		populateListView();
@@ -84,7 +89,6 @@ public class AchievementsFragment extends android.support.v4.app.Fragment{
 			ProgressBar achievementProgress = (ProgressBar) dialog.findViewById(R.id.achievementProgressBar);
 			achievementProgress.setVisibility(View.VISIBLE);
 		}
-
 
 		Button okButton = (Button) dialog.findViewById(R.id.ok_button);
 		okButton.setOnClickListener(new View.OnClickListener(){
@@ -160,6 +164,4 @@ public class AchievementsFragment extends android.support.v4.app.Fragment{
         Customer customer = context.getCustomer();
         return context.achievementIsComplete(achievement.getAchievementId(), customer.getId());
     }
-
-
 }

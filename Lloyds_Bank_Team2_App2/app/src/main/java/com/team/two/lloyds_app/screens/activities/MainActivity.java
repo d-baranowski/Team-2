@@ -83,7 +83,9 @@ public class MainActivity extends ActionBarActivity implements
         toolbar.setTitleTextColor(Color.WHITE);
 
         // Increment login
+        //addincrement();
         //incrementLogin(customerId);
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -215,6 +217,8 @@ public class MainActivity extends ActionBarActivity implements
     public void updateTransactionsTotal(int customerId, double updateAmount) { dbadapter.updateTransactionsTotal(customerId, updateAmount); }
 
     public double getTransactionsTotal(int customerId) { return dbadapter.getTransactionsTotal(customerId); }
+
+    public void addincrement() { dbadapter.add(); }
 
     public void incrementLogin(int customerId) { dbadapter.incrementLogin(customerId); }
 

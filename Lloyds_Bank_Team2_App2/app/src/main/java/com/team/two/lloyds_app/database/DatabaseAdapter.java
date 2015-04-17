@@ -625,7 +625,6 @@ public class DatabaseAdapter{
     public void addCompletedAchievement(int achievementId, int customerId)
     {
         SQLiteDatabase db = helper.getWritableDatabase();
-        String[] columns = SqlCons.CUSTOMER_ACHIEVEMENTS_COLUMNS;
 
         ContentValues newAchievementValues = new ContentValues();
         newAchievementValues.put(SqlCons.CUSTOMER_ACHIEVEMENT_ID, achievementId);
@@ -670,8 +669,8 @@ public class DatabaseAdapter{
     public void incrementLogin(int customerId)
     {
         SQLiteDatabase db = helper.getWritableDatabase();
-        String[] columns = SqlCons.CUSTOMER_ACHIEVEMENTS_COLUMNS;
-        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = " + customerId + "";
+        String[] columns = SqlCons.CUSTOMER_STATISTICS_COLUMNS;
+        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = " + customerId;
 
         Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME,columns,query,null,null,null,null);
         int count = cursor.getCount();
@@ -679,8 +678,21 @@ public class DatabaseAdapter{
         if(count == 1)
         {
 
+
         }
 
+    }
+
+    public void add()
+    {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = SqlCons.CUSTOMER_STATISTICS_COLUMNS;
+
+        ContentValues newAchievementValues = new ContentValues();
+        newAchievementValues.put(SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID, 1);
+        newAchievementValues.put(SqlCons.CUSTOMER_TOTAL_TRANSACTIONS, 0.00);
+        newAchievementValues.put(SqlCons.CUSTOMER_LOGINS, 0);
+        db.insert(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME, null, newAchievementValues);
     }
 
     public int getLoginsTotal(int customerId)
