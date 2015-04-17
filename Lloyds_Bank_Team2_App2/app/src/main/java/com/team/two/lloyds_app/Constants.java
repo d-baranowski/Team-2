@@ -1,7 +1,8 @@
 package com.team.two.lloyds_app;
 
 /**
- * Created by Daniel on 22/03/2015.
+ * Created by Daniel Baranowski on 22/03/2015.
+ * Purpose: Class to contain all our constants
  */
 public class Constants {
     public static final String PREF_FILE_NAME = "testpref";

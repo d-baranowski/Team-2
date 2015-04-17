@@ -1,7 +1,7 @@
 package com.team.two.lloyds_app.screens.drawer;
 
 /**
- * Author: Daniel
+ * Author: Daniel Baranowski
  * Date: 18/03/2015
  * Purpose: Drawer code
  */

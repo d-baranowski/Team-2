@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: Deniz
+ * Author: Deniz Kucukterzi
  * Date: 12/04/2015
  * Purpose: Code for achievements
  */

@@ -1,7 +1,7 @@
 package com.team.two.lloyds_app.objects;
 
 /**
- * Author: Deniz
+ * Author: Deniz Kucukterzi
  * Date: 15/04/2015
  * Purpose: data about achievements
  */
