@@ -24,6 +24,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:id="@+id/achievementTitle"
+        android:textSize="16sp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="4dp"
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
+        android:textSize="14sp"
         android:id="@+id/achievementPoints"
         android:paddingRight="8dp"
         android:layout_marginTop="10dp"
@@ -44,5 +46,16 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Incomplete"
+        android:id="@+id/achievementStatus"
+        android:textSize="14sp"
+        android:layout_alignBottom="@+id/achievementIcon"
+        android:layout_alignRight="@+id/achievementPoints"
+        android:layout_alignEnd="@+id/achievementPoints" />
 
 </RelativeLayout>
