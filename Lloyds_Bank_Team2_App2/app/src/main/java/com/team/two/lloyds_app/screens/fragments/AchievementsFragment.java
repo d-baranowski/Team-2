@@ -54,8 +54,14 @@ public class AchievementsFragment extends android.support.v4.app.Fragment{
 		achievementListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                MainActivity context = (MainActivity) getActivity();
+
+                int customerId = context.getCustomer().getId();
+                int logins = context.getLoginsTotal(customerId);
+                double transactionsTotal = context.getTransactionsTotal(customerId);
+
 				Achievement achievement = (Achievement) parent.getAdapter().getItem(position);
-				showAchievementDialog(achievement);
+				showAchievementDialog(achievement, transactionsTotal, logins);
 			}
 		});
 
@@ -70,7 +76,7 @@ public class AchievementsFragment extends android.support.v4.app.Fragment{
 		return rl;
 	}
 
-	public void showAchievementDialog(Achievement achievement){
+	public void showAchievementDialog(Achievement achievement, double transactionsTotal, int logins){
 		// Create custom dialog object
 		final Dialog dialog = new Dialog(getActivity());
 
@@ -88,6 +94,30 @@ public class AchievementsFragment extends android.support.v4.app.Fragment{
 		if(achievement.getIncremental() == 1){
 			ProgressBar achievementProgress = (ProgressBar) dialog.findViewById(R.id.achievementProgressBar);
 			achievementProgress.setVisibility(View.VISIBLE);
+
+            // Show progress bar actual progress value
+            TextView progressBarText = (TextView) dialog.findViewById(R.id.progressBarValueText);
+            progressBarText.setVisibility(View.VISIBLE);
+
+            // Show progress bar max values
+            if(achievement.getAchievementId() == 3)
+            {
+                achievementProgress.setMax(10000);
+                achievementProgress.setProgress((int)transactionsTotal);
+                progressBarText.setText("You have £" + transactionsTotal + "/£10,000");
+            }
+            else if(achievement.getAchievementId() == 5)
+            {
+                achievementProgress.setMax(5);
+                achievementProgress.setProgress(logins);
+                progressBarText.setText("You have made " + logins + " out of 5 logins");
+            }
+            else if(achievement.getAchievementId() == 6)
+            {
+                achievementProgress.setMax(50);
+                achievementProgress.setProgress(logins);
+                progressBarText.setText("You have made " + logins + " out of 50 logins");
+            }
 		}
 
 		Button okButton = (Button) dialog.findViewById(R.id.ok_button);

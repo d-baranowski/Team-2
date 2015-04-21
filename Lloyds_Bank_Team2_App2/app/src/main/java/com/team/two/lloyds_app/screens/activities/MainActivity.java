@@ -24,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.team.two.lloyds_app.exceptions.EmptyMandatoryFieldException;
 import com.team.two.lloyds_app.R;
@@ -83,9 +84,10 @@ public class MainActivity extends ActionBarActivity implements
         toolbar.setTitleTextColor(Color.WHITE);
 
         // Increment login
-        //addincrement();
         incrementLogin(customerId);
 
+        // Check if any login achievements were achieved
+        checkAchievement5and6();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -218,8 +220,6 @@ public class MainActivity extends ActionBarActivity implements
 
     public double getTransactionsTotal(int customerId) { return dbadapter.getTransactionsTotal(customerId); }
 
-    public void addincrement() { dbadapter.add(); }
-
     public void incrementLogin(int customerId) { dbadapter.incrementLogin(customerId); }
 
     public int getLoginsTotal(int customerId) { return dbadapter.getLoginsTotal(customerId); }
@@ -281,4 +281,33 @@ public class MainActivity extends ActionBarActivity implements
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
+
+    // Check number of logins achievements
+    public void checkAchievement5and6()
+    {
+        if(!achievementIsComplete(5, customerId) || !achievementIsComplete(6, customerId))
+        {
+            int numberOfLogins = getLoginsTotal(customerId);
+
+            if(numberOfLogins == 5)
+            {
+                addCompletedAchievement(5, customerId);
+                gainOffersPoints(50);
+
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(this, "You completed the 5 Logins  achievement!", duration);
+                toast.show();
+            }
+            else if(numberOfLogins == 50)
+            {
+                addCompletedAchievement(6, customerId);
+                gainOffersPoints(150);
+
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(this, "You completed the 50 Logins achievement!", duration);
+                toast.show();
+            }
+        }
+    }
+
 }

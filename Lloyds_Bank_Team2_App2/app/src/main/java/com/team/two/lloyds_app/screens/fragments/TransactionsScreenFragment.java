@@ -150,8 +150,10 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
             if (balance > 0) {
                 if (balance <= source.getAvailableBalance()) {
-                    //updateTransaction(balance);
+                    updateTransaction(balance);
                     checkAchievement1(balance);
+                    checkAchievement3();
+                    checkAchievement4(balance);
 
                     result = "Successful Transfer";
                     ((MainActivity) getActivity()).getAdapter().transfer(source, destination, balance);
@@ -215,7 +217,10 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
 
             if (balance > 0) {
                 if (balance <= source.getAvailableBalance()) {
+                    updateTransaction(balance);
                     checkAchievement2(balance);
+                    checkAchievement3();
+
                     result = "Successful Payment";
                     ((MainActivity) getActivity()).getAdapter().payment(source, destination, balance, description);
                     ((MainActivity) getActivity()).openHome();
@@ -448,17 +453,9 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         int customerId = customer.getId();
 
         context.updateTransactionsTotal(customerId, amount);
-        double total = context.getTransactionsTotal(customerId);
-
-        Context contextt = getActivity().getApplicationContext();
-
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(contextt, String.valueOf(total) + " total", duration);
-        toast.show();
-
     }
 
+    // Check if £200 or more is transferred to a personal account
     public void checkAchievement1(double balance)
     {
         if(balance>=200)
@@ -481,6 +478,7 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
         }
     }
 
+    // Check if £200 or more is transferred to an external account
     public void checkAchievement2(double balance)
     {
         if(balance>=200)
@@ -504,19 +502,22 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
     }
 
     // Check if at least £10,000 has been transferred until now
-    public boolean checkAchievement3()
+    public void checkAchievement3()
     {
         MainActivity context = (MainActivity)getActivity();
         Customer customer = context.getCustomer();
         int customerId = customer.getId();
         double transactionTotal = context.getTransactionsTotal(customerId);
 
-        if(transactionTotal>=10000)
+        if(transactionTotal>=10000 && !context.achievementIsComplete(3, customerId))
         {
-            return true;
-        }
+            context.addCompletedAchievement(3, customer.getId());
+            context.gainOffersPoints(500);
 
-        return false;
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(getActivity(), "You completed the £10,000 total transactions achievement!", duration);
+            toast.show();
+        }
     }
 
     // Check if current balance is 5000 or more
@@ -541,5 +542,4 @@ public class TransactionsScreenFragment extends android.support.v4.app.Fragment 
             }
         }
     }
-
 }

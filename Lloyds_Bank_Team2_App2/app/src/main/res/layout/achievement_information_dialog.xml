@@ -16,9 +16,18 @@
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="318dp"
+        android:layout_width="332dp"
         android:layout_height="wrap_content"
         android:id="@+id/achievementProgressBar"
+        android:visibility="invisible"
+        android:minHeight="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/progressBarValueText"
         android:layout_gravity="center_horizontal"
         android:visibility="invisible" />
 

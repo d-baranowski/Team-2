@@ -232,7 +232,7 @@ public class DbHelp extends SQLiteOpenHelper{
 		contentValAchievements.put(SqlCons.ACHIEVEMENT_DESCRIPTION, "You must have a main account balance of at least £5000");
 		contentValAchievements.put(SqlCons.ACHIEVEMENT_POINTS, 100);
 		contentValAchievements.put(SqlCons.ACHIEVEMENT_ICON_ID, R.drawable.achievement_4);
-		contentValAchievements.put(SqlCons.ACHIEVEMENT_IS_INCREMENTAL, 1);
+		contentValAchievements.put(SqlCons.ACHIEVEMENT_IS_INCREMENTAL, 0);
 		db.insert(SqlCons.ACHIEVEMENTS_TABLE_NAME, null, contentValAchievements);
 
 		contentValAchievements = new ContentValues();
@@ -258,11 +258,13 @@ public class DbHelp extends SQLiteOpenHelper{
 		//contentValuesCustomerAchievements.put(SqlCons.CUSTOMER_ACHIEVEMENT_CUSTOMER_ID, 1);
         //db.insert(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME, null, contentValuesCustomerAchievements);
 
-        // Initialise customer statistics
+        // Initialise customer statistics for customer 1
         ContentValues contentValuesCustomerStatistics = new ContentValues();
         contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID, 1);
         contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_TOTAL_TRANSACTIONS, 0.00);
         contentValuesCustomerStatistics.put(SqlCons.CUSTOMER_LOGINS, 0);
+        db.insert(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME, null, contentValuesCustomerStatistics);
+
 
 		ContentValues availableOfferContentValue = new ContentValues();
 		availableOfferContentValue.put(SqlCons.AVAIL_OFFER_ICON, R.drawable.morrisons_logo);

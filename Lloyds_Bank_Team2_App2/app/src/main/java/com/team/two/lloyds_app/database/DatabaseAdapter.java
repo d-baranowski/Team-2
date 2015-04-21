@@ -633,11 +633,12 @@ public class DatabaseAdapter{
         db.insert(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME, null, newAchievementValues);
     }
 
+    // ----------
     public void updateTransactionsTotal(int customerId, double updateAmount)
     {
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = SqlCons.CUSTOMER_STATISTICS_COLUMNS;
-        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = " + customerId + "";
+        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = '" + customerId + "'";
 
         Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME,columns,query,null,null,null,null);
         int count = cursor.getCount();
@@ -671,30 +672,22 @@ public class DatabaseAdapter{
     {
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = SqlCons.CUSTOMER_STATISTICS_COLUMNS;
-        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = '" + customerId +"'";
+        String query = SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID + " = '" + customerId + "'";
 
-        Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME,columns,null,null,null,null,null);
-
+        Cursor cursor = db.query(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME,columns,query,null,null,null,null);
         int count = cursor.getCount();
-        Log.d("testdb", Integer.toString(count));
+
         if(count == 1)
         {
+            cursor.moveToFirst();
+            int previousLogins = cursor.getInt(cursor.getColumnIndex(SqlCons.CUSTOMER_LOGINS));
+            int newLogins = previousLogins + 1;
 
 
+            ContentValues transactionValues = new ContentValues();
+            transactionValues.put(SqlCons.CUSTOMER_LOGINS, newLogins);
+            db.update(SqlCons.CUSTOMER_STATISTICS_TABLE_NAME, transactionValues, query, null);
         }
-
-    }
-
-    public void add()
-    {
-        SQLiteDatabase db = helper.getWritableDatabase();
-        String[] columns = SqlCons.CUSTOMER_STATISTICS_COLUMNS;
-
-        ContentValues newAchievementValues = new ContentValues();
-        newAchievementValues.put(SqlCons.CUSTOMER_STATISTICS_CUSTOMER_ID, 1);
-        newAchievementValues.put(SqlCons.CUSTOMER_TOTAL_TRANSACTIONS, 0.00);
-        newAchievementValues.put(SqlCons.CUSTOMER_LOGINS, 0);
-        db.insert(SqlCons.CUSTOMER_ACHIEVEMENTS_TABLE_NAME, null, newAchievementValues);
     }
 
     public int getLoginsTotal(int customerId)
